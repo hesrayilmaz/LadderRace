@@ -5,14 +5,17 @@ using DG.Tweening;
 
 public class JoystickPlayerExample : MonoBehaviour
 {
-    public float speed;
+    //public float speed;
     public FixedJoystick fixedJoystick;
-    public Rigidbody rb;
+    //public Rigidbody rb;
+
 
     private void Update()
     {
-        Debug.Log("vertical: " + fixedJoystick.Vertical);
-        Debug.Log("horizontal: " + fixedJoystick.Horizontal);
+        if(fixedJoystick.Vertical!=0 || fixedJoystick.Horizontal != 0)
+        {
+
+        }
         transform.DOMove((Vector3.forward * fixedJoystick.Vertical+Vector3.right * fixedJoystick.Horizontal), 0.03f).SetRelative();
     }
     public void FixedUpdate()

@@ -7,6 +7,8 @@ public class CharacterController : MonoBehaviour
 {
     [SerializeField] private SimpleAnimancer _animancer;
     [SerializeField] private FixedJoystick fixedJoystick;
+    [SerializeField] private AudioSource _audio;
+
 
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
@@ -15,6 +17,9 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private string _climbAnimName = "Climb";
     [SerializeField] private float _climbAnimSpeed = 2f;
     private bool _isClimbingUpward = false;
+    private bool _isClimbingDownward = false;
+    private bool _isClimbed = false;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -24,12 +29,21 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_isClimbingUpward)
+        if (_isClimbingUpward && !_isClimbed)
         {
             ClimbAnimation();
-            transform.DOMoveY(5f, 0.1f).SetRelative();
+            transform.DOMoveY(7f, 0.1f).SetRelative();
         }
-            
+        else if (_isClimbingUpward && _isClimbed)
+        {
+            _audio.Stop();
+            IdleAnimation();
+        }
+        else if (_isClimbingDownward)
+        {
+            ClimbAnimation();
+            transform.DOMoveY(-7f, 0.1f).SetRelative();
+        }
         else if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
         {
             RunAnimation();
@@ -42,20 +56,19 @@ public class CharacterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Ladder")
+        if (other.gameObject.tag == "LadderStart")
         {
             _isClimbingUpward = true;
+            _isClimbingDownward = false;
+            _audio.Play();
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Ladder")
+        else if (other.gameObject.tag == "LadderEnd")
         {
             _isClimbingUpward = false;
+            _isClimbingDownward = true;
+            _isClimbed = true;
         }
     }
-
 
     public void IdleAnimation()
     {
