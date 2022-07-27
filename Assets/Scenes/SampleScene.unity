@@ -132,6 +132,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 177386971}
+  - component: {fileID: 177386973}
+  - component: {fileID: 177386972}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -156,6 +158,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &177386972
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177386970}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &177386973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177386970}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d19198279e665d47be1ce05c85e3f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animancer: {fileID: 1413736231}
+  fixedJoystick: {fileID: 1348705744}
+  _idleAnimName: Idle
+  _idleAnimSpeed: 1
+  _runAnimName: Running
+  _runAnimSpeed: 2
+  _climbAnimName: Climbing
+  _climbAnimSpeed: 2
 --- !u!1 &223969975
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,11 +261,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2929252283123773938, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 130
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 2929252283123773938, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 130
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 2929252283123773938, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_LocalPosition.x
@@ -289,11 +325,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2929252285020697096, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 70
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 2929252285020697096, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 70
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 2929252285020698103, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_Color.a
@@ -472,14 +508,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.3052118, y: -0, z: -0, w: 0.9522845}
-  m_LocalPosition: {x: 106, y: 731, z: -385}
+  m_LocalRotation: {x: 0.3692652, y: -0, z: -0, w: 0.9293241}
+  m_LocalPosition: {x: 106, y: 655, z: -304}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 177386971}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 35.542, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 43.341, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,6 +599,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5794458faaf0df3448455b2884493850, type: 3}
       propertyPath: m_Name
       value: Ladder_long
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5794458faaf0df3448455b2884493850, type: 3}
+      propertyPath: m_TagString
+      value: Ladder
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5794458faaf0df3448455b2884493850, type: 3}
@@ -671,7 +711,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -682,7 +722,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413736226}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a37d705c8e9115e439ec799186182634, type: 3}
   m_Name: 
@@ -698,7 +738,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413736226}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 1
@@ -724,6 +764,59 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1413736231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413736226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60ea0d89ebbce6b4ab189922ea263713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animancer: {fileID: 1413736232}
+  _fadeDuration: 0.1
+  _clips:
+  - {fileID: 7400000, guid: ade99276bd28da143aabac90819705e8, type: 2}
+  - {fileID: 7400000, guid: ebc4d7ed5ba45e04f95596a70beddef3, type: 2}
+  - {fileID: 7400000, guid: 5d30bceaa36a96045a7a4325c5aad053, type: 2}
+  _playDefault: 1
+--- !u!114 &1413736232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413736226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Animator: {fileID: 1413736230}
+  _ActionOnDisable: 0
+--- !u!114 &1413736233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413736226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d19198279e665d47be1ce05c85e3f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animancer: {fileID: 1413736231}
+  fixedJoystick: {fileID: 1348705744}
+  _idleAnimName: Idle
+  _idleAnimSpeed: 1
+  _runAnimName: Running
+  _runAnimSpeed: 2
+  _climbAnimName: Climbing Ladder
+  _climbAnimSpeed: 1
 --- !u!1 &1584649490
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,8 +934,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0063305064, y: 0.0021592567, z: 0.07309953}
-  m_Center: {x: -6.9849204e-10, y: 0.0000000023865139, z: 0.03639875}
+  m_Size: {x: 0.005, y: 0.01, z: 0.1}
+  m_Center: {x: -6.9849204e-10, y: 0.0000000023865139, z: 0.038}
 --- !u!1 &1732434462
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,7 +1175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4bbeff6069a1e9a4b85d23a275b59307, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4bbeff6069a1e9a4b85d23a275b59307, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1127,6 +1220,6 @@ PrefabInstance:
     - target: {fileID: 3727956284482021115, guid: 4bbeff6069a1e9a4b85d23a275b59307, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 59e4faf24927edf4a82f463ad16f1c37, type: 2}
+      objectReference: {fileID: 2100000, guid: 058100048821daa4f872af54dd90bbe0, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bbeff6069a1e9a4b85d23a275b59307, type: 3}

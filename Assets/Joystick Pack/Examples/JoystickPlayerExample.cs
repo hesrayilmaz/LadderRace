@@ -11,7 +11,9 @@ public class JoystickPlayerExample : MonoBehaviour
 
     private void Update()
     {
-        transform.DOMove((Vector3.forward * fixedJoystick.Vertical+Vector3.right * fixedJoystick.Horizontal), 0.04f).SetRelative();
+        Debug.Log("vertical: " + fixedJoystick.Vertical);
+        Debug.Log("horizontal: " + fixedJoystick.Horizontal);
+        transform.DOMove((Vector3.forward * fixedJoystick.Vertical+Vector3.right * fixedJoystick.Horizontal), 0.03f).SetRelative();
     }
     public void FixedUpdate()
     {
