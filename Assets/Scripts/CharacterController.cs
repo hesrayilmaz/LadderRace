@@ -12,9 +12,9 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float _idleAnimSpeed = 1f;
     [SerializeField] private string _runAnimName = "Running";
     [SerializeField] private float _runAnimSpeed = 2f;
-    [SerializeField] private string _climbAnimName = "Climbing Ladder";
+    [SerializeField] private string _climbAnimName = "Climb";
     [SerializeField] private float _climbAnimSpeed = 2f;
-    private bool _isClimbing = false;
+    private bool _isClimbingUpward = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,10 +24,10 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_isClimbing)
+        if (_isClimbingUpward)
         {
             ClimbAnimation();
-            transform.DOMoveY(2f, 0.1f).SetRelative();
+            transform.DOMoveY(5f, 0.1f).SetRelative();
         }
             
         else if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
@@ -44,7 +44,7 @@ public class CharacterController : MonoBehaviour
     {
         if (other.gameObject.tag == "Ladder")
         {
-            _isClimbing = true;
+            _isClimbingUpward = true;
         }
     }
 
@@ -52,7 +52,7 @@ public class CharacterController : MonoBehaviour
     {
         if (other.gameObject.tag == "Ladder")
         {
-            _isClimbing = false;
+            _isClimbingUpward = false;
         }
     }
 
