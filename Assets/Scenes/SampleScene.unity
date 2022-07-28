@@ -193,6 +193,7 @@ MonoBehaviour:
   _runAnimSpeed: 2
   _climbAnimName: Climbing
   _climbAnimSpeed: 2
+  _rotateSpeed: 100
 --- !u!1 &223969975
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,19 +751,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1413736228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1413736226}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a37d705c8e9115e439ec799186182634, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fixedJoystick: {fileID: 1348705744}
 --- !u!136 &1413736229
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -851,6 +839,7 @@ MonoBehaviour:
   _runAnimSpeed: 2
   _climbAnimName: Climb
   _climbAnimSpeed: 1
+  _rotateSpeed: 100
 --- !u!1 &1584649490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1419,7 +1408,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1942982837}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.8650656, y: -172.3737, z: 236.27876}
+  m_LocalPosition: {x: -6.8650656, y: -175, z: 236.27876}
   m_LocalScale: {x: 24.113, y: 24.113, z: 24.113}
   m_ConstrainProportionsScale: 0
   m_Children: []

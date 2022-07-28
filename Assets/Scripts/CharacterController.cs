@@ -9,21 +9,23 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private FixedJoystick fixedJoystick;
     [SerializeField] private AudioSource _audio;
 
-
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
     [SerializeField] private string _runAnimName = "Running";
     [SerializeField] private float _runAnimSpeed = 2f;
     [SerializeField] private string _climbAnimName = "Climb";
     [SerializeField] private float _climbAnimSpeed = 2f;
+    [SerializeField] private float _rotateSpeed = 10f;
+
     private bool _isClimbingUpward = false;
     private bool _isClimbingDownward = false;
     private bool _isClimbed = false;
-    
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -47,11 +49,14 @@ public class CharacterController : MonoBehaviour
         else if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
         {
             RunAnimation();
+            //transform.DORotate((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.03f).SetRelative();
         }
         else
             IdleAnimation();
         
-        transform.DOMove((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.03f).SetRelative();
+        transform.DOMove((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.02f).SetRelative();
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
+
     }
 
 
