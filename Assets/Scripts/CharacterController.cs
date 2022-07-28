@@ -50,6 +50,7 @@ public class CharacterController : MonoBehaviour
         }
         else
             IdleAnimation();
+        
         transform.DOMove((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.03f).SetRelative();
     }
 
