@@ -31,29 +31,35 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_isClimbingUpward && !_isClimbed)
+        if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
         {
-            ClimbAnimation();
-            transform.DOMoveY(7f, 0.1f).SetRelative();
+            RunAnimation();
+            //transform.DORotate((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal),1f);
         }
-        else if (_isClimbingUpward && _isClimbed)
+        else if (_isClimbingUpward && !_isClimbed)
         {
+            Debug.Log("1");
+            ClimbAnimation();
+            transform.DOMoveY(7f, 0.07f).SetRelative();
+        }
+        else if (_isClimbed)
+        {
+            Debug.Log("2");
             _audio.Stop();
             IdleAnimation();
         }
         else if (_isClimbingDownward)
         {
-            ClimbAnimation();
-            transform.DOMoveY(-7f, 0.1f).SetRelative();
-        }
-        else if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
-        {
-            RunAnimation();
-            //transform.DORotate((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.03f).SetRelative();
+            Debug.Log("3");
+            _audio.Stop();
+            IdleAnimation();
+            //ClimbAnimation();
+            //transform.DOMoveY(-7f, 0.07f).SetRelative();
         }
         else
             IdleAnimation();
-        
+
+       
         transform.DOMove((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.02f).SetRelative();
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
 
@@ -66,6 +72,7 @@ public class CharacterController : MonoBehaviour
         {
             _isClimbingUpward = true;
             _isClimbingDownward = false;
+            _isClimbed = false;
             _audio.Play();
         }
         else if (other.gameObject.tag == "LadderEnd")
@@ -74,6 +81,7 @@ public class CharacterController : MonoBehaviour
             _isClimbingDownward = true;
             _isClimbed = true;
         }
+       
     }
 
     public void IdleAnimation()
