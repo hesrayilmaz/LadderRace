@@ -186,8 +186,8 @@ MonoBehaviour:
   _animancer: {fileID: 1413736231}
   fixedJoystick: {fileID: 1348705744}
   _audio: {fileID: 1853585414}
-  _platform: {fileID: 0}
-  _newLevel: {fileID: 0}
+  _platform: {fileID: 4417917977823363830, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
+  _newLevel: {fileID: 1452282368}
   _idleAnimName: Idle
   _idleAnimSpeed: 1
   _runAnimName: Running
@@ -698,7 +698,7 @@ MonoBehaviour:
   _runAnimName: Running
   _runAnimSpeed: 2
   _climbAnimName: Climb
-  _climbAnimSpeed: 1.5
+  _climbAnimSpeed: 2
   _rotateSpeed: 100
 --- !u!1 &1452282367
 GameObject:

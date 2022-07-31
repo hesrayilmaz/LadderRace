@@ -8,6 +8,7 @@ TagManager:
   - LadderEnd
   - LadderStart
   - Wall
+  - Platform
   layers:
   - Default
   - TransparentFX

@@ -20,14 +20,14 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private float _rotateSpeed = 10f;
 
     private bool _isClimbingUpward = false;
-    private bool _isClimbingDownward = false;
+    //private bool _isClimbingDownward = false;
     private bool _isClimbed = false;
     private Vector3 _characterPos;
 
     // Start is called before the first frame update
     void Start()
     {
-        _characterPos = new Vector3(64f, 420f, 450f);
+
     }
 
     // Update is called once per frame
@@ -35,44 +35,42 @@ public class CharacterManager : MonoBehaviour
     {
         if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
         {
+            //Debug.Log("1111");
             _isClimbed = false;
             RunAnimation();
-            //transform.DORotate((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal),1f);
         }
         else if (_isClimbingUpward && !_isClimbed)
         {
+            //Debug.Log("2222");
             ClimbAnimation();
-            transform.DOMoveY(7f, 0.07f).SetRelative();
+            transform.DOMoveY(7f, 0.06f).SetRelative();
         }
         else if (_isClimbed)
         {
+            //Debug.Log("3333");
             _audio.Stop();
             IdleAnimation();
+            
         }
-        else if (_isClimbingDownward)
+        /*else if (_isClimbingDownward)
         {
             _audio.Stop();
             IdleAnimation();
-            //ClimbAnimation();
-            //transform.DOMoveY(-7f, 0.07f).SetRelative();
-        }
+            ClimbAnimation();
+            transform.DOMoveY(-7f, 0.07f).SetRelative();
+        }*/
         else
             IdleAnimation();
 
-       
-        transform.DOMove((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.01f).SetRelative();
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
-
-    }
-
-    private void LateUpdate()
-    {
-        if (_isClimbed)
+        if (_isClimbed && _newLevel.GetCurrentLevel() != null)
         {
             _characterPos = _newLevel.GetCurrentLevel().transform.position + new Vector3(80f, -404f, -1600f);
-            Debug.Log(_characterPos);
             transform.position = _characterPos;
+            transform.DOMove(_characterPos, 0.015f);
         }
+
+        transform.DOMove((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.015f).SetRelative();
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
 
     }
     
@@ -82,7 +80,7 @@ public class CharacterManager : MonoBehaviour
         if (other.gameObject.tag == "LadderStart")
         {
             _isClimbingUpward = true;
-            _isClimbingDownward = false;
+            //_isClimbingDownward = false;
             _isClimbed = false;
             _audio.Play();
             _newLevel.GenerateLevel();
@@ -90,22 +88,19 @@ public class CharacterManager : MonoBehaviour
         else if (other.gameObject.tag == "LadderEnd")
         {
             _isClimbingUpward = false;
-            _isClimbingDownward = true;
+            //_isClimbingDownward = true;
             _isClimbed = true;
         }
-       
     }
 
     public void IdleAnimation()
     {
         PlayAnimation(_idleAnimName, _idleAnimSpeed);
     }
-
     public void RunAnimation()
     {
         PlayAnimation(_runAnimName, _runAnimSpeed);
     }
-
     public void ClimbAnimation()
     {
         PlayAnimation(_climbAnimName, _climbAnimSpeed);

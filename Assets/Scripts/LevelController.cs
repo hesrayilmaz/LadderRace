@@ -28,7 +28,8 @@ public class LevelController : MonoBehaviour
             _floor.transform.position = _floor.transform.position + new Vector3(0f, _yDiff, _zDiff);
             _currentLevel = Instantiate(_floor);
         }
-            
+        else
+            _currentLevel = null;
         
     }
 
