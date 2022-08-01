@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelController : MonoBehaviour
 {
     [SerializeField] private GameObject _floor;
+    [SerializeField] private SpawnItems _items;
     [SerializeField] private int _numOfFloor;
     private GameObject _currentLevel;
     private int _currentNum = 0;
@@ -27,6 +28,7 @@ public class LevelController : MonoBehaviour
         {
             _floor.transform.position = _floor.transform.position + new Vector3(0f, _yDiff, _zDiff);
             _currentLevel = Instantiate(_floor);
+            _items.Init(_currentLevel);
         }
         else
             _currentLevel = null;

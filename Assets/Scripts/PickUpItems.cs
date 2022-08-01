@@ -19,10 +19,6 @@ public class PickUpItems : MonoBehaviour
         _pickedUp = false;
     }
 
-    public void Init()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -30,18 +26,6 @@ public class PickUpItems : MonoBehaviour
         if (_pickedUp)
         {
             _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-            /*if(transform.position.z - (transform.position.z-1) > 0)
-            {
-                Debug.Log("111111");
-                Debug.Log(Math.Abs(transform.position.z) - Math.Abs(transform.position.z) - 1);
-                _myBrick.transform.position = transform.position + new Vector3(0f, 0f, -20f);
-            }
-            else
-            {
-                Debug.Log("22222");
-                Debug.Log(Math.Abs(transform.position.z) - Math.Abs(transform.position.z) - 1);
-                _myBrick.transform.position = transform.position + new Vector3(0f, 0f, 20f);
-            }*/
 
             //_myBrick.transform.rotation = Quaternion.LookRotation(new Vector3(0f,0f,0f));
             _myBrick.transform.parent = _character.transform;
@@ -52,7 +36,6 @@ public class PickUpItems : MonoBehaviour
                 _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position+new Vector3(0f,1f,0f);
 
             _brickList.Add(_myBrick);
-            Debug.Log(_brickList[_brickList.Count - 1]);
         }
     }
 
@@ -60,7 +43,6 @@ public class PickUpItems : MonoBehaviour
     {
         if (other.gameObject.tag == "Brick")
         {
-            Debug.Log("brickkkkkkkkkkkkkkkk");
             _pickedUp = true;
             _myBrick = other.gameObject;
         }
