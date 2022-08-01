@@ -7,6 +7,7 @@ public class LevelController : MonoBehaviour
     [SerializeField] private GameObject _floor;
     [SerializeField] private SpawnItems _items;
     [SerializeField] private int _numOfFloor;
+    private int _numOfBrick;
     private GameObject _currentLevel;
     private int _currentNum = 0;
     private float _yDiff = 413f;
@@ -28,7 +29,12 @@ public class LevelController : MonoBehaviour
         {
             _floor.transform.position = _floor.transform.position + new Vector3(0f, _yDiff, _zDiff);
             _currentLevel = Instantiate(_floor);
-            _items.Init(_currentLevel);
+            _numOfBrick = Random.Range(15, 30);
+            for(int i = 0; i < _numOfBrick; i++)
+            {
+                _items.Init(_currentLevel);
+            }
+            
         }
         else
             _currentLevel = null;

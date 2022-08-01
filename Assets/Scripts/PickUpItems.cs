@@ -33,7 +33,7 @@ public class PickUpItems : MonoBehaviour
             if (_brickList.Count == 0)
                 _myBrick.transform.position = _character.transform.position;
             else
-                _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position+new Vector3(0f,1f,0f);
+                _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position+new Vector3(0f,5f,0f);
 
             _brickList.Add(_myBrick);
         }
