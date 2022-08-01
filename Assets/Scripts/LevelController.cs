@@ -15,7 +15,7 @@ public class LevelController : MonoBehaviour
     void Start()
     {
         _floor.transform.position = new Vector3(-16f, 411f, 1263f);
-        Instantiate(_floor);
+        //Instantiate(_floor);
         //GenerateLevel();
     }
 

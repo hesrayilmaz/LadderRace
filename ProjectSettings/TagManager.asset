@@ -9,6 +9,7 @@ TagManager:
   - LadderStart
   - Wall
   - Platform
+  - Brick
   layers:
   - Default
   - TransparentFX
