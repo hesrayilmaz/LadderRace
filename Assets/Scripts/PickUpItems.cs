@@ -7,7 +7,8 @@ public class PickUpItems : MonoBehaviour
 {
     [SerializeField] private GameObject _character;
     [SerializeField] private GameObject _actualBrick;
-    [SerializeField] private GameObject _myBrick;
+    private GameObject _myBrick;
+    [SerializeField] private AudioSource _pickUpAudio;
     private List<GameObject> _brickList;
     private bool _pickedUp;
 
@@ -33,7 +34,7 @@ public class PickUpItems : MonoBehaviour
             if (_brickList.Count == 0)
                 _myBrick.transform.position = _character.transform.position;
             else
-                _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position+new Vector3(0f,5f,0f);
+                _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position+new Vector3(0f,1f,0f);
 
             _brickList.Add(_myBrick);
         }
@@ -43,6 +44,7 @@ public class PickUpItems : MonoBehaviour
     {
         if (other.gameObject.tag == "Brick")
         {
+            _pickUpAudio.Play();
             _pickedUp = true;
             _myBrick = other.gameObject;
         }

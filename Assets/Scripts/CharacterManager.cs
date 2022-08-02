@@ -7,7 +7,7 @@ public class CharacterManager : MonoBehaviour
 {
     [SerializeField] private SimpleAnimancer _animancer;
     [SerializeField] private FixedJoystick fixedJoystick;
-    [SerializeField] private AudioSource _audio;
+    [SerializeField] private AudioSource _climbAudio;
     [SerializeField] private GameObject _platform;
     [SerializeField] private LevelController _newLevel;
 
@@ -48,7 +48,7 @@ public class CharacterManager : MonoBehaviour
         else if (_isClimbed)
         {
             //Debug.Log("3333");
-            _audio.Stop();
+            _climbAudio.Stop();
             IdleAnimation();
             
         }
@@ -82,7 +82,7 @@ public class CharacterManager : MonoBehaviour
             _isClimbingUpward = true;
             //_isClimbingDownward = false;
             _isClimbed = false;
-            _audio.Play();
+            _climbAudio.Play();
             _newLevel.GenerateLevel();
         }
         else if (other.gameObject.tag == "LadderEnd")
