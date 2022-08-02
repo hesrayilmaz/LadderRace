@@ -29,6 +29,8 @@ public class PickUpItems : MonoBehaviour
             _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
             //_myBrick.transform.rotation = Quaternion.LookRotation(new Vector3(0f,0f,0f));
+            _myBrick.transform.localRotation = Quaternion.identity;
+            //_myBrick.transform.localPosition = Vector3.zero;
             _myBrick.transform.parent = _character.transform;
 
             if (_brickList.Count == 0)
