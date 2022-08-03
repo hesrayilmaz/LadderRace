@@ -10,6 +10,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private AudioSource _climbAudio;
     [SerializeField] private GameObject _platform;
     [SerializeField] private LevelController _newLevel;
+    [SerializeField] private PickUpItems _ladder;
 
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
@@ -84,6 +85,7 @@ public class CharacterManager : MonoBehaviour
             _isClimbed = false;
             _climbAudio.Play();
             _newLevel.GenerateLevel();
+            _ladder.Drop();
         }
         else if (other.gameObject.tag == "LadderEnd")
         {

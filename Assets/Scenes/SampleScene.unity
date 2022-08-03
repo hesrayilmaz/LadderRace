@@ -297,6 +297,7 @@ MonoBehaviour:
   _climbAudio: {fileID: 0}
   _platform: {fileID: 4417917977823363830, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
   _newLevel: {fileID: 1452282368}
+  _ladder: {fileID: 0}
   _idleAnimName: Idle
   _idleAnimSpeed: 1
   _runAnimName: Running
@@ -1677,6 +1678,7 @@ MonoBehaviour:
   _climbAudio: {fileID: 1258810126}
   _platform: {fileID: 4417917977823363830, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
   _newLevel: {fileID: 1452282368}
+  _ladder: {fileID: 1413736234}
   _idleAnimName: Idle
   _idleAnimSpeed: 1
   _runAnimName: Running
@@ -1698,6 +1700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _character: {fileID: 819093954}
   _actualBrick: {fileID: 5113347095119816855, guid: 630d058d6b00c7f4793e20bd35beb888, type: 3}
+  _ladder: {fileID: 2055321233}
   _pickUpAudio: {fileID: 569645840}
 --- !u!1 &1452282367
 GameObject:
@@ -2100,6 +2103,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 630d058d6b00c7f4793e20bd35beb888, type: 3}
+--- !u!1 &2055321233 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4417917976364680345, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
+  m_PrefabInstance: {fileID: 94763828}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2079955115 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5113347095119816936, guid: 630d058d6b00c7f4793e20bd35beb888, type: 3}
