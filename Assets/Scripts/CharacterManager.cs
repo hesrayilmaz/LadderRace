@@ -20,8 +20,9 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private float _climbAnimSpeed = 2f;
     [SerializeField] private float _rotateSpeed = 10f;
 
-    private bool _isClimbingUpward = false;
-    //private bool _isClimbingDownward = false;
+    public static bool _isClimbingUpward = false;
+    public static bool _isClimbingDownward = false;
+    public static bool _isClimbedOnce = true;
     private bool _isClimbed = false;
     private Vector3 _characterPos;
 
@@ -53,13 +54,11 @@ public class CharacterManager : MonoBehaviour
             IdleAnimation();
             
         }
-        /*else if (_isClimbingDownward)
+        else if (_isClimbingDownward)
         {
-            _audio.Stop();
-            IdleAnimation();
             ClimbAnimation();
             transform.DOMoveY(-7f, 0.07f).SetRelative();
-        }*/
+        }
         else
             IdleAnimation();
 
@@ -78,7 +77,7 @@ public class CharacterManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "LadderStart")
+        if (other.gameObject.tag == "LadderStart" && _isClimbedOnce)
         {
             _isClimbingUpward = true;
             //_isClimbingDownward = false;
@@ -86,6 +85,14 @@ public class CharacterManager : MonoBehaviour
             _climbAudio.Play();
             _newLevel.GenerateLevel();
             _ladder.Drop();
+            _isClimbedOnce = false;
+        }
+        else if(other.gameObject.tag == "LadderStart")
+        {
+            _isClimbingUpward = false;
+            _isClimbingDownward = false;
+            _climbAudio.Stop();
+            _isClimbedOnce = true;
         }
         else if (other.gameObject.tag == "LadderEnd")
         {

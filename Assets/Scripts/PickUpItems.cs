@@ -31,6 +31,7 @@ public class PickUpItems : MonoBehaviour
         if (_pickedUp)
         {
             PickUp();
+            _pickedUp = false;
         }
     }
 
@@ -41,22 +42,15 @@ public class PickUpItems : MonoBehaviour
             _pickUpAudio.Play();
             _myBrick = other.gameObject;
             _pickedUp = true;
-            
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        _pickedUp = false;
-        
-            //_myBrick.GetComponent<TrailRenderer>().emitting = false;
-    }
 
     public void PickUp()
     {
         _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
-        _myBrick.transform.localRotation = Quaternion.identity;
+        
         //_myBrick.transform.localPosition = Vector3.zero;
         _myBrick.transform.parent = _character.transform;
 
@@ -66,19 +60,17 @@ public class PickUpItems : MonoBehaviour
         {
             //_startPos = _myBrick.transform.position;
             //_endPos = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 1.1f, 0f);
-            _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 1.1f, 0f);
+            _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 5f, 0f);
             StartCoroutine(TrailRendererProcess(_myBrick));
         }
-
+        _myBrick.transform.localRotation = Quaternion.identity;
         //Vector3.Lerp(_brickList[_brickList.Count - 1].transform.position, _brickList[_brickList.Count - 1].transform.position+new Vector3(0f,1.1f,0f),Time.deltaTime*100f);
         _brickList.Add(_myBrick);
     }
 
     public void Drop()
     {
-        
         StartCoroutine(DropProcess());
-       
     }
 
     IEnumerator TrailRendererProcess(GameObject go)
@@ -91,15 +83,25 @@ public class PickUpItems : MonoBehaviour
 
     IEnumerator DropProcess()
     {
-        while (_brickList.Count != 0)
+        int count = 0;
+        while (_brickList.Count != 0 && count<13)
         {
             _myBrick = _brickList[_brickList.Count - 1];
             _myBrick.transform.parent = _ladder.transform;
             _myBrick.transform.localRotation = Quaternion.identity;
-            _ladderPos = _ladderPos + new Vector3(0, 7, 0);
+            _ladderPos = _ladderPos + new Vector3(0, 30, 0);
             _myBrick.transform.localPosition = _ladderPos;
             _brickList.RemoveAt(_brickList.Count - 1);
-            yield return new WaitForSeconds(0.03f);
+            count++;
+            yield return new WaitForSeconds(0.13f);
         }
+
+        if (count < 13)
+        {
+            CharacterManager._isClimbingUpward = false;
+            //CharacterManager._isClimbed=true;
+            CharacterManager._isClimbingDownward = true;
+        }
+        _myBrick.gameObject.tag = "LastBrick";
     }
 }
