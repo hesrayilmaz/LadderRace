@@ -23,7 +23,8 @@ public class CharacterManager : MonoBehaviour
     public static bool _isClimbingUpward = false;
     public static bool _isClimbingDownward = false;
     public static bool _isClimbedOnce = true;
-    private bool _isClimbed = false; 
+    public static bool _isClimbed = false; 
+    public static bool _isNewLevel = false; 
     private bool _isCurrentLevel = true; 
     private bool _isLastBrick = true;
     private Vector3 _characterPos;
@@ -54,7 +55,9 @@ public class CharacterManager : MonoBehaviour
             //Debug.Log("3333");
             _climbAudio.Stop();
             IdleAnimation();
-            
+            _isCurrentLevel = true;
+            _isClimbedOnce = true;
+            PickUpItems._bricksOnLadder.Clear();
         }
         else if (_isClimbingDownward)
         {
@@ -81,6 +84,7 @@ public class CharacterManager : MonoBehaviour
     {
         if (other.gameObject.tag == "LadderStart" && _isClimbedOnce)
         {
+           
             _isClimbingUpward = true;
             //_isClimbingDownward = false;
             _isClimbed = false;
@@ -91,10 +95,11 @@ public class CharacterManager : MonoBehaviour
                 _isCurrentLevel = false;
             }
             
-           // if(_isLastBrick)
-                _ladder.Drop();
+           //if(_isLastBrick)
+            _ladder.Drop();
             _isClimbedOnce = false;
             _isLastBrick = false;
+            _isNewLevel = false;
         }
         else if(other.gameObject.tag == "LadderStart")
         {
@@ -108,6 +113,7 @@ public class CharacterManager : MonoBehaviour
             _isClimbingUpward = false;
             //_isClimbingDownward = true;
             _isClimbed = true;
+            _isNewLevel = true;
         }
 
         if(other.gameObject.tag == "LastBrick")

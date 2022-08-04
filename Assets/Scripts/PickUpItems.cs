@@ -11,7 +11,7 @@ public class PickUpItems : MonoBehaviour
     private GameObject _myBrick;
     [SerializeField] private AudioSource _pickUpAudio;
     private List<GameObject> _brickList;
-    private List<GameObject> _bricksOnLadder;
+    public static List<GameObject> _bricksOnLadder;
     private bool _pickedUp;
     private Vector3 _startPos, _endPos;
     private Vector3 _ladderPos;
@@ -72,7 +72,15 @@ public class PickUpItems : MonoBehaviour
 
     public void Drop()
     {
+        if (CharacterManager._isNewLevel)
+        {
+            _ladderPos = _ladderPos + new Vector3(0, 20, 793);
+
+        }
+
         StartCoroutine(DropProcess());
+        
+       
     }
 
     IEnumerator TrailRendererProcess(GameObject go)
