@@ -57,7 +57,6 @@ public class CharacterManager : MonoBehaviour
             IdleAnimation();
             _isCurrentLevel = true;
             _isClimbedOnce = true;
-            PickUpItems._bricksOnLadder.Clear();
         }
         else if (_isClimbingDownward)
         {

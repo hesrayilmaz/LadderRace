@@ -11,7 +11,7 @@ public class PickUpItems : MonoBehaviour
     private GameObject _myBrick;
     [SerializeField] private AudioSource _pickUpAudio;
     private List<GameObject> _brickList;
-    public static List<GameObject> _bricksOnLadder;
+    private List<GameObject> _bricksOnLadder;
     private bool _pickedUp;
     private Vector3 _startPos, _endPos;
     private Vector3 _ladderPos;
@@ -62,7 +62,7 @@ public class PickUpItems : MonoBehaviour
         {
             //_startPos = _myBrick.transform.position;
             //_endPos = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 1.1f, 0f);
-            _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 5f, 0f);
+            _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 10f, 0f);
             StartCoroutine(TrailRendererProcess(_myBrick));
         }
         _myBrick.transform.localRotation = Quaternion.identity;
@@ -75,7 +75,7 @@ public class PickUpItems : MonoBehaviour
         if (CharacterManager._isNewLevel)
         {
             _ladderPos = _ladderPos + new Vector3(0, 20, 793);
-
+            _bricksOnLadder.Clear();
         }
 
         StartCoroutine(DropProcess());
@@ -111,6 +111,7 @@ public class PickUpItems : MonoBehaviour
             //CharacterManager._isClimbed=true;
             CharacterManager._isClimbingDownward = true;
         }
+
         _myBrick.gameObject.tag = "LastBrick";
     }
 }
