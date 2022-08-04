@@ -27,8 +27,8 @@ public class SpawnItems : MonoBehaviour
 
     private void SetRanges(GameObject level)
     {
-        Min = new Vector3(level.transform.position.x - 300, _yAxis, level.transform.position.z - 1500); 
-        Max = new Vector3(level.transform.position.x + 300, _yAxis, level.transform.position.z - 900);
+        Min = new Vector3(level.transform.position.x - 400, _yAxis, level.transform.position.z - 1500); 
+        Max = new Vector3(level.transform.position.x + 400, _yAxis, level.transform.position.z - 900);
         _xAxis = Random.Range(Min.x, Max.x);
         _yAxis = level.transform.position.y-400;
         _zAxis = Random.Range(Min.z, Max.z);

@@ -17,8 +17,14 @@ public class LevelController : MonoBehaviour
     void Start()
     {
         _floor.transform.position = new Vector3(-16f, 411f, 1263f);
+        _currentLevel = _floor;
         //Instantiate(_floor);
         //GenerateLevel();
+        _numOfBrick = Random.Range(15, 20);
+        for (int i = 0; i < _numOfBrick; i++)
+        {
+            _items.Init(_currentLevel);
+        }
     }
 
     // Update is called once per frame
@@ -29,7 +35,7 @@ public class LevelController : MonoBehaviour
         {
             _floor.transform.position = _floor.transform.position + new Vector3(0f, _yDiff, _zDiff);
             _currentLevel = Instantiate(_floor);
-            _numOfBrick = Random.Range(15, 30);
+            _numOfBrick = Random.Range(15, 20);
             for(int i = 0; i < _numOfBrick; i++)
             {
                 _items.Init(_currentLevel);
