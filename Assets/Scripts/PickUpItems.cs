@@ -11,6 +11,7 @@ public class PickUpItems : MonoBehaviour
     private GameObject _myBrick;
     [SerializeField] private AudioSource _pickUpAudio;
     private List<GameObject> _brickList;
+    private List<GameObject> _bricksOnLadder;
     private bool _pickedUp;
     private Vector3 _startPos, _endPos;
     private Vector3 _ladderPos;
@@ -19,7 +20,8 @@ public class PickUpItems : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _brickList = new List<GameObject>();
+        _brickList = new List<GameObject>(); 
+        _bricksOnLadder = new List<GameObject>();
         _pickedUp = false;
         _ladderPos = new Vector3(-7, -162, 264);
     }
@@ -83,20 +85,19 @@ public class PickUpItems : MonoBehaviour
 
     IEnumerator DropProcess()
     {
-        int count = 0;
-        while (_brickList.Count != 0 && count<13)
+        while (_brickList.Count != 0 && _bricksOnLadder.Count < 13)
         {
             _myBrick = _brickList[_brickList.Count - 1];
+            _bricksOnLadder.Add(_myBrick);
             _myBrick.transform.parent = _ladder.transform;
             _myBrick.transform.localRotation = Quaternion.identity;
             _ladderPos = _ladderPos + new Vector3(0, 30, 0);
             _myBrick.transform.localPosition = _ladderPos;
             _brickList.RemoveAt(_brickList.Count - 1);
-            count++;
             yield return new WaitForSeconds(0.13f);
         }
 
-        if (count < 13)
+        if (_bricksOnLadder.Count < 13)
         {
             CharacterManager._isClimbingUpward = false;
             //CharacterManager._isClimbed=true;

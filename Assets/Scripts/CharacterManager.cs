@@ -23,7 +23,9 @@ public class CharacterManager : MonoBehaviour
     public static bool _isClimbingUpward = false;
     public static bool _isClimbingDownward = false;
     public static bool _isClimbedOnce = true;
-    private bool _isClimbed = false;
+    private bool _isClimbed = false; 
+    private bool _isCurrentLevel = true; 
+    private bool _isLastBrick = true;
     private Vector3 _characterPos;
 
     // Start is called before the first frame update
@@ -83,9 +85,16 @@ public class CharacterManager : MonoBehaviour
             //_isClimbingDownward = false;
             _isClimbed = false;
             _climbAudio.Play();
-            _newLevel.GenerateLevel();
-            _ladder.Drop();
+            if (_isCurrentLevel)
+            {
+                _newLevel.GenerateLevel();
+                _isCurrentLevel = false;
+            }
+            
+           // if(_isLastBrick)
+                _ladder.Drop();
             _isClimbedOnce = false;
+            _isLastBrick = false;
         }
         else if(other.gameObject.tag == "LadderStart")
         {
@@ -99,6 +108,11 @@ public class CharacterManager : MonoBehaviour
             _isClimbingUpward = false;
             //_isClimbingDownward = true;
             _isClimbed = true;
+        }
+
+        if(other.gameObject.tag == "LastBrick")
+        {
+            _isLastBrick = true;
         }
     }
 
