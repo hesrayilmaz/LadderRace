@@ -81,7 +81,11 @@ public class PickUpItems : MonoBehaviour
         _climbAudio.Play();
         StartCoroutine(DropProcess());
         
-       
+    }
+
+    public int GetBrickCount()
+    {
+        return _bricksOnLadder.Count;
     }
 
     IEnumerator TrailRendererProcess(GameObject go)
@@ -96,6 +100,7 @@ public class PickUpItems : MonoBehaviour
     {
         while (_brickList.Count != 0 && _bricksOnLadder.Count < 20)
         {
+            
             _myBrick = _brickList[_brickList.Count - 1];
             _bricksOnLadder.Add(_myBrick);
             _myBrick.transform.parent = _ladder.transform;
@@ -104,8 +109,9 @@ public class PickUpItems : MonoBehaviour
             _myBrick.transform.localPosition = _ladderPos;
             _brickList.RemoveAt(_brickList.Count - 1);
             yield return new WaitForSeconds(0.13f);
+            
         }
-
+        
         if (_bricksOnLadder.Count == 20)
         {
             CharacterManager._isClimbingUpward = true;
