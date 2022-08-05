@@ -20,7 +20,7 @@ public class LevelController : MonoBehaviour
         _currentLevel = _floor;
         //Instantiate(_floor);
         //GenerateLevel();
-        _numOfBrick = Random.Range(15, 20);
+        _numOfBrick = Random.Range(25, 35);
         for (int i = 0; i < _numOfBrick; i++)
         {
             _items.Init(_currentLevel);

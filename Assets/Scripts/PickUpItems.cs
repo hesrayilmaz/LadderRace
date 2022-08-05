@@ -10,6 +10,7 @@ public class PickUpItems : MonoBehaviour
     [SerializeField] private GameObject _ladder;
     private GameObject _myBrick;
     [SerializeField] private AudioSource _pickUpAudio;
+    [SerializeField] private AudioSource _climbAudio;
     private List<GameObject> _brickList;
     private List<GameObject> _bricksOnLadder;
     private bool _pickedUp;
@@ -23,7 +24,7 @@ public class PickUpItems : MonoBehaviour
         _brickList = new List<GameObject>(); 
         _bricksOnLadder = new List<GameObject>();
         _pickedUp = false;
-        _ladderPos = new Vector3(-7, -162, 264);
+        _ladderPos = new Vector3(-7, -165, 264);
     }
 
 
@@ -74,10 +75,10 @@ public class PickUpItems : MonoBehaviour
     {
         if (CharacterManager._isNewLevel)
         {
-            _ladderPos = _ladderPos + new Vector3(0, 20, 793);
+            _ladderPos = _ladderPos + new Vector3(0, 15, 793);
             _bricksOnLadder.Clear();
         }
-
+        _climbAudio.Play();
         StartCoroutine(DropProcess());
         
        
@@ -93,25 +94,22 @@ public class PickUpItems : MonoBehaviour
 
     IEnumerator DropProcess()
     {
-        while (_brickList.Count != 0 && _bricksOnLadder.Count < 13)
+        while (_brickList.Count != 0 && _bricksOnLadder.Count < 20)
         {
             _myBrick = _brickList[_brickList.Count - 1];
             _bricksOnLadder.Add(_myBrick);
             _myBrick.transform.parent = _ladder.transform;
             _myBrick.transform.localRotation = Quaternion.identity;
-            _ladderPos = _ladderPos + new Vector3(0, 30, 0);
+            _ladderPos = _ladderPos + new Vector3(0, 20, 0);
             _myBrick.transform.localPosition = _ladderPos;
             _brickList.RemoveAt(_brickList.Count - 1);
             yield return new WaitForSeconds(0.13f);
         }
 
-        if (_bricksOnLadder.Count < 13)
+        if (_bricksOnLadder.Count == 20)
         {
-            CharacterManager._isClimbingUpward = false;
-            //CharacterManager._isClimbed=true;
-            CharacterManager._isClimbingDownward = true;
+            CharacterManager._isClimbingUpward = true;
         }
-
-        _myBrick.gameObject.tag = "LastBrick";
+        _climbAudio.Stop();
     }
 }

@@ -14,17 +14,6 @@ public class SpawnItems : MonoBehaviour
     private float _zAxis;
     private Vector3 _randomPosition;
 
-    private void Start()
-    {
-        
-    }
-    private void Update()
-    {
-        
-        //_yAxis = UnityEngine.Random.Range(Min.y, Max.y);
-        
-    }
-
     private void SetRanges(GameObject level)
     {
         Min = new Vector3(level.transform.position.x - 400, _yAxis, level.transform.position.z - 1500); 

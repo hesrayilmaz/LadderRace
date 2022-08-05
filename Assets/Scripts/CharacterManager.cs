@@ -17,23 +17,15 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private string _runAnimName = "Running";
     [SerializeField] private float _runAnimSpeed = 2f;
     [SerializeField] private string _climbAnimName = "Climb";
-    [SerializeField] private float _climbAnimSpeed = 2f;
+    [SerializeField] private float _climbAnimSpeed = 3f;
     [SerializeField] private float _rotateSpeed = 10f;
 
     public static bool _isClimbingUpward = false;
-    public static bool _isClimbingDownward = false;
-    public static bool _isClimbedOnce = true;
     public static bool _isClimbed = false; 
     public static bool _isNewLevel = false; 
     private bool _isCurrentLevel = true; 
-    private bool _isLastBrick = true;
     private Vector3 _characterPos;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -48,7 +40,7 @@ public class CharacterManager : MonoBehaviour
         {
             //Debug.Log("2222");
             ClimbAnimation();
-            transform.DOMoveY(7f, 0.06f).SetRelative();
+            transform.DOMoveY(7f, 0.05f).SetRelative();
         }
         else if (_isClimbed)
         {
@@ -56,12 +48,6 @@ public class CharacterManager : MonoBehaviour
             _climbAudio.Stop();
             IdleAnimation();
             _isCurrentLevel = true;
-            _isClimbedOnce = true;
-        }
-        else if (_isClimbingDownward)
-        {
-            ClimbAnimation();
-            transform.DOMoveY(-7f, 0.07f).SetRelative();
         }
         else
             IdleAnimation();
@@ -81,43 +67,25 @@ public class CharacterManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "LadderStart" && _isClimbedOnce)
+        if (other.gameObject.tag == "LadderStart")
         {
-           
-            _isClimbingUpward = true;
-            //_isClimbingDownward = false;
+            //_isClimbingUpward = true;
             _isClimbed = false;
-            _climbAudio.Play();
+           // _climbAudio.Play();
             if (_isCurrentLevel)
             {
                 _newLevel.GenerateLevel();
                 _isCurrentLevel = false;
             }
-            
-           //if(_isLastBrick)
+        
             _ladder.Drop();
-            _isClimbedOnce = false;
-            _isLastBrick = false;
             _isNewLevel = false;
-        }
-        else if(other.gameObject.tag == "LadderStart")
-        {
-            _isClimbingUpward = false;
-            _isClimbingDownward = false;
-            _climbAudio.Stop();
-            _isClimbedOnce = true;
         }
         else if (other.gameObject.tag == "LadderEnd")
         {
             _isClimbingUpward = false;
-            //_isClimbingDownward = true;
             _isClimbed = true;
             _isNewLevel = true;
-        }
-
-        if(other.gameObject.tag == "LastBrick")
-        {
-            _isLastBrick = true;
         }
     }
 

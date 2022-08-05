@@ -1137,7 +1137,7 @@ MonoBehaviour:
   _runAnimName: Running
   _runAnimSpeed: 2
   _climbAnimName: Climb
-  _climbAnimSpeed: 2
+  _climbAnimSpeed: 3
   _rotateSpeed: 100
 --- !u!114 &1413736234
 MonoBehaviour:
@@ -1155,6 +1155,7 @@ MonoBehaviour:
   _actualBrick: {fileID: 5113347095119816855, guid: 630d058d6b00c7f4793e20bd35beb888, type: 3}
   _ladder: {fileID: 143087688}
   _pickUpAudio: {fileID: 569645840}
+  _climbAudio: {fileID: 1258810126}
 --- !u!1 &1452282367
 GameObject:
   m_ObjectHideFlags: 0
