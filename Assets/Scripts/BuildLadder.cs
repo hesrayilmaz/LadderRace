@@ -38,6 +38,9 @@ public class BuildLadder : MonoBehaviour
             PickUp();
             _pickedUp = false;
         }
+
+        if (CharacterManager._isNewLevel)
+            _bricksOnLadder.Clear();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,8 +58,6 @@ public class BuildLadder : MonoBehaviour
     {
         _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
-        
-        //_myBrick.transform.localPosition = Vector3.zero;
         _myBrick.transform.parent = _character.transform;
 
         if (_brickList.Count == 0)
@@ -76,13 +77,9 @@ public class BuildLadder : MonoBehaviour
     public void Drop()
     {
         if (CharacterManager._isNewLevel)
-        {
             _ladderPos = _ladderPos + new Vector3(0, 15, 793);
-            _bricksOnLadder.Clear();
-        }
         _climbAudio.Play();
         StartCoroutine(DropProcess());
-        
     }
 
     public int GetBrickCount()

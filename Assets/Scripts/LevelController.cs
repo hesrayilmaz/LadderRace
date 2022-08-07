@@ -35,7 +35,7 @@ public class LevelController : MonoBehaviour
         {
             _floor.transform.position = _floor.transform.position + new Vector3(0f, _yDiff, _zDiff);
             _currentLevel = Instantiate(_floor);
-            _numOfBrick = Random.Range(15, 20);
+            _numOfBrick = Random.Range(20, 35);
             for(int i = 0; i < _numOfBrick; i++)
             {
                 _items.Init(_currentLevel);

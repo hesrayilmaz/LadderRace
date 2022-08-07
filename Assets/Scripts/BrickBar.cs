@@ -5,24 +5,23 @@ using UnityEngine.UI;
 using TMPro;
 public class BrickBar : MonoBehaviour
 {
-    public Image _barImage;
-    [SerializeField] private TextMeshProUGUI _percent;
+    //public Image _barImage;
+    [SerializeField] private TextMeshPro _percentText;
     [SerializeField] private BuildLadder _items;
-    private int maxValue = 20, percent;
-    public static float _currentVal = 0f;
+    private int _maxBrickNum = 20, _percent;
+
     // Start is called before the first frame update
     void Start()
     {
-        _barImage.fillAmount = _currentVal;
-        _percent.text = "%" + 0;
+        _items = GameObject.Find("stickmanIdle").GetComponent<BuildLadder>();
+        _percentText.text = "%" + 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        percent = (100 / maxValue) * _items.GetBrickCount();
-        _percent.text = "%" + percent;
-        _barImage.fillAmount= _items.GetBrickCount()*0.05f;
-      
+        _percent = (100 / _maxBrickNum) * _items.GetBrickCount();
+        Debug.Log(_items.GetBrickCount());
+        _percentText.text = "%" + _percent;
     }
 }
