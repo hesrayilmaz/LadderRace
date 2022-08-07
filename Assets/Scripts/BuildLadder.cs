@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUpItems : MonoBehaviour
+public class BuildLadder : MonoBehaviour
 {
     [SerializeField] private GameObject _character;
     [SerializeField] private GameObject _actualBrick;
     [SerializeField] private GameObject _ladder;
+    [SerializeField] private GameObject _actualLadderStep;
     private GameObject _myBrick;
+    private GameObject _ladderStep;
     [SerializeField] private AudioSource _pickUpAudio;
     [SerializeField] private AudioSource _climbAudio;
     private List<GameObject> _brickList;
@@ -24,7 +26,7 @@ public class PickUpItems : MonoBehaviour
         _brickList = new List<GameObject>(); 
         _bricksOnLadder = new List<GameObject>();
         _pickedUp = false;
-        _ladderPos = new Vector3(-7, -165, 264);
+        _ladderPos = new Vector3(-7, -170, 265);
     }
 
 
@@ -100,16 +102,17 @@ public class PickUpItems : MonoBehaviour
     {
         while (_brickList.Count != 0 && _bricksOnLadder.Count < 20)
         {
-            
-            _myBrick = _brickList[_brickList.Count - 1];
-            _bricksOnLadder.Add(_myBrick);
-            _myBrick.transform.parent = _ladder.transform;
-            _myBrick.transform.localRotation = Quaternion.identity;
+            _ladderStep = Instantiate(_actualLadderStep);
+            _ladderStep.transform.localScale = new Vector3(170, 200, 200);
+            _bricksOnLadder.Add(_ladderStep);
+            _ladderStep.transform.parent = _ladder.transform;
+            _ladderStep.transform.localRotation = Quaternion.identity;
             _ladderPos = _ladderPos + new Vector3(0, 20, 0);
-            _myBrick.transform.localPosition = _ladderPos;
-            _brickList.RemoveAt(_brickList.Count - 1);
-            yield return new WaitForSeconds(0.13f);
-            
+            _ladderStep.transform.localPosition = _ladderPos;
+            _myBrick = _brickList[_brickList.Count - 1];
+            Destroy(_myBrick);
+            _brickList.Remove(_myBrick);
+            yield return new WaitForSeconds(0.1f);
         }
         
         if (_bricksOnLadder.Count == 20)

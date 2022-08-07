@@ -1575,6 +1575,7 @@ MonoBehaviour:
   _character: {fileID: 819093954}
   _actualBrick: {fileID: 5113347095119816855, guid: 630d058d6b00c7f4793e20bd35beb888, type: 3}
   _ladder: {fileID: 143087688}
+  _actualLadderStep: {fileID: 919132149155446097, guid: 26fd0287357c59443ac669590688dabe, type: 3}
   _pickUpAudio: {fileID: 569645840}
   _climbAudio: {fileID: 1258810126}
 --- !u!1 &1452282367

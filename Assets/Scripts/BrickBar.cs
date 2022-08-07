@@ -7,7 +7,7 @@ public class BrickBar : MonoBehaviour
 {
     public Image _barImage;
     [SerializeField] private TextMeshProUGUI _percent;
-    [SerializeField] private PickUpItems _items;
+    [SerializeField] private BuildLadder _items;
     private int maxValue = 20, percent;
     public static float _currentVal = 0f;
     // Start is called before the first frame update

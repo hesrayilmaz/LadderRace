@@ -10,7 +10,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private AudioSource _climbAudio;
     [SerializeField] private GameObject _platform;
     [SerializeField] private LevelController _newLevel;
-    [SerializeField] private PickUpItems _ladder;
+    [SerializeField] private BuildLadder _ladder;
     [SerializeField] private GameObject _bar;
 
     [SerializeField] private string _idleAnimName = "Idle";
