@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class BrickBar : MonoBehaviour
+public class BrickPercent : MonoBehaviour
 {
     //public Image _barImage;
     [SerializeField] private TextMeshPro _percentText;
@@ -21,7 +21,6 @@ public class BrickBar : MonoBehaviour
     void Update()
     {
         _percent = (100 / _maxBrickNum) * _items.GetBrickCount();
-        Debug.Log(_items.GetBrickCount());
         _percentText.text = "%" + _percent;
     }
 }

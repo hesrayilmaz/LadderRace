@@ -664,7 +664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50f03d43d1ba11f49a315eca1f9bac4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _percent: {fileID: 4834553707403440927}
+  _percentText: {fileID: 4834553707403440927}
   _items: {fileID: 0}
 --- !u!1 &4981171448456201448
 GameObject:

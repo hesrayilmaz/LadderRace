@@ -612,6 +612,10 @@ PrefabInstance:
       propertyPath: _items
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2494822042773056018, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
+      propertyPath: _percentText
+      value: 
+      objectReference: {fileID: 1700288604}
     - target: {fileID: 2930289462066705578, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -1326,6 +1330,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1700288604 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4834553707403440927, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
+  m_PrefabInstance: {fileID: 847338815}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9171100775873064
 GameObject:
   m_ObjectHideFlags: 0

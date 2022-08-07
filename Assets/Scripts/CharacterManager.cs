@@ -11,7 +11,6 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private GameObject _platform;
     [SerializeField] private LevelController _newLevel;
     [SerializeField] private BuildLadder _ladder;
-    [SerializeField] private GameObject _bar;
 
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
@@ -71,7 +70,6 @@ public class CharacterManager : MonoBehaviour
         if (other.gameObject.tag == "LadderStart")
         {
             //_isClimbingUpward = true;
-            _bar.SetActive(true);
            
             _isClimbed = false;
            // _climbAudio.Play();
@@ -93,13 +91,6 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "LadderStart")
-        {
-            _bar.SetActive(false);
-        }
-    }
     public void IdleAnimation()
     {
         PlayAnimation(_idleAnimName, _idleAnimSpeed);
