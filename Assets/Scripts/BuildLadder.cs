@@ -18,7 +18,7 @@ public class BuildLadder : MonoBehaviour
     private bool _pickedUp;
     private Vector3 _startPos, _endPos;
     private Vector3 _ladderPos;
-    private int _maxBricks = 14;
+    private int _maxBricks = 10;
 
 
     // Start is called before the first frame update
@@ -102,14 +102,14 @@ public class BuildLadder : MonoBehaviour
 
     IEnumerator DropProcess()
     {
-        while (_brickList.Count != 0 && _bricksOnLadder.Count < 20)
+        while (_brickList.Count != 0 && _bricksOnLadder.Count < 30)
         {
             _ladderStep = Instantiate(_actualLadderStep);
-            _ladderStep.transform.localScale = new Vector3(170, 200, 200);
+            _ladderStep.transform.localScale = new Vector3(170, 120, 200);
             _bricksOnLadder.Add(_ladderStep);
             _ladderStep.transform.parent = _ladder.transform;
             _ladderStep.transform.localRotation = Quaternion.identity;
-            _ladderPos = _ladderPos + new Vector3(0, 20, 0);
+            _ladderPos = _ladderPos + new Vector3(0, 15, 0);
             _ladderStep.transform.localPosition = _ladderPos;
             _myBrick = _brickList[_brickList.Count - 1];
             Destroy(_myBrick);
@@ -117,7 +117,7 @@ public class BuildLadder : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         
-        if (_bricksOnLadder.Count == 20)
+        if (_bricksOnLadder.Count == 30)
         {
             CharacterManager._isClimbingUpward = true;
         }
