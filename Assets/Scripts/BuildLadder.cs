@@ -18,6 +18,7 @@ public class BuildLadder : MonoBehaviour
     private bool _pickedUp;
     private Vector3 _startPos, _endPos;
     private Vector3 _ladderPos;
+    private int _maxBricks = 14;
 
 
     // Start is called before the first frame update
@@ -56,22 +57,26 @@ public class BuildLadder : MonoBehaviour
 
     public void PickUp()
     {
-        _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-
-        _myBrick.transform.parent = _character.transform;
-
-        if (_brickList.Count == 0)
-            _myBrick.transform.position = _character.transform.position;
-        else
+        if (_brickList.Count <= _maxBricks)
         {
-            //_startPos = _myBrick.transform.position;
-            //_endPos = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 1.1f, 0f);
-            _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 10f, 0f);
-            StartCoroutine(TrailRendererProcess(_myBrick));
+            _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+
+            _myBrick.transform.parent = _character.transform;
+
+            if (_brickList.Count == 0)
+                _myBrick.transform.position = _character.transform.position;
+            else
+            {
+                //_startPos = _myBrick.transform.position;
+                //_endPos = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 1.1f, 0f);
+                _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 10f, 0f);
+                StartCoroutine(TrailRendererProcess(_myBrick));
+            }
+            _myBrick.transform.localRotation = Quaternion.identity;
+            //Vector3.Lerp(_brickList[_brickList.Count - 1].transform.position, _brickList[_brickList.Count - 1].transform.position+new Vector3(0f,1.1f,0f),Time.deltaTime*100f);
+            _brickList.Add(_myBrick);
         }
-        _myBrick.transform.localRotation = Quaternion.identity;
-        //Vector3.Lerp(_brickList[_brickList.Count - 1].transform.position, _brickList[_brickList.Count - 1].transform.position+new Vector3(0f,1.1f,0f),Time.deltaTime*100f);
-        _brickList.Add(_myBrick);
+        
     }
 
     public void Drop()
