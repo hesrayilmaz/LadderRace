@@ -9,6 +9,7 @@ public class BuildLadder : MonoBehaviour
     [SerializeField] private GameObject _actualBrick;
     [SerializeField] private GameObject _ladder;
     [SerializeField] private GameObject _actualLadderStep;
+    [SerializeField] private AIManager _AIManager;
     private GameObject _myBrick;
     private GameObject _ladderStep;
     [SerializeField] private AudioSource _pickUpAudio;
@@ -17,7 +18,7 @@ public class BuildLadder : MonoBehaviour
     private List<GameObject> _bricksOnLadder;
     private bool _pickedUp;
     private Vector3 _startPos, _endPos;
-    private Vector3 _ladderPos;
+    private Vector3 _firstStepPos, _ladderPos;
     private int _maxBricks = 10, _necessaryBricks=30;
 
 
@@ -27,7 +28,8 @@ public class BuildLadder : MonoBehaviour
         _brickList = new List<GameObject>(); 
         _bricksOnLadder = new List<GameObject>();
         _pickedUp = false;
-        _ladderPos = new Vector3(-7, -175, 265);
+        _firstStepPos = new Vector3(-7, -175, 265);
+        _ladderPos = _firstStepPos;
     }
 
 
@@ -40,7 +42,8 @@ public class BuildLadder : MonoBehaviour
             _pickedUp = false;
         }
 
-        if (CharacterManager._isNewLevel)
+        if ((this.gameObject.tag == "Stickman" && CharacterManager._isNewLevel) ||
+            (this.gameObject.tag == "AI" && AIManager._isNewLevel))
             _bricksOnLadder.Clear();
     }
 
@@ -77,6 +80,14 @@ public class BuildLadder : MonoBehaviour
             //Vector3.Lerp(_brickList[_brickList.Count - 1].transform.position, _brickList[_brickList.Count - 1].transform.position+new Vector3(0f,1.1f,0f),Time.deltaTime*100f);
             _brickList.Add(_myBrick);
         }
+
+        if(this.gameObject.tag=="AI" && _brickList.Count == _maxBricks)
+        {
+            
+            _AIManager.GoToLadder(_firstStepPos+new Vector3(-50,180,130));
+            AIManager._goToLadder = true;
+        }
+
         
     }
 

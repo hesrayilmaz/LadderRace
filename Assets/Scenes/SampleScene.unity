@@ -1394,7 +1394,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 10000
-  field of view: 68
+  field of view: 75
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2021,6 +2021,7 @@ MonoBehaviour:
   _actualBrick: {fileID: 5113347095119816855, guid: 630d058d6b00c7f4793e20bd35beb888, type: 3}
   _ladder: {fileID: 143087688}
   _actualLadderStep: {fileID: 919132149155446097, guid: 26fd0287357c59443ac669590688dabe, type: 3}
+  _AIManager: {fileID: 0}
   _pickUpAudio: {fileID: 569645840}
   _climbAudio: {fileID: 1258810126}
 --- !u!1 &1428125578
@@ -2080,6 +2081,7 @@ MonoBehaviour:
   _actualBrick: {fileID: 5113347095119816855, guid: 7e2dafe8c9f076e48bbd35908534277a, type: 3}
   _ladder: {fileID: 847338816}
   _actualLadderStep: {fileID: 919132149155446097, guid: fb2b62df9bbe9454db5505c1dd307607, type: 3}
+  _AIManager: {fileID: 1428125587}
   _pickUpAudio: {fileID: 569645840}
   _climbAudio: {fileID: 1258810126}
 --- !u!114 &1428125581

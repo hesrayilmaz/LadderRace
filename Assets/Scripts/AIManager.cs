@@ -23,14 +23,19 @@ public class AIManager : MonoBehaviour
     public static bool _isClimbingUpward = false;
     public static bool _isClimbed = false;
     public static bool _isNewLevel = false;
+    public static bool _goToLadder = false;
     private bool _isCurrentLevel = true;
-    private Vector3 _characterPos;
+    private Vector3 _characterPos, target;
 
 
     // Update is called once per frame
     void Update()
     {
-        if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
+        if (_goToLadder)
+        {
+            transform.DOMove(target, 70f).SetSpeedBased().SetEase(Ease.Linear);
+        }
+        else if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
         {
             //Debug.Log("1111");
             _isClimbed = false;
@@ -70,7 +75,7 @@ public class AIManager : MonoBehaviour
         if (other.gameObject.tag == "LadderStart")
         {
             //_isClimbingUpward = true;
-
+            _goToLadder = false;
             _isClimbed = false;
 
             _ladder.Drop();
@@ -101,5 +106,11 @@ public class AIManager : MonoBehaviour
     {
         _animancer.PlayAnimation(animName);
         _animancer.SetStateSpeed(animSpeed);
+    }
+
+    public void GoToLadder(Vector3 endPoint)
+    {
+        target = endPoint;
+        
     }
 }
