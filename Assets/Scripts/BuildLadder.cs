@@ -27,7 +27,7 @@ public class BuildLadder : MonoBehaviour
         _brickList = new List<GameObject>(); 
         _bricksOnLadder = new List<GameObject>();
         _pickedUp = false;
-        _ladderPos = new Vector3(-7, -170, 265);
+        _ladderPos = new Vector3(-7, -175, 265);
     }
 
 
@@ -82,7 +82,7 @@ public class BuildLadder : MonoBehaviour
     public void Drop()
     {
         if (CharacterManager._isNewLevel)
-            _ladderPos = _ladderPos + new Vector3(0, 15, 793);
+            _ladderPos = _ladderPos + new Vector3(0, 8, 793);
         _climbAudio.Play();
         StartCoroutine(DropProcess());
     }
@@ -105,11 +105,11 @@ public class BuildLadder : MonoBehaviour
         while (_brickList.Count != 0 && _bricksOnLadder.Count < 30)
         {
             _ladderStep = Instantiate(_actualLadderStep);
-            _ladderStep.transform.localScale = new Vector3(170, 120, 200);
+            _ladderStep.transform.localScale = new Vector3(170, 150, 200);
             _bricksOnLadder.Add(_ladderStep);
             _ladderStep.transform.parent = _ladder.transform;
             _ladderStep.transform.localRotation = Quaternion.identity;
-            _ladderPos = _ladderPos + new Vector3(0, 15, 0);
+            _ladderPos = _ladderPos + new Vector3(0, 16, 0);
             _ladderStep.transform.localPosition = _ladderPos;
             _myBrick = _brickList[_brickList.Count - 1];
             Destroy(_myBrick);

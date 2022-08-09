@@ -12,6 +12,7 @@ TagManager:
   - Brick
   - LastBrick
   - Ground
+  - AIBrick
   layers:
   - Default
   - TransparentFX

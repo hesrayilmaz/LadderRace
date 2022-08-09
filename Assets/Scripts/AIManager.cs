@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class CharacterManager : MonoBehaviour
+public class AIManager : MonoBehaviour
 {
     [SerializeField] private SimpleAnimancer _animancer;
-    [SerializeField] private FixedJoystick fixedJoystick;
     [SerializeField] private AudioSource _climbAudio;
     [SerializeField] private LevelController _newLevel;
     [SerializeField] private BuildLadder _ladder;
+
+    [SerializeField] private FixedJoystick fixedJoystick;
 
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
@@ -20,9 +21,9 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private float _rotateSpeed = 10f;
 
     public static bool _isClimbingUpward = false;
-    public static bool _isClimbed = false; 
-    public static bool _isNewLevel = false; 
-    private bool _isCurrentLevel = true; 
+    public static bool _isClimbed = false;
+    public static bool _isNewLevel = false;
+    private bool _isCurrentLevel = true;
     private Vector3 _characterPos;
 
 
@@ -62,22 +63,16 @@ public class CharacterManager : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
 
     }
-    
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "LadderStart")
         {
             //_isClimbingUpward = true;
-           
+
             _isClimbed = false;
-           // _climbAudio.Play();
-            if (_isCurrentLevel)
-            {
-                _newLevel.GenerateLevel();
-                _isCurrentLevel = false;
-            }
-        
+
             _ladder.Drop();
             _isNewLevel = false;
         }
@@ -86,7 +81,7 @@ public class CharacterManager : MonoBehaviour
             _isClimbingUpward = false;
             _isClimbed = true;
             _isNewLevel = true;
-            
+
         }
     }
 

@@ -10,7 +10,7 @@ public class LevelController : MonoBehaviour
     private int _numOfBrick;
     private GameObject _currentLevel;
     private int _currentNum = 0, _minNum=40, _maxNum=50;
-    private float _yDiff = 413f;
+    private float _yDiff = 480f;
     private float _zDiff = 793f;
 
     // Start is called before the first frame update

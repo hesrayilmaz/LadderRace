@@ -13,7 +13,7 @@ public class BrickPercent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _items = GameObject.Find("stickmanIdle").GetComponent<BuildLadder>();
+        _items = GameObject.Find("stickman").GetComponent<BuildLadder>();
         _percentText.text = "%" + 0;
     }
 
