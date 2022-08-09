@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnItems : MonoBehaviour
 {
 
-    [SerializeField] private GameObject _brick;
+    [SerializeField] private GameObject _brick, _AIBrick;
     [SerializeField] private LevelController _level;
     private Vector3 Min;
     private Vector3 Max;
@@ -27,5 +27,7 @@ public class SpawnItems : MonoBehaviour
     {
         SetRanges(level);
         Instantiate(_brick, _randomPosition, Quaternion.identity);
+        SetRanges(level);
+        Instantiate(_AIBrick, _randomPosition, Quaternion.identity);
     }
 }

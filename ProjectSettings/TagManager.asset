@@ -13,6 +13,8 @@ TagManager:
   - LastBrick
   - Ground
   - AIBrick
+  - AI
+  - Stickman
   layers:
   - Default
   - TransparentFX
