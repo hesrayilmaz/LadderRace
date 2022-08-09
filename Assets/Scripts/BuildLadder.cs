@@ -18,7 +18,7 @@ public class BuildLadder : MonoBehaviour
     private bool _pickedUp;
     private Vector3 _startPos, _endPos;
     private Vector3 _ladderPos;
-    private int _maxBricks = 10;
+    private int _maxBricks = 10, _necessaryBricks=30;
 
 
     // Start is called before the first frame update
@@ -46,7 +46,8 @@ public class BuildLadder : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Brick")
+        if ((this.gameObject.tag=="Stickman" && other.gameObject.tag == "Brick")||
+            (this.gameObject.tag == "AI" && other.gameObject.tag == "AIBrick"))
         {
             _pickUpAudio.Play();
             _myBrick = other.gameObject;
@@ -102,7 +103,7 @@ public class BuildLadder : MonoBehaviour
 
     IEnumerator DropProcess()
     {
-        while (_brickList.Count != 0 && _bricksOnLadder.Count < 30)
+        while (_brickList.Count != 0 && _bricksOnLadder.Count < _necessaryBricks)
         {
             _ladderStep = Instantiate(_actualLadderStep);
             _ladderStep.transform.localScale = new Vector3(170, 150, 200);
@@ -117,7 +118,7 @@ public class BuildLadder : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         
-        if (_bricksOnLadder.Count == 30)
+        if (_bricksOnLadder.Count == _necessaryBricks)
         {
             CharacterManager._isClimbingUpward = true;
         }

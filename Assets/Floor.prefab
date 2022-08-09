@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 5263619509923572092}
   m_Layer: 0
   m_Name: Percent
-  m_TagString: Untagged
+  m_TagString: AI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,6 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _percentText: {fileID: 3367768034943281731}
   _items: {fileID: 0}
+  _AIitems: {fileID: 0}
 --- !u!1 &2032475964345020900
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,7 +874,7 @@ GameObject:
   - component: {fileID: 2494822042773056018}
   m_Layer: 0
   m_Name: Percent
-  m_TagString: Untagged
+  m_TagString: Stickman
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -908,6 +909,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _percentText: {fileID: 4834553707403440927}
   _items: {fileID: 0}
+  _AIitems: {fileID: 0}
 --- !u!1 &4688033032837786034
 GameObject:
   m_ObjectHideFlags: 0
