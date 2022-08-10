@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnItems : MonoBehaviour
 {
 
-    [SerializeField] private GameObject _brick, _AIBrick;
+    [SerializeField] private GameObject _brick, _AIBrick, level;
     [SerializeField] private LevelController _level;
     private Vector3 Min;
     private Vector3 Max;
@@ -14,7 +14,7 @@ public class SpawnItems : MonoBehaviour
     private float _zAxis;
     private Vector3 _randomPosition;
 
-    private void SetRanges(GameObject level)
+    private void SetRanges()
     {
         Min = new Vector3(level.transform.position.x - 400, _yAxis, level.transform.position.z - 1500); 
         Max = new Vector3(level.transform.position.x + 400, _yAxis, level.transform.position.z - 900);
@@ -25,9 +25,12 @@ public class SpawnItems : MonoBehaviour
     }
     public void Init(GameObject level)
     {
-        SetRanges(level);
+        this.level = level;
+        SetRanges();
         Instantiate(_brick, _randomPosition, Quaternion.identity);
-        SetRanges(level);
+        SetRanges();
         Instantiate(_AIBrick, _randomPosition, Quaternion.identity);
     }
+
+
 }
