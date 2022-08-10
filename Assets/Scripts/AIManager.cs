@@ -11,7 +11,7 @@ public class AIManager : MonoBehaviour
     private Vector3 walkPoint;
     private bool _isWalkPointSet;
     private float _walkPointRange;
-    private GameObject _level;
+    private Vector3 _level;
     public float _distToPlayer = 1f;
 
     [SerializeField] private SimpleAnimancer _animancer;
@@ -34,15 +34,15 @@ public class AIManager : MonoBehaviour
     public static bool _isClimbed = false;
     public static bool _isNewLevel = false;
     public static bool _goToLadder = false;
-    private bool _isCurrentLevel = true;
+    public static bool _isCurrentLevel = true;
     private bool _isMoving = true;
     private bool _isLadder = false;
     private Vector3 _characterPos, target;
+    private int _levelIndex = 0;
 
     private void Start()
     {
-        _level = _levelController.GetCurrentLevel();
-        //RunAnimation();
+        _level = new Vector3(-16, 411, 1263);
     }
     // Update is called once per frame
     void Update()
@@ -86,10 +86,7 @@ public class AIManager : MonoBehaviour
             transform.DOMove(_characterPos, 0.015f);
         }
         */
-        //transform.DOMove((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.015f).SetRelative();
-        //Move();
-        
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
+       
 
     }
 
@@ -103,8 +100,15 @@ public class AIManager : MonoBehaviour
             
             _isClimbed = false;
             _isLadder = true;
+            if (_isCurrentLevel)
+            {
+                _levelController.GenerateLevel();
+                _isCurrentLevel = false;
+                CharacterManager._isCurrentLevel = false;
+            }
             StartCoroutine(DropProcess());
             _isNewLevel = false;
+
             
             //_isMoving = true;
         }
@@ -130,13 +134,24 @@ public class AIManager : MonoBehaviour
 
     public void SetWalkPoint()
     {
-        _level = _levelController.GetCurrentLevel();
-        float _yAxis = _level.transform.position.y - 400;
-        Vector3 Min = new Vector3(_level.transform.position.x - 350, _yAxis, _level.transform.position.z - 1500);
-        Vector3 Max = new Vector3(_level.transform.position.x + 350, _yAxis, _level.transform.position.z - 900);
+        
+        //if(_level == null)
+        if(_isClimbed)
+        {
+            _level = _level + new Vector3(0, 480, 793);
+            _isClimbed = false;
+            //_levelIndex++;
+
+        }
+        
+        Debug.Log(_level);
+        float _yAxis = _level.y - 400;
+        Vector3 Min = new Vector3(_level.x - 350, _yAxis, _level.z - 1500);
+        Vector3 Max = new Vector3(_level.x + 350, _yAxis, _level.z - 900);
         float _xAxis = Random.Range(Min.x, Max.x);
         float _zAxis = Random.Range(Min.z, Max.z);
         walkPoint = new Vector3(_xAxis, _yAxis, _zAxis);
+        //Debug.Log(walkPoint);
         _isWalkPointSet = true;
     }
 

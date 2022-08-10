@@ -22,7 +22,7 @@ public class CharacterManager : MonoBehaviour
     public static bool _isClimbingUpward = false;
     public static bool _isClimbed = false; 
     public static bool _isNewLevel = false; 
-    private bool _isCurrentLevel = true; 
+    public static bool _isCurrentLevel = true; 
     private Vector3 _characterPos;
 
 
@@ -59,7 +59,7 @@ public class CharacterManager : MonoBehaviour
         }
 
         transform.DOMove((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.015f).SetRelative();
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
 
     }
     
@@ -76,6 +76,7 @@ public class CharacterManager : MonoBehaviour
             {
                 _newLevel.GenerateLevel();
                 _isCurrentLevel = false;
+                AIManager._isCurrentLevel = false;
             }
         
             _ladder.Drop();
