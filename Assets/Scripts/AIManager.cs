@@ -50,7 +50,8 @@ public class AIManager : MonoBehaviour
         //if(Vector3.Distance(transform.position,_player.position) < _distToPlayer)
           //  Move();
 
-        //if(_isMoving)
+       // if(_isMoving)
+       if(!_goToLadder && !_isClimbingUpward)
           Move();
        /* if (_goToLadder)
         {
@@ -61,13 +62,13 @@ public class AIManager : MonoBehaviour
             //Debug.Log("1111");
             _isClimbed = false;
             RunAnimation();
-        }
+        }*/
         else if (_isClimbingUpward && !_isClimbed)
         {
             //Debug.Log("2222");
             ClimbAnimation();
             transform.DOMoveY(7f, 0.05f).SetRelative();
-        }
+        }/*
         else if (_isClimbed)
         {
             //Debug.Log("3333");
@@ -99,11 +100,12 @@ public class AIManager : MonoBehaviour
         {
             //_isClimbingUpward = true;
             
-            _goToLadder = false;
+            
             _isClimbed = false;
             _isLadder = true;
-            _ladder.Drop();
+            StartCoroutine(DropProcess());
             _isNewLevel = false;
+            
             //_isMoving = true;
         }
         else if (other.gameObject.tag == "LadderEnd")
@@ -121,7 +123,7 @@ public class AIManager : MonoBehaviour
         else _agent.SetDestination(walkPoint);
        
         Vector3 _distToWalkPoint = transform.position - walkPoint;
-        Debug.Log(_distToWalkPoint.magnitude);
+       // Debug.Log(_distToWalkPoint.magnitude);
         if (_distToWalkPoint.magnitude < 10f)
             _isWalkPointSet = false;
     }
@@ -130,8 +132,8 @@ public class AIManager : MonoBehaviour
     {
         _level = _levelController.GetCurrentLevel();
         float _yAxis = _level.transform.position.y - 400;
-        Vector3 Min = new Vector3(_level.transform.position.x - 700, _yAxis, _level.transform.position.z - 1500);
-        Vector3 Max = new Vector3(_level.transform.position.x + 400, _yAxis, _level.transform.position.z - 900);
+        Vector3 Min = new Vector3(_level.transform.position.x - 350, _yAxis, _level.transform.position.z - 1500);
+        Vector3 Max = new Vector3(_level.transform.position.x + 350, _yAxis, _level.transform.position.z - 900);
         float _xAxis = Random.Range(Min.x, Max.x);
         float _zAxis = Random.Range(Min.z, Max.z);
         walkPoint = new Vector3(_xAxis, _yAxis, _zAxis);
@@ -159,7 +161,23 @@ public class AIManager : MonoBehaviour
 
     public void GoToLadder(Vector3 endPoint)
     {
-        target = endPoint;
+        //target = endPoint;
+        Debug.Log("ladder");
+        _agent.SetDestination(endPoint);
+
+        //Vector3 _distToWalkPoint = transform.position - walkPoint;
+        // Debug.Log(_distToWalkPoint.magnitude);
+        //if (_distToWalkPoint.magnitude < 10f)
+          //  _isWalkPointSet = false;
+    }
+
+    IEnumerator DropProcess()
+    {
+        IdleAnimation();
+        _ladder.Drop();
+        yield return new WaitForSeconds(1f);
+        _goToLadder = false;
+        RunAnimation();
     }
 
    

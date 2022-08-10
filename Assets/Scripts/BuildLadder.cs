@@ -129,10 +129,10 @@ public class BuildLadder : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         
-        if (_bricksOnLadder.Count == _necessaryBricks)
-        {
+        if (this.gameObject.tag == "Stickman" && _bricksOnLadder.Count == _necessaryBricks)
             CharacterManager._isClimbingUpward = true;
-        }
+        else if(this.gameObject.tag == "AI" && _bricksOnLadder.Count == _necessaryBricks)
+            AIManager._isClimbingUpward = true;
         _climbAudio.Stop();
     }
 }
