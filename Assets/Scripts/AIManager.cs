@@ -7,6 +7,8 @@ using UnityEngine.AI;
 public class AIManager : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent _agent;
+    [SerializeField] private NavMeshSurface _surface;
+
     [SerializeField] private Transform _player;
     private Vector3 walkPoint;
     private bool _isWalkPointSet;
@@ -39,6 +41,7 @@ public class AIManager : MonoBehaviour
     private bool _isLadder = false;
     private Vector3 _characterPos, target;
     private int _levelIndex = 0;
+    private Vector3 _ladderEndPos;
 
     private void Start()
     {
@@ -51,7 +54,7 @@ public class AIManager : MonoBehaviour
           //  Move();
 
        // if(_isMoving)
-       if(!_goToLadder && !_isClimbingUpward)
+       if(!_goToLadder && !_isClimbingUpward && !_isClimbed)
           Move();
        /* if (_goToLadder)
         {
@@ -65,28 +68,44 @@ public class AIManager : MonoBehaviour
         }*/
         else if (_isClimbingUpward && !_isClimbed)
         {
-            //Debug.Log("2222");
+            _isMoving = false;
+            gameObject.GetComponent<NavMeshAgent>().enabled = false;
             ClimbAnimation();
-            transform.DOMoveY(7f, 0.05f).SetRelative();
-        }/*
-        else if (_isClimbed)
-        {
-            //Debug.Log("3333");
-            _climbAudio.Stop();
-            IdleAnimation();
-            _isCurrentLevel = true;
+            transform.DOMoveY(7f, 0.2f).SetRelative();
+            //_ladderEndPos = transform.position + new Vector3(0, 460, 0);
+            //_agent.SetDestination(_ladderEndPos);
         }
-        else
-            IdleAnimation();
-
+        /*
+         else if (_isClimbed)
+         {
+             //Debug.Log("3333");
+             _climbAudio.Stop();
+             IdleAnimation();
+             _isCurrentLevel = true;
+         }
+         else
+             IdleAnimation();
+        */
         if (_isClimbed && _levelController.GetCurrentLevel() != null)
         {
-            _characterPos = _levelController.GetCurrentLevel().transform.position + new Vector3(80f, -404f, -1600f);
-            transform.position = _characterPos;
-            transform.DOMove(_characterPos, 0.015f);
+            StartCoroutine(FixPosition());
+            _isClimbed = false;
+            //IdleAnimation();
+           // _characterPos = transform.position + new Vector3(0f, 50f, 70f);
+            //transform.position = _characterPos;
+            //transform.DOMove(_characterPos, 0.015f);
+
+
+            //_isWalkPointSet = false;
+            // gameObject.GetComponent<NavMeshAgent>().enabled = true;
+
+
+            // _agent.SetDestination(_characterPos);
+            // transform.DOMove(_characterPos, 0.015f);
         }
-        */
-       
+
+        //else if (!_isClimbed)
+          //  _isMoving = true;       
 
     }
 
@@ -103,6 +122,7 @@ public class AIManager : MonoBehaviour
             if (_isCurrentLevel)
             {
                 _levelController.GenerateLevel();
+                _surface.BuildNavMesh();
                 _isCurrentLevel = false;
                 CharacterManager._isCurrentLevel = false;
             }
@@ -117,6 +137,8 @@ public class AIManager : MonoBehaviour
             _isClimbingUpward = false;
             _isClimbed = true;
             _isNewLevel = true;
+            _isWalkPointSet = false;
+
 
         }
     }
@@ -125,7 +147,9 @@ public class AIManager : MonoBehaviour
     {
         if (!_isWalkPointSet) SetWalkPoint();
         else _agent.SetDestination(walkPoint);
-       
+
+        _isClimbed = false;
+        RunAnimation();
         Vector3 _distToWalkPoint = transform.position - walkPoint;
        // Debug.Log(_distToWalkPoint.magnitude);
         if (_distToWalkPoint.magnitude < 10f)
@@ -136,10 +160,13 @@ public class AIManager : MonoBehaviour
     {
         
         //if(_level == null)
-        if(_isClimbed)
+        if(_isNewLevel)
         {
+            Debug.Log("?????????????????????????");
+            gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _level = _level + new Vector3(0, 480, 793);
-            _isClimbed = false;
+            //RunAnimation();
+            _isNewLevel = false;
             //_levelIndex++;
 
         }
@@ -147,7 +174,7 @@ public class AIManager : MonoBehaviour
         Debug.Log(_level);
         float _yAxis = _level.y - 400;
         Vector3 Min = new Vector3(_level.x - 350, _yAxis, _level.z - 1500);
-        Vector3 Max = new Vector3(_level.x + 350, _yAxis, _level.z - 900);
+        Vector3 Max = new Vector3(_level.x + 350, _yAxis, _level.z - 1000);
         float _xAxis = Random.Range(Min.x, Max.x);
         float _zAxis = Random.Range(Min.z, Max.z);
         walkPoint = new Vector3(_xAxis, _yAxis, _zAxis);
@@ -195,5 +222,16 @@ public class AIManager : MonoBehaviour
         RunAnimation();
     }
 
+    IEnumerator FixPosition()
+    {
+        _characterPos = transform.position + new Vector3(0f, 20f, 70f);
+        //_characterPos = _levelController.GetCurrentLevel().transform.position + new Vector3(80f, -404f, -1600f);
+        transform.position = _characterPos;
+        transform.DOMove(_characterPos, 0.015f);
+        yield return new WaitForSeconds(0.5f);
+        //gameObject.GetComponent<NavMeshAgent>().enabled = true;
+       // Move();
+        //IdleAnimation();
+    }
    
 }

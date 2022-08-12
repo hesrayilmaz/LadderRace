@@ -84,7 +84,7 @@ public class BuildLadder : MonoBehaviour
         if(this.gameObject.tag=="AI" && _brickList.Count == _maxBricks)
         {
             
-            _AIManager.GoToLadder(_firstStepPos+new Vector3(-50,180,130));
+            _AIManager.GoToLadder(_firstStepPos+new Vector3(-55,180,130));
             AIManager._goToLadder = true;
         }
 
@@ -102,6 +102,10 @@ public class BuildLadder : MonoBehaviour
     public int GetBrickCount()
     {
         return _bricksOnLadder.Count;
+    }
+    public GameObject GetLastBrick()
+    {
+        return _bricksOnLadder[_bricksOnLadder.Count-1];
     }
 
     IEnumerator TrailRendererProcess(GameObject go)
