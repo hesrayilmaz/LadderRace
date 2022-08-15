@@ -52,6 +52,7 @@ public class BuildLadder : MonoBehaviour
         if ((this.gameObject.tag=="Stickman" && other.gameObject.tag == "Brick")||
             (this.gameObject.tag == "AI" && other.gameObject.tag == "AIBrick"))
         {
+            Debug.Log("BRICKSS");
             _pickUpAudio.Play();
             _myBrick = other.gameObject;
             _pickedUp = true;

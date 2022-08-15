@@ -111,7 +111,7 @@ public class AIManager : MonoBehaviour
             if (_isCurrentLevel)
             {
                 _levelController.GenerateLevel();
-                
+                _surface.BuildNavMesh();
                 _isCurrentLevel = false;
                 CharacterManager._isCurrentLevel = false;
             }
@@ -123,7 +123,7 @@ public class AIManager : MonoBehaviour
         }
         else if (other.gameObject.tag == "LadderEnd")
         {
-            _surface.BuildNavMesh();
+           
             _isClimbingUpward = false;
             _isClimbed = true;
             _isNewLevel = true;
@@ -138,7 +138,7 @@ public class AIManager : MonoBehaviour
         if (!_isWalkPointSet) SetWalkPoint();
         else
         {
-            //Debug.Log("hedef: " + walkPoint);
+           // Debug.Log("hedef: " + walkPoint);
             _agent.SetDestination(walkPoint);
         }
         
