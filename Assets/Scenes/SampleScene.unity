@@ -2307,6 +2307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 792a465288b77a241bae0dbc0de24afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelController: {fileID: 0}
   _character: {fileID: 819093954}
   _actualBrick: {fileID: 5113347095119816855, guid: 630d058d6b00c7f4793e20bd35beb888, type: 3}
   _ladder: {fileID: 143087688}
@@ -2367,6 +2368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 792a465288b77a241bae0dbc0de24afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelController: {fileID: 1452282368}
   _character: {fileID: 1230606663}
   _actualBrick: {fileID: 5113347095119816855, guid: 7e2dafe8c9f076e48bbd35908534277a, type: 3}
   _ladder: {fileID: 847338816}

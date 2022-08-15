@@ -81,6 +81,7 @@ public class AIManager : MonoBehaviour
             //StartCoroutine(FixPosition());
             transform.position += new Vector3(0f, 15f, 70f);
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
+            _isCurrentLevel = true;
             _isClimbed = false;
             //IdleAnimation();
            // _characterPos = transform.position + new Vector3(0f, 50f, 70f);
