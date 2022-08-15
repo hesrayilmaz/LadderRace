@@ -11,7 +11,7 @@ public class AIManager : MonoBehaviour
 
     [SerializeField] private Transform _player;
     private Vector3 walkPoint;
-    private bool _isWalkPointSet;
+    public static bool _isWalkPointSet;
     private float _walkPointRange;
     private Vector3 _level;
     public float _distToPlayer = 1f;
@@ -42,6 +42,7 @@ public class AIManager : MonoBehaviour
     private Vector3 _characterPos, target;
     private int _levelIndex = 0;
     private Vector3 _ladderEndPos;
+    public int radius = 2;
 
     private void Start()
     {
@@ -77,7 +78,9 @@ public class AIManager : MonoBehaviour
         */
         if (_isClimbed && _levelController.GetCurrentLevel() != null)
         {
-            StartCoroutine(FixPosition());
+            //StartCoroutine(FixPosition());
+            transform.position += new Vector3(0f, 15f, 70f);
+            gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _isClimbed = false;
             //IdleAnimation();
            // _characterPos = transform.position + new Vector3(0f, 50f, 70f);
@@ -111,7 +114,7 @@ public class AIManager : MonoBehaviour
             if (_isCurrentLevel)
             {
                 _levelController.GenerateLevel();
-                _surface.BuildNavMesh();
+                //_surface.BuildNavMesh();
                 _isCurrentLevel = false;
                 CharacterManager._isCurrentLevel = false;
             }
@@ -128,8 +131,7 @@ public class AIManager : MonoBehaviour
             _isClimbed = true;
             _isNewLevel = true;
             _isWalkPointSet = false;
-
-
+            
         }
     }
 
@@ -151,6 +153,40 @@ public class AIManager : MonoBehaviour
             _isWalkPointSet = false;
     }
 
+    /*public void Move()
+    {
+        if (!_isWalkPointSet)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
+            List<Vector3> AIBricks = new List<Vector3>();
+            for(int i = 0; i < hitColliders.Length; i++)
+            {
+                if (hitColliders[i].tag == "AIBrick")
+                    AIBricks.Add(hitColliders[i].transform.position);
+            }
+            
+            if (AIBricks.Count > 0)
+                walkPoint = AIBricks[0];
+            else
+            {
+                int bricksOnGround = GameObject.Find("AIBricks").transform.childCount;
+                Debug.Log("child count:"+bricksOnGround);
+                int random = Random.Range(0, bricksOnGround);
+                walkPoint = GameObject.Find("AIBricks").transform.GetChild(random).position;
+            }
+
+            _agent.SetDestination(walkPoint);
+            RunAnimation();
+            _isWalkPointSet = true;
+        }
+
+        _isClimbed = false;
+        Vector3 _distToWalkPoint = transform.position - walkPoint;
+        Debug.Log(_distToWalkPoint.magnitude);
+        if (_distToWalkPoint.magnitude < 10f)
+            _isWalkPointSet = false;
+    }*/
+
     public void SetWalkPoint()
     {
         
@@ -158,12 +194,9 @@ public class AIManager : MonoBehaviour
         if(_isNewLevel)
         {
             Debug.Log("?????????????????????????");
-            gameObject.GetComponent<NavMeshAgent>().enabled = true;
+            //gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _level = _level + new Vector3(0, 480, 793);
-            //RunAnimation();
             _isNewLevel = false;
-            //_levelIndex++;
-
         }
         
         Debug.Log("level: "+_level);
@@ -217,16 +250,17 @@ public class AIManager : MonoBehaviour
         RunAnimation();
     }
 
-    IEnumerator FixPosition()
+   /* IEnumerator FixPosition()
     {
-        _characterPos = transform.position + new Vector3(0f, 20f, 70f);
+        _characterPos = transform.position + new Vector3(0f, 15f, 70f);
         //_characterPos = _levelController.GetCurrentLevel().transform.position + new Vector3(80f, -404f, -1600f);
         transform.position = _characterPos;
         transform.DOMove(_characterPos, 0.015f);
         yield return new WaitForSeconds(0.5f);
+        
         //gameObject.GetComponent<NavMeshAgent>().enabled = true;
-       // Move();
+        // Move();
         //IdleAnimation();
-    }
+    }*/
    
 }

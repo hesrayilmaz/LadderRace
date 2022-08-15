@@ -35,5 +35,5 @@ public class SpawnItems : MonoBehaviour
         _AIBrickObj.transform.parent = _AIBrickList.transform;
     }
 
-
+    
 }
