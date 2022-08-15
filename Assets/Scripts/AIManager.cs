@@ -50,22 +50,11 @@ public class AIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(Vector3.Distance(transform.position,_player.position) < _distToPlayer)
-          //  Move();
-
+      
        // if(_isMoving)
-       if(!_goToLadder && !_isClimbingUpward && !_isClimbed)
-          Move();
-       /* if (_goToLadder)
-        {
-            transform.DOMove(target, 70f).SetSpeedBased().SetEase(Ease.Linear);
-        }
-        /*else if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
-        {
-            //Debug.Log("1111");
-            _isClimbed = false;
-            RunAnimation();
-        }*/
+        if(!_goToLadder && !_isClimbingUpward && !_isClimbed)
+            Move();
+       
         else if (_isClimbingUpward && !_isClimbed)
         {
             _isMoving = false;
@@ -122,7 +111,7 @@ public class AIManager : MonoBehaviour
             if (_isCurrentLevel)
             {
                 _levelController.GenerateLevel();
-                _surface.BuildNavMesh();
+                
                 _isCurrentLevel = false;
                 CharacterManager._isCurrentLevel = false;
             }
@@ -134,6 +123,7 @@ public class AIManager : MonoBehaviour
         }
         else if (other.gameObject.tag == "LadderEnd")
         {
+            _surface.BuildNavMesh();
             _isClimbingUpward = false;
             _isClimbed = true;
             _isNewLevel = true;
@@ -146,7 +136,12 @@ public class AIManager : MonoBehaviour
     public void Move()
     {
         if (!_isWalkPointSet) SetWalkPoint();
-        else _agent.SetDestination(walkPoint);
+        else
+        {
+            //Debug.Log("hedef: " + walkPoint);
+            _agent.SetDestination(walkPoint);
+        }
+        
 
         _isClimbed = false;
         RunAnimation();
@@ -171,7 +166,7 @@ public class AIManager : MonoBehaviour
 
         }
         
-        Debug.Log(_level);
+        Debug.Log("level: "+_level);
         float _yAxis = _level.y - 400;
         Vector3 Min = new Vector3(_level.x - 350, _yAxis, _level.z - 1500);
         Vector3 Max = new Vector3(_level.x + 350, _yAxis, _level.z - 1000);
