@@ -29,6 +29,7 @@ public class SpawnItems : MonoBehaviour
         this.level = level;
         SetRanges();
         _brickObj=Instantiate(_brick, _randomPosition, Quaternion.identity);
+        
         _brickObj.transform.parent = _brickList.transform;
         SetRanges();
         _AIBrickObj=Instantiate(_AIBrick, _randomPosition, Quaternion.identity);

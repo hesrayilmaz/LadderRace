@@ -15,6 +15,9 @@ TagManager:
   - AIBrick
   - AI
   - Stickman
+  - RedBrick
+  - OrangeBrick
+  - GreenBrick
   layers:
   - Default
   - TransparentFX

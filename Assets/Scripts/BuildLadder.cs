@@ -51,7 +51,7 @@ public class BuildLadder : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if ((this.gameObject.tag=="Stickman" && other.gameObject.tag == "Brick")||
-            (this.gameObject.tag == "AI" && other.gameObject.tag == "AIBrick"))
+            (this.gameObject.tag == "AI" && other.gameObject.tag == "RedBrick"))
         {
             _pickUpAudio.Play();
             _myBrick = other.gameObject;

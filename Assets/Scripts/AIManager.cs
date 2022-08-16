@@ -7,7 +7,6 @@ using UnityEngine.AI;
 public class AIManager : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent _agent;
-    [SerializeField] private NavMeshSurface _surface;
 
     [SerializeField] private Transform _player;
     private Vector3 walkPoint;

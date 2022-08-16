@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 3077548962299259993}
   - component: {fileID: 6983305108300000731}
   m_Layer: 0
-  m_Name: AIBrick
-  m_TagString: AIBrick
+  m_Name: GreenBrick
+  m_TagString: GreenBrick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f14a3fbde0dbf3848863ed2c6c62627c, type: 2}
+  - {fileID: 2100000, guid: 77cee196c3d317e40ade026c459c6f8b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -223,7 +223,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.2627451, b: 0.23921569, a: 1}
+      key0: {r: 0.28627452, g: 0.9803922, b: 0.2392157, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
