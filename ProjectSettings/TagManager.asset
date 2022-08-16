@@ -18,6 +18,13 @@ TagManager:
   - RedBrick
   - OrangeBrick
   - GreenBrick
+  - RedParent
+  - BlueParent
+  - GreenParent
+  - OrangeParent
+  - Red
+  - Green
+  - Orange
   layers:
   - Default
   - TransparentFX

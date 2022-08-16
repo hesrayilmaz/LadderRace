@@ -8,7 +8,6 @@ public class AIManager : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent _agent;
 
-    [SerializeField] private Transform _player;
     private Vector3 walkPoint;
     public static bool _isWalkPointSet;
     private float _walkPointRange;
@@ -21,7 +20,6 @@ public class AIManager : MonoBehaviour
     [SerializeField] private BuildLadder _ladder;
     [SerializeField] private SpawnItems _range;
 
-    [SerializeField] private FixedJoystick fixedJoystick;
 
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
@@ -41,18 +39,37 @@ public class AIManager : MonoBehaviour
     private Vector3 _characterPos, target;
     private int _levelIndex = 0;
     private Vector3 _ladderEndPos;
-    public int radius = 2;
+    public int radius = 3;
+
+
+
+
+
+    private List<GameObject> _brickList;
+    private int _maxBricks = 10;
+    private GameObject _myBrick;
+    [SerializeField] private AudioSource _pickUpAudio;
+    private bool _pickedUp=false;
+    [SerializeField] private GameObject _characterBack;
+
 
     private void Start()
     {
+        _brickList = new List<GameObject>();
         _level = new Vector3(-16, 411, 1263);
     }
     // Update is called once per frame
     void Update()
     {
-      
+
+        if (_pickedUp)
+        {
+            PickUp();
+            _pickedUp = false;
+        }
+            
        // if(_isMoving)
-        if(!_goToLadder && !_isClimbingUpward && !_isClimbed)
+        else if(!_goToLadder && !_isClimbingUpward && !_isClimbed)
             Move();
        
         else if (_isClimbingUpward && !_isClimbed)
@@ -133,46 +150,103 @@ public class AIManager : MonoBehaviour
             _isWalkPointSet = false;
             
         }
+        else if(!(other.gameObject.tag == transform.tag) &&
+                  other.gameObject.tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
+        {
+            Debug.Log("çarpýþtý");
+            Debug.Log(other.gameObject.tag);
+            _pickUpAudio.Play();
+            _myBrick = other.gameObject;
+            _pickedUp = true;
+            //PickUp();
+        }
+
     }
+
+    public void PickUp()
+    {
+        if (_brickList.Count <= _maxBricks)
+        {
+            _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+
+            _myBrick.transform.parent = _characterBack.transform;
+
+            if (_brickList.Count == 0)
+                _myBrick.transform.position = _characterBack.transform.position;
+            else
+            {
+                //_startPos = _myBrick.transform.position;
+                //_endPos = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 1.1f, 0f);
+                _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 10f, 0f);
+                StartCoroutine(TrailRendererProcess(_myBrick));
+            }
+            _myBrick.transform.localRotation = Quaternion.identity;
+            //Vector3.Lerp(_brickList[_brickList.Count - 1].transform.position, _brickList[_brickList.Count - 1].transform.position+new Vector3(0f,1.1f,0f),Time.deltaTime*100f);
+            _brickList.Add(_myBrick);
+            _isWalkPointSet = false;
+        }
+
+        /*if (_brickList.Count == _maxBricks)
+        {
+            GoToLadder(_firstStepPos + new Vector3(-61, 180, 127));
+            _goToLadder = true;
+        }*/
+
+
+    }
+    /* public void Move()
+     {
+         if (!_isWalkPointSet) SetWalkPoint();
+         else
+         {
+            // Debug.Log("hedef: " + walkPoint);
+             _agent.SetDestination(walkPoint);
+         }
+
+
+         _isClimbed = false;
+         RunAnimation();
+         Vector3 _distToWalkPoint = transform.position - walkPoint;
+        // Debug.Log(_distToWalkPoint.magnitude);
+         if (_distToWalkPoint.magnitude < 10f)
+             _isWalkPointSet = false;
+     }*/
 
     public void Move()
     {
-        if (!_isWalkPointSet) SetWalkPoint();
-        else
-        {
-           // Debug.Log("hedef: " + walkPoint);
-            _agent.SetDestination(walkPoint);
-        }
-        
-
-        _isClimbed = false;
-        RunAnimation();
-        Vector3 _distToWalkPoint = transform.position - walkPoint;
-       // Debug.Log(_distToWalkPoint.magnitude);
-        if (_distToWalkPoint.magnitude < 10f)
-            _isWalkPointSet = false;
-    }
-
-    /*public void Move()
-    {
         if (!_isWalkPointSet)
         {
+            Debug.Log(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1));
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
-            List<Vector3> AIBricks = new List<Vector3>();
+            List<Vector3> targetColor = new List<Vector3>();
             for(int i = 0; i < hitColliders.Length; i++)
             {
-                if (hitColliders[i].tag == "AIBrick")
-                    AIBricks.Add(hitColliders[i].transform.position);
+                
+                if (!(hitColliders[i].tag==transform.tag) &&
+                    hitColliders[i].tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
+                {
+                    Debug.Log(hitColliders[i].tag);
+                    targetColor.Add(hitColliders[i].transform.position);
+                }
+                    
             }
             
-            if (AIBricks.Count > 0)
-                walkPoint = AIBricks[0];
+            if (targetColor.Count > 0)
+            {
+                Debug.Log(targetColor.Count);
+                walkPoint = targetColor[targetColor.Count-1];
+                Debug.Log("walk point: " + walkPoint);
+                Debug.Log("transform: " + transform.position);
+            }
+                
             else
             {
-                int bricksOnGround = GameObject.Find("AIBricks").transform.childCount;
+                //Debug.Log(GameObject.FindGameObjectWithTag(transform.tag + "Parent").ToString());
+                int bricksOnGround = GameObject.FindGameObjectWithTag(transform.tag+"Parent").transform.childCount;
+                    //GameObject.Find("AIBricks").transform.childCount;
                 Debug.Log("child count:"+bricksOnGround);
                 int random = Random.Range(0, bricksOnGround);
-                walkPoint = GameObject.Find("AIBricks").transform.GetChild(random).position;
+                walkPoint = GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.GetChild(random).position;
             }
 
             _agent.SetDestination(walkPoint);
@@ -180,12 +254,14 @@ public class AIManager : MonoBehaviour
             _isWalkPointSet = true;
         }
 
+        
+        
         _isClimbed = false;
-        Vector3 _distToWalkPoint = transform.position - walkPoint;
-        Debug.Log(_distToWalkPoint.magnitude);
-        if (_distToWalkPoint.magnitude < 10f)
-            _isWalkPointSet = false;
-    }*/
+        //Vector3 _distToWalkPoint = transform.position - walkPoint;
+        //Debug.Log("dist: "+_distToWalkPoint.magnitude);
+        //if (_distToWalkPoint.magnitude < 10f)
+          //  _isWalkPointSet = false;
+    }
 
     public void SetWalkPoint()
     {
@@ -250,17 +326,25 @@ public class AIManager : MonoBehaviour
         RunAnimation();
     }
 
-   /* IEnumerator FixPosition()
+    IEnumerator TrailRendererProcess(GameObject go)
     {
-        _characterPos = transform.position + new Vector3(0f, 15f, 70f);
-        //_characterPos = _levelController.GetCurrentLevel().transform.position + new Vector3(80f, -404f, -1600f);
-        transform.position = _characterPos;
-        transform.DOMove(_characterPos, 0.015f);
-        yield return new WaitForSeconds(0.5f);
-        
-        //gameObject.GetComponent<NavMeshAgent>().enabled = true;
-        // Move();
-        //IdleAnimation();
-    }*/
-   
+        go.GetComponent<TrailRenderer>().emitting = true;
+        //go.transform.position = Vector3.Lerp(_startPos, _endPos, 1f);
+        yield return new WaitForSeconds(0.7f);
+        go.GetComponent<TrailRenderer>().emitting = false;
+    }
+
+    /* IEnumerator FixPosition()
+     {
+         _characterPos = transform.position + new Vector3(0f, 15f, 70f);
+         //_characterPos = _levelController.GetCurrentLevel().transform.position + new Vector3(80f, -404f, -1600f);
+         transform.position = _characterPos;
+         transform.DOMove(_characterPos, 0.015f);
+         yield return new WaitForSeconds(0.5f);
+
+         //gameObject.GetComponent<NavMeshAgent>().enabled = true;
+         // Move();
+         //IdleAnimation();
+     }*/
+
 }

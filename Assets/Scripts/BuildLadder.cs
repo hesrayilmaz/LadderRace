@@ -39,7 +39,7 @@ public class BuildLadder : MonoBehaviour
     {
         if (_pickedUp)
         {
-            PickUp();
+            //PickUp();
             _pickedUp = false;
         }
 
@@ -67,7 +67,7 @@ public class BuildLadder : MonoBehaviour
     }
 
 
-    public void PickUp()
+   /* public void PickUp()
     {
         if (_brickList.Count <= _maxBricks)
         {
@@ -96,7 +96,7 @@ public class BuildLadder : MonoBehaviour
         }
 
         
-    }
+    }*/
 
     public void Drop()
     {

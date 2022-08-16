@@ -1390,7 +1390,7 @@ GameObject:
   - component: {fileID: 464804572}
   m_Layer: 0
   m_Name: Bricks
-  m_TagString: Untagged
+  m_TagString: BlueParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2330,7 +2330,7 @@ GameObject:
   - component: {fileID: 808997302}
   m_Layer: 0
   m_Name: RedBricks
-  m_TagString: Untagged
+  m_TagString: RedParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2361,7 +2361,7 @@ GameObject:
   - component: {fileID: 814396195}
   m_Layer: 0
   m_Name: OrangeBricks
-  m_TagString: Untagged
+  m_TagString: OrangeParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3066,7 +3066,7 @@ GameObject:
   - component: {fileID: 1118875679}
   m_Layer: 0
   m_Name: greenAI
-  m_TagString: AI
+  m_TagString: Green
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3123,14 +3123,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agent: {fileID: 1118875679}
-  _player: {fileID: 543450651767952186}
   _distToPlayer: 1
   _animancer: {fileID: 1118875683}
   _climbAudio: {fileID: 1258810126}
   _levelController: {fileID: 1452282368}
   _ladder: {fileID: 1118875681}
   _range: {fileID: 1452282370}
-  fixedJoystick: {fileID: 1348705744}
   _idleAnimName: Idle
   _idleAnimSpeed: 1
   _runAnimName: Running
@@ -3138,7 +3136,9 @@ MonoBehaviour:
   _climbAnimName: Climb
   _climbAnimSpeed: 3
   _rotateSpeed: 10
-  radius: 2
+  radius: 5
+  _pickUpAudio: {fileID: 569645840}
+  _characterBack: {fileID: 1816334525}
 --- !u!114 &1118875681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3146,7 +3146,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1118875677}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 792a465288b77a241bae0dbc0de24afe, type: 3}
   m_Name: 
@@ -3466,7 +3466,7 @@ GameObject:
   - component: {fileID: 1193407084}
   m_Layer: 0
   m_Name: GreenBricks
-  m_TagString: Untagged
+  m_TagString: GreenParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4162,7 +4162,7 @@ GameObject:
   - component: {fileID: 1428125588}
   m_Layer: 0
   m_Name: redAI
-  m_TagString: AI
+  m_TagString: Red
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4191,7 +4191,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428125578}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 792a465288b77a241bae0dbc0de24afe, type: 3}
   m_Name: 
@@ -4300,14 +4300,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agent: {fileID: 1428125588}
-  _player: {fileID: 543450651767952186}
   _distToPlayer: 1
   _animancer: {fileID: 1428125583}
   _climbAudio: {fileID: 1258810126}
   _levelController: {fileID: 1452282368}
   _ladder: {fileID: 1428125580}
   _range: {fileID: 1452282370}
-  fixedJoystick: {fileID: 1348705744}
   _idleAnimName: Idle
   _idleAnimSpeed: 1
   _runAnimName: Running
@@ -4315,7 +4313,9 @@ MonoBehaviour:
   _climbAnimName: Climb
   _climbAnimSpeed: 3
   _rotateSpeed: 10
-  radius: 2
+  radius: 5
+  _pickUpAudio: {fileID: 569645840}
+  _characterBack: {fileID: 1230606663}
 --- !u!195 &1428125588
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4391,7 +4391,7 @@ GameObject:
   - component: {fileID: 1434041005}
   m_Layer: 0
   m_Name: orangeAI
-  m_TagString: AI
+  m_TagString: Orange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4448,14 +4448,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agent: {fileID: 1434041005}
-  _player: {fileID: 543450651767952186}
   _distToPlayer: 1
   _animancer: {fileID: 1434041009}
   _climbAudio: {fileID: 1258810126}
   _levelController: {fileID: 1452282368}
   _ladder: {fileID: 1434041007}
   _range: {fileID: 1452282370}
-  fixedJoystick: {fileID: 1348705744}
   _idleAnimName: Idle
   _idleAnimSpeed: 1
   _runAnimName: Running
@@ -4463,7 +4461,9 @@ MonoBehaviour:
   _climbAnimName: Climb
   _climbAnimSpeed: 3
   _rotateSpeed: 10
-  radius: 2
+  radius: 5
+  _pickUpAudio: {fileID: 569645840}
+  _characterBack: {fileID: 451901015}
 --- !u!114 &1434041007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4471,7 +4471,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434041003}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 792a465288b77a241bae0dbc0de24afe, type: 3}
   m_Name: 
@@ -4695,7 +4695,6 @@ MonoBehaviour:
   _redBrick: {fileID: 5113347095119816855, guid: 7e2dafe8c9f076e48bbd35908534277a, type: 3}
   _greenBrick: {fileID: 5113347095119816855, guid: ff640498860b3c44d8b7bf1daf5ec150, type: 3}
   _orangeBrick: {fileID: 5113347095119816855, guid: 005f045268d970349a66ce7c0f1751f8, type: 3}
-  _level: {fileID: 0}
   _brickParent: {fileID: 464804571}
   _redBrickParent: {fileID: 808997301}
   _greenBrickParent: {fileID: 1193407083}
