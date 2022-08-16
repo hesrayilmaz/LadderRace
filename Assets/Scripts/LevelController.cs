@@ -9,7 +9,7 @@ public class LevelController : MonoBehaviour
     [SerializeField] private int _numOfFloor;
     private int _numOfBrick;
     private GameObject _currentLevel;
-    private int _currentNum = 0, _minNum=70, _maxNum=80;
+    private int _currentNum = 0, _minNum=35, _maxNum=45;
     private float _yDiff = 480f;
     private float _zDiff = 793f;
 
