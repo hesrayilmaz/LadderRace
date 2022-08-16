@@ -76,7 +76,7 @@ public class AIManager : MonoBehaviour
          else
              IdleAnimation();
         */
-        if (_isClimbed && _levelController.GetCurrentLevel() != null)
+        if (_isClimbed)
         {
             //StartCoroutine(FixPosition());
             transform.position += new Vector3(0f, 15f, 70f);
@@ -191,7 +191,6 @@ public class AIManager : MonoBehaviour
     public void SetWalkPoint()
     {
         
-        //if(_level == null)
         if(_isNewLevel)
         {
             Debug.Log("?????????????????????????");
@@ -234,6 +233,7 @@ public class AIManager : MonoBehaviour
     {
         //target = endPoint;
         Debug.Log("ladder");
+        transform.LookAt(endPoint);
         _agent.SetDestination(endPoint);
 
         //Vector3 _distToWalkPoint = transform.position - walkPoint;
@@ -246,7 +246,7 @@ public class AIManager : MonoBehaviour
     {
         IdleAnimation();
         _ladder.Drop();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         _goToLadder = false;
         RunAnimation();
     }

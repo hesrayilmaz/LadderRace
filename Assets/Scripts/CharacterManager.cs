@@ -24,8 +24,12 @@ public class CharacterManager : MonoBehaviour
     public static bool _isNewLevel = false; 
     public static bool _isCurrentLevel = true; 
     private Vector3 _characterPos;
+    private Vector3 _level;
 
-
+    private void Start()
+    {
+        _level = new Vector3(-16, 411, 1263);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -44,22 +48,20 @@ public class CharacterManager : MonoBehaviour
         else if (_isClimbed)
         {
             //Debug.Log("3333");
-            _climbAudio.Stop();
+            //_climbAudio.Stop();
             IdleAnimation();
+           _characterPos = _level + new Vector3(80f, -404f, -1600f);
+            transform.position = _characterPos;
+            transform.DOMove(_characterPos, 0.015f);
             _isCurrentLevel = true;
+            
         }
         else
             IdleAnimation();
 
-        if (_isClimbed && _newLevel.GetCurrentLevel() != null)
-        {
-            _characterPos = _newLevel.GetCurrentLevel().transform.position + new Vector3(80f, -404f, -1600f);
-            transform.position = _characterPos;
-            transform.DOMove(_characterPos, 0.015f);
-        }
 
         transform.DOMove((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.015f).SetRelative();
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
 
     }
     
@@ -87,7 +89,7 @@ public class CharacterManager : MonoBehaviour
             _isClimbingUpward = false;
             _isClimbed = true;
             _isNewLevel = true;
-            
+            _level = _level + new Vector3(0, 480, 793);
         }
     }
 

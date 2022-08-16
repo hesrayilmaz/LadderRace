@@ -91,7 +91,7 @@ public class BuildLadder : MonoBehaviour
 
         if(this.gameObject.tag=="AI" && _brickList.Count == _maxBricks)
         {
-            _AIManager.GoToLadder(_firstStepPos+new Vector3(-61,180,130));
+            _AIManager.GoToLadder(_firstStepPos+new Vector3(-61,180,127));
             AIManager._goToLadder = true;
         }
 
