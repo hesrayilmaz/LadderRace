@@ -15,9 +15,13 @@ public class BrickPercent : MonoBehaviour
     void Start()
     {
         _items = GameObject.Find("stickman").GetComponent<BuildLadder>();
-        _AIItems = GameObject.Find("redAI").GetComponent<BuildLadder>();
-        _AIItems = GameObject.Find("greenAI").GetComponent<BuildLadder>();
-        _AIItems = GameObject.Find("orangeAI").GetComponent<BuildLadder>();
+        if (this.gameObject.tag == "Red")
+            _AIItems = GameObject.Find("redAI").GetComponent<BuildLadder>();
+        else if(this.gameObject.tag == "Green")
+            _AIItems = GameObject.Find("greenAI").GetComponent<BuildLadder>();
+        else if(this.gameObject.tag == "Orange")
+            _AIItems = GameObject.Find("orangeAI").GetComponent<BuildLadder>();
+         
         _percentText.text = "%" + 0;
     }
 
@@ -32,6 +36,7 @@ public class BrickPercent : MonoBehaviour
             _percent = (int)((100.0 / _maxBrickNum) * _AIItems.GetBrickCount());
         else if(this.gameObject.tag=="Orange")
             _percent = (int)((100.0 / _maxBrickNum) * _AIItems.GetBrickCount());
+      
         _percentText.text = "%" + _percent;
         
         

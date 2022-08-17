@@ -34,8 +34,7 @@ public class AIManager : MonoBehaviour
     public bool _isNewLevel { get; set; }
     public bool _goToLadder { get; set; }
     public static bool _isCurrentLevel = true;
-    private Vector3 _characterPos, target;
-    private int _levelIndex = 0;
+    private Vector3 _characterPos;
     private Vector3 _ladderEndPos;
     public int radius = 3;
 
@@ -43,7 +42,7 @@ public class AIManager : MonoBehaviour
 
 
 
-    private List<GameObject> _brickList;
+    public List<GameObject> _brickList { get; set; }
     private int _maxBricks = 10;
     private GameObject _myBrick;
     [SerializeField] private AudioSource _pickUpAudio;
@@ -70,11 +69,11 @@ public class AIManager : MonoBehaviour
             PickUp();
             _pickedUp = false;
         }
-            
+         
        // if(_isMoving)
         else if(!_goToLadder && !_isClimbingUpward && !_isClimbed)
         {
-            Debug.Log("22222222222");
+            //Debug.Log("22222222222");
             Move();
         }
             
@@ -121,7 +120,7 @@ public class AIManager : MonoBehaviour
         if (other.gameObject.tag == "LadderStart")
         {
             //_isClimbingUpward = true;
-            
+            Debug.Log("LADDER START");
             _isClimbed = false;
             if (_isCurrentLevel)
             {
@@ -131,6 +130,7 @@ public class AIManager : MonoBehaviour
             }
             StartCoroutine(DropProcess());
             _isNewLevel = false;
+            _isWalkPointSet = false;
 
         }
         else if (other.gameObject.tag == "LadderEnd")
@@ -139,6 +139,8 @@ public class AIManager : MonoBehaviour
             _isClimbingUpward = false;
             _isClimbed = true;
             _isNewLevel = true;
+            _ladder.ClearBricks();
+            _ladder.ChangeLadderPosAI();
             _isWalkPointSet = false;
             
         }
@@ -154,7 +156,8 @@ public class AIManager : MonoBehaviour
 
     public void PickUp()
     {
-        Debug.Log("pickupppppppppppp");
+        //Debug.Log("pickupppppppppppp");
+        Debug.Log(_brickList.Count);
         if (_brickList.Count <= _maxBricks)
         {
             _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
@@ -170,42 +173,23 @@ public class AIManager : MonoBehaviour
             }
             _myBrick.transform.localRotation = Quaternion.identity;
             _brickList.Add(_myBrick);
-            
+            //_myBrick.tag = "Untagged";
         }
 
-        /*if (_brickList.Count == _maxBricks)
+        if (_brickList.Count == _maxBricks)
         {
-            GoToLadder(_firstStepPos + new Vector3(-61, 180, 127));
+            //GoToLadder(_ladder.GetLadderPosAI()+ new Vector3(-61, 180, 127));
+            GoToLadder(_ladder.GetLadderPosAI());
             _goToLadder = true;
-        }*/
+        }
 
 
     }
-    /* public void Move()
-     {
-         if (!_isWalkPointSet) SetWalkPoint();
-         else
-         {
-            // Debug.Log("hedef: " + walkPoint);
-             _agent.SetDestination(walkPoint);
-         }
-
-
-         _isClimbed = false;
-         RunAnimation();
-         Vector3 _distToWalkPoint = transform.position - walkPoint;
-        // Debug.Log(_distToWalkPoint.magnitude);
-         if (_distToWalkPoint.magnitude < 10f)
-             _isWalkPointSet = false;
-     }*/
-
+ 
     public void Move()
     {
-        Debug.Log("moveeeeeeeeeeeeeee");
         if (!_isWalkPointSet)
         {
-            Debug.Log("büyük iffff");
-            Debug.Log(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1));
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
             List<Vector3> targetColor = new List<Vector3>();
             for(int i = 0; i < hitColliders.Length; i++)
@@ -214,7 +198,6 @@ public class AIManager : MonoBehaviour
                 if (!(hitColliders[i].tag==transform.tag) &&
                     hitColliders[i].tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
                 {
-                    //Debug.Log(hitColliders[i].tag);
                     targetColor.Add(hitColliders[i].transform.position);
                 }
                     
@@ -222,54 +205,28 @@ public class AIManager : MonoBehaviour
             
             if (targetColor.Count > 0)
             {
-                Debug.Log("küçük ifffff");
                 //Debug.Log(targetColor.Count);
                 walkPoint = targetColor[targetColor.Count-1];
-                Debug.Log("walk point: " + walkPoint);
-                Debug.Log("transform: " + transform.position);
             }
                 
             else
             {
-                Debug.Log("küçük elseee");
-                //Debug.Log(GameObject.FindGameObjectWithTag(transform.tag + "Parent").ToString());
                 int bricksOnGround = GameObject.FindGameObjectWithTag(transform.tag+"Parent").transform.childCount;
-               // Debug.Log("child count:"+bricksOnGround);
                 int random = Random.Range(0, bricksOnGround);
                 walkPoint = GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.GetChild(random).position;
             }
-
+            Debug.Log("walk point: " + walkPoint);
+            Debug.Log("transform: " + transform.position);
             _agent.SetDestination(walkPoint);
             RunAnimation();
             _isWalkPointSet = true;
         }
-
+       
         _isClimbed = false;
         Vector3 _distToWalkPoint = transform.position - walkPoint;
         //Debug.Log("dist: "+_distToWalkPoint.magnitude);
         if (_distToWalkPoint.magnitude < 10f)
             _isWalkPointSet = false;
-    }
-
-    public void SetWalkPoint()
-    {
-        
-        if(_isNewLevel)
-        {
-            Debug.Log("?????????????????????????");
-            _level = _level + new Vector3(0, 480, 793);
-            _isNewLevel = false;
-        }
-        
-        Debug.Log("level: "+_level);
-        float _yAxis = _level.y - 400;
-        Vector3 Min = new Vector3(_level.x - 350, _yAxis, _level.z - 1500);
-        Vector3 Max = new Vector3(_level.x + 350, _yAxis, _level.z - 1000);
-        float _xAxis = Random.Range(Min.x, Max.x);
-        float _zAxis = Random.Range(Min.z, Max.z);
-        walkPoint = new Vector3(_xAxis, _yAxis, _zAxis);
-        //Debug.Log(walkPoint);
-        _isWalkPointSet = true;
     }
 
 
@@ -293,15 +250,9 @@ public class AIManager : MonoBehaviour
 
     public void GoToLadder(Vector3 endPoint)
     {
-        //target = endPoint;
-        Debug.Log("ladder");
+        Debug.Log("ladder poiint: "+endPoint);
         transform.LookAt(endPoint);
         _agent.SetDestination(endPoint);
-
-        //Vector3 _distToWalkPoint = transform.position - walkPoint;
-        // Debug.Log(_distToWalkPoint.magnitude);
-        //if (_distToWalkPoint.magnitude < 10f)
-          //  _isWalkPointSet = false;
     }
 
     IEnumerator DropProcess()

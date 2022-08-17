@@ -423,7 +423,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &108766628
 Transform:
   m_ObjectHideFlags: 0
@@ -650,6 +650,9 @@ MonoBehaviour:
   _climbAnimName: Climbing
   _climbAnimSpeed: 2
   _rotateSpeed: 100
+  _brickList: []
+  _pickUpAudio: {fileID: 0}
+  _characterBack: {fileID: 0}
 --- !u!1 &178004884
 GameObject:
   m_ObjectHideFlags: 0
@@ -2424,6 +2427,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1270124055012374906, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
+      propertyPath: m_TagString
+      value: Red
+      objectReference: {fileID: 0}
+    - target: {fileID: 1270124055012374906, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
@@ -2551,9 +2558,17 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6151629947738762341, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
+      propertyPath: m_TagString
+      value: Green
+      objectReference: {fileID: 0}
     - target: {fileID: 7046788218532460752, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7716791292271808595, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
+      propertyPath: m_TagString
+      value: Orange
       objectReference: {fileID: 0}
     - target: {fileID: 8744402275960551274, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -3146,7 +3161,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1118875677}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 792a465288b77a241bae0dbc0de24afe, type: 3}
   m_Name: 
@@ -4124,6 +4139,9 @@ MonoBehaviour:
   _climbAnimName: Climb
   _climbAnimSpeed: 3
   _rotateSpeed: 100
+  _brickList: []
+  _pickUpAudio: {fileID: 569645840}
+  _characterBack: {fileID: 819093954}
 --- !u!114 &1413736234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4193,7 +4211,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428125578}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 792a465288b77a241bae0dbc0de24afe, type: 3}
   m_Name: 
@@ -4474,7 +4492,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434041003}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 792a465288b77a241bae0dbc0de24afe, type: 3}
   m_Name: 

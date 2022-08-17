@@ -28,7 +28,7 @@ public class CharacterManager : MonoBehaviour
 
 
 
-    private List<GameObject> _brickList;
+    public List<GameObject> _brickList;
     private int _maxBricks = 10;
     private GameObject _myBrick;
     [SerializeField] private AudioSource _pickUpAudio;
@@ -107,6 +107,8 @@ public class CharacterManager : MonoBehaviour
             _isClimbingUpward = false;
             _isClimbed = true;
             _isNewLevel = true;
+            _ladder.ClearBricks();
+            _ladder.ChangeLadderPos();
             _level = _level + new Vector3(0, 480, 793);
         }
         else if (other.gameObject.tag == "Brick")
