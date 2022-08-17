@@ -9,7 +9,7 @@ public class AIManager : MonoBehaviour
     [SerializeField] private NavMeshAgent _agent;
 
     private Vector3 walkPoint;
-    public static bool _isWalkPointSet;
+    private bool _isWalkPointSet;
     private float _walkPointRange;
     private Vector3 _level;
     public float _distToPlayer = 1f;
@@ -29,13 +29,11 @@ public class AIManager : MonoBehaviour
     [SerializeField] private float _climbAnimSpeed = 3f;
     [SerializeField] private float _rotateSpeed = 10f;
 
-    public static bool _isClimbingUpward = false;
-    public static bool _isClimbed = false;
-    public static bool _isNewLevel = false;
-    public static bool _goToLadder = false;
+    public bool _isClimbingUpward { get; set; }
+    public bool _isClimbed { get; set; }
+    public bool _isNewLevel { get; set; }
+    public bool _goToLadder { get; set; }
     public static bool _isCurrentLevel = true;
-    private bool _isMoving = true;
-    private bool _isLadder = false;
     private Vector3 _characterPos, target;
     private int _levelIndex = 0;
     private Vector3 _ladderEndPos;
@@ -55,6 +53,10 @@ public class AIManager : MonoBehaviour
 
     private void Start()
     {
+        _isClimbingUpward = false;
+        _isClimbed = false;
+        _isNewLevel = false;
+        _goToLadder = false;
         _brickList = new List<GameObject>();
         _level = new Vector3(-16, 411, 1263);
     }
@@ -64,17 +66,22 @@ public class AIManager : MonoBehaviour
 
         if (_pickedUp)
         {
+            Debug.Log("11111111111"); 
             PickUp();
             _pickedUp = false;
         }
             
        // if(_isMoving)
         else if(!_goToLadder && !_isClimbingUpward && !_isClimbed)
+        {
+            Debug.Log("22222222222");
             Move();
+        }
+            
        
         else if (_isClimbingUpward && !_isClimbed)
         {
-            _isMoving = false;
+            Debug.Log("3333");
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
             ClimbAnimation();
             transform.DOMoveY(7f, 0.2f).SetRelative();
@@ -95,22 +102,12 @@ public class AIManager : MonoBehaviour
         if (_isClimbed)
         {
             //StartCoroutine(FixPosition());
+            Debug.Log("444444");
             transform.position += new Vector3(0f, 15f, 70f);
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _isCurrentLevel = true;
             _isClimbed = false;
-            //IdleAnimation();
-           // _characterPos = transform.position + new Vector3(0f, 50f, 70f);
-            //transform.position = _characterPos;
-            //transform.DOMove(_characterPos, 0.015f);
-
-
-            //_isWalkPointSet = false;
-            // gameObject.GetComponent<NavMeshAgent>().enabled = true;
-
-
-            // _agent.SetDestination(_characterPos);
-            // transform.DOMove(_characterPos, 0.015f);
+           
         }
 
         //else if (!_isClimbed)
@@ -125,21 +122,16 @@ public class AIManager : MonoBehaviour
         {
             //_isClimbingUpward = true;
             
-            
             _isClimbed = false;
-            _isLadder = true;
             if (_isCurrentLevel)
             {
                 _levelController.GenerateLevel();
-                //_surface.BuildNavMesh();
                 _isCurrentLevel = false;
                 CharacterManager._isCurrentLevel = false;
             }
             StartCoroutine(DropProcess());
             _isNewLevel = false;
 
-            
-            //_isMoving = true;
         }
         else if (other.gameObject.tag == "LadderEnd")
         {
@@ -153,18 +145,16 @@ public class AIManager : MonoBehaviour
         else if(!(other.gameObject.tag == transform.tag) &&
                   other.gameObject.tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
         {
-            Debug.Log("çarpýþtý");
-            Debug.Log(other.gameObject.tag);
             _pickUpAudio.Play();
             _myBrick = other.gameObject;
             _pickedUp = true;
-            //PickUp();
         }
 
     }
 
     public void PickUp()
     {
+        Debug.Log("pickupppppppppppp");
         if (_brickList.Count <= _maxBricks)
         {
             _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
@@ -175,15 +165,12 @@ public class AIManager : MonoBehaviour
                 _myBrick.transform.position = _characterBack.transform.position;
             else
             {
-                //_startPos = _myBrick.transform.position;
-                //_endPos = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 1.1f, 0f);
                 _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 10f, 0f);
                 StartCoroutine(TrailRendererProcess(_myBrick));
             }
             _myBrick.transform.localRotation = Quaternion.identity;
-            //Vector3.Lerp(_brickList[_brickList.Count - 1].transform.position, _brickList[_brickList.Count - 1].transform.position+new Vector3(0f,1.1f,0f),Time.deltaTime*100f);
             _brickList.Add(_myBrick);
-            _isWalkPointSet = false;
+            
         }
 
         /*if (_brickList.Count == _maxBricks)
@@ -214,8 +201,10 @@ public class AIManager : MonoBehaviour
 
     public void Move()
     {
+        Debug.Log("moveeeeeeeeeeeeeee");
         if (!_isWalkPointSet)
         {
+            Debug.Log("büyük iffff");
             Debug.Log(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1));
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
             List<Vector3> targetColor = new List<Vector3>();
@@ -225,7 +214,7 @@ public class AIManager : MonoBehaviour
                 if (!(hitColliders[i].tag==transform.tag) &&
                     hitColliders[i].tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
                 {
-                    Debug.Log(hitColliders[i].tag);
+                    //Debug.Log(hitColliders[i].tag);
                     targetColor.Add(hitColliders[i].transform.position);
                 }
                     
@@ -233,7 +222,8 @@ public class AIManager : MonoBehaviour
             
             if (targetColor.Count > 0)
             {
-                Debug.Log(targetColor.Count);
+                Debug.Log("küçük ifffff");
+                //Debug.Log(targetColor.Count);
                 walkPoint = targetColor[targetColor.Count-1];
                 Debug.Log("walk point: " + walkPoint);
                 Debug.Log("transform: " + transform.position);
@@ -241,10 +231,10 @@ public class AIManager : MonoBehaviour
                 
             else
             {
+                Debug.Log("küçük elseee");
                 //Debug.Log(GameObject.FindGameObjectWithTag(transform.tag + "Parent").ToString());
                 int bricksOnGround = GameObject.FindGameObjectWithTag(transform.tag+"Parent").transform.childCount;
-                    //GameObject.Find("AIBricks").transform.childCount;
-                Debug.Log("child count:"+bricksOnGround);
+               // Debug.Log("child count:"+bricksOnGround);
                 int random = Random.Range(0, bricksOnGround);
                 walkPoint = GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.GetChild(random).position;
             }
@@ -254,13 +244,11 @@ public class AIManager : MonoBehaviour
             _isWalkPointSet = true;
         }
 
-        
-        
         _isClimbed = false;
-        //Vector3 _distToWalkPoint = transform.position - walkPoint;
+        Vector3 _distToWalkPoint = transform.position - walkPoint;
         //Debug.Log("dist: "+_distToWalkPoint.magnitude);
-        //if (_distToWalkPoint.magnitude < 10f)
-          //  _isWalkPointSet = false;
+        if (_distToWalkPoint.magnitude < 10f)
+            _isWalkPointSet = false;
     }
 
     public void SetWalkPoint()
@@ -269,7 +257,6 @@ public class AIManager : MonoBehaviour
         if(_isNewLevel)
         {
             Debug.Log("?????????????????????????");
-            //gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _level = _level + new Vector3(0, 480, 793);
             _isNewLevel = false;
         }

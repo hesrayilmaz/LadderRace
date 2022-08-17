@@ -19,21 +19,39 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private float _climbAnimSpeed = 3f;
     [SerializeField] private float _rotateSpeed = 10f;
 
-    public static bool _isClimbingUpward = false;
-    public static bool _isClimbed = false; 
-    public static bool _isNewLevel = false; 
+    public bool _isClimbingUpward { get; set; }
+    public bool _isClimbed { get; set; }
+    public bool _isNewLevel { get; set; }
     public static bool _isCurrentLevel = true; 
     private Vector3 _characterPos;
     private Vector3 _level;
 
+
+
+    private List<GameObject> _brickList;
+    private int _maxBricks = 10;
+    private GameObject _myBrick;
+    [SerializeField] private AudioSource _pickUpAudio;
+    private bool _pickedUp = false;
+    [SerializeField] private GameObject _characterBack;
+
     private void Start()
     {
+        _isClimbingUpward = false;
+        _isClimbed = false;
+        _isNewLevel = false;
+        _brickList = new List<GameObject>();
         _level = new Vector3(-16, 411, 1263);
     }
     // Update is called once per frame
     void Update()
     {
-        if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
+        if (_pickedUp)
+        {
+            PickUp();
+            _pickedUp = false;
+        }
+        else if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
         {
             //Debug.Log("1111");
             _isClimbed = false;
@@ -53,7 +71,7 @@ public class CharacterManager : MonoBehaviour
            _characterPos = _level + new Vector3(80f, -404f, -1600f);
             transform.position = _characterPos;
             transform.DOMove(_characterPos, 0.015f);
-            _isCurrentLevel = true;
+           _isCurrentLevel = true;
             
         }
         else
@@ -74,7 +92,7 @@ public class CharacterManager : MonoBehaviour
            
             _isClimbed = false;
            // _climbAudio.Play();
-            if (_isCurrentLevel)
+           if (_isCurrentLevel)
             {
                 _newLevel.GenerateLevel();
                 _isCurrentLevel = false;
@@ -91,6 +109,42 @@ public class CharacterManager : MonoBehaviour
             _isNewLevel = true;
             _level = _level + new Vector3(0, 480, 793);
         }
+        else if (other.gameObject.tag == "Brick")
+        {
+            _pickUpAudio.Play();
+            _myBrick = other.gameObject;
+            _pickedUp = true;
+        }
+    }
+
+
+    public void PickUp()
+    {
+        if (_brickList.Count <= _maxBricks)
+        {
+            _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+
+            _myBrick.transform.parent = _characterBack.transform;
+
+            if (_brickList.Count == 0)
+                _myBrick.transform.position = _characterBack.transform.position;
+            else
+            {
+                _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 10f, 0f);
+                StartCoroutine(TrailRendererProcess(_myBrick));
+            }
+            _myBrick.transform.localRotation = Quaternion.identity;
+            _brickList.Add(_myBrick);
+        }
+
+    }
+
+    IEnumerator TrailRendererProcess(GameObject go)
+    {
+        go.GetComponent<TrailRenderer>().emitting = true;
+        //go.transform.position = Vector3.Lerp(_startPos, _endPos, 1f);
+        yield return new WaitForSeconds(0.7f);
+        go.GetComponent<TrailRenderer>().emitting = false;
     }
 
     public void IdleAnimation()

@@ -3157,6 +3157,7 @@ MonoBehaviour:
   _ladder: {fileID: 2031273514}
   _actualLadderStep: {fileID: 919132149155446097, guid: 9b36cbd77eeafc84086c7634e89a5365, type: 3}
   _AIManager: {fileID: 1118875680}
+  _characterManager: {fileID: 0}
   _pickUpAudio: {fileID: 569645840}
   _climbAudio: {fileID: 1258810126}
 --- !u!114 &1118875682
@@ -4141,6 +4142,7 @@ MonoBehaviour:
   _ladder: {fileID: 143087688}
   _actualLadderStep: {fileID: 919132149155446097, guid: 26fd0287357c59443ac669590688dabe, type: 3}
   _AIManager: {fileID: 0}
+  _characterManager: {fileID: 1413736233}
   _pickUpAudio: {fileID: 569645840}
   _climbAudio: {fileID: 1258810126}
 --- !u!1 &1428125578
@@ -4202,6 +4204,7 @@ MonoBehaviour:
   _ladder: {fileID: 847338816}
   _actualLadderStep: {fileID: 919132149155446097, guid: fb2b62df9bbe9454db5505c1dd307607, type: 3}
   _AIManager: {fileID: 1428125587}
+  _characterManager: {fileID: 0}
   _pickUpAudio: {fileID: 569645840}
   _climbAudio: {fileID: 1258810126}
 --- !u!114 &1428125582
@@ -4482,6 +4485,7 @@ MonoBehaviour:
   _ladder: {fileID: 11428468}
   _actualLadderStep: {fileID: 919132149155446097, guid: a5bdfc61d627a1d4f830e29e3955a188, type: 3}
   _AIManager: {fileID: 1434041006}
+  _characterManager: {fileID: 0}
   _pickUpAudio: {fileID: 569645840}
   _climbAudio: {fileID: 1258810126}
 --- !u!114 &1434041008
