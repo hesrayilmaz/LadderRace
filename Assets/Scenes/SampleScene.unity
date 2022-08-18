@@ -643,6 +643,7 @@ MonoBehaviour:
   _climbAudio: {fileID: 0}
   _newLevel: {fileID: 1452282368}
   _ladder: {fileID: 0}
+  _range: {fileID: 0}
   _idleAnimName: Idle
   _idleAnimSpeed: 1
   _runAnimName: Running
@@ -4132,6 +4133,7 @@ MonoBehaviour:
   _climbAudio: {fileID: 1258810126}
   _newLevel: {fileID: 1452282368}
   _ladder: {fileID: 1413736234}
+  _range: {fileID: 1452282370}
   _idleAnimName: Idle
   _idleAnimSpeed: 1
   _runAnimName: Running
@@ -4685,6 +4687,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _floor: {fileID: 4417917977823363830, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
   _items: {fileID: 1452282370}
+  _RedManager: {fileID: 1428125587}
+  _GreenManager: {fileID: 1118875680}
+  _OrangeManager: {fileID: 1434041006}
+  _CharacterManager: {fileID: 1413736233}
   _numOfFloor: 4
 --- !u!4 &1452282369
 Transform:
@@ -4717,10 +4723,10 @@ MonoBehaviour:
   _redBrick: {fileID: 5113347095119816855, guid: 7e2dafe8c9f076e48bbd35908534277a, type: 3}
   _greenBrick: {fileID: 5113347095119816855, guid: ff640498860b3c44d8b7bf1daf5ec150, type: 3}
   _orangeBrick: {fileID: 5113347095119816855, guid: 005f045268d970349a66ce7c0f1751f8, type: 3}
-  _brickParent: {fileID: 464804571}
-  _redBrickParent: {fileID: 808997301}
-  _greenBrickParent: {fileID: 1193407083}
-  _orangeBrickParent: {fileID: 814396194}
+  _StickmanBrickParent: {fileID: 464804571}
+  _RedBrickParent: {fileID: 808997301}
+  _GreenBrickParent: {fileID: 1193407083}
+  _OrangeBrickParent: {fileID: 814396194}
 --- !u!1 &1480042607
 GameObject:
   m_ObjectHideFlags: 0

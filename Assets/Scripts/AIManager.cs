@@ -224,8 +224,12 @@ public class AIManager : MonoBehaviour
             }
             Debug.Log("walk point: " + walkPoint);
             Debug.Log("transform: " + transform.position);
-            _agent.SetDestination(walkPoint);
+            float _distToWalkPoint2 = transform.position.y - walkPoint.y;
+            Debug.Log("distttttttttttttt: "+_distToWalkPoint2);
+            if (walkPoint.y - transform.position.y > 10)
+                return;
             
+            _agent.SetDestination(walkPoint);
             RunAnimation();
             _isWalkPointSet = true;
         }
