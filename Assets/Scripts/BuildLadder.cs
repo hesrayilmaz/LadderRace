@@ -40,7 +40,7 @@ public class BuildLadder : MonoBehaviour
         //_firstStepPos = _ladder.transform.position;
         //_ladderPos = _ladder.transform.position + new Vector3(-110,-350,100);
         _ladderPos = _ladder.transform.position + new Vector3(-5, -170, 265);
-
+        _firstStepPos = _ladderPos;
     }
 
 
@@ -83,17 +83,19 @@ public class BuildLadder : MonoBehaviour
     public void ChangeLadderPos()
     {
         _ladderPos = _ladderPos + new Vector3(0, 8, 793);
+        _firstStepPos = _ladderPos;
     }
     public void ChangeLadderPosAI()
     {
         _ladderPos = _ladderPos + new Vector3(0, 0, 793);
+        _firstStepPos = _ladderPos;
        // _ladderPos = _firstStepPos;
     }
 
     public Vector3 GetLadderPosAI()
     {
         //return _firstStepPos;
-        return _ladderPos;
+        return _firstStepPos;
     }
     public int GetBrickCount()
     {

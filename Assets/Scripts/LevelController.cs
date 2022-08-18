@@ -22,10 +22,6 @@ public class LevelController : MonoBehaviour
     {
         _floor.transform.position = new Vector3(-16f, 411f, 1263f);
         _currentLevel = _floor;
-        //Instantiate(_floor);
-        //GenerateLevel();
-       
-       
     }
 
     private void Update()

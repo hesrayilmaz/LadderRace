@@ -165,7 +165,6 @@ public class AIManager : MonoBehaviour
     public void PickUp()
     {
         //Debug.Log("pickupppppppppppp");
-        Debug.Log(_brickList.Count);
         if (_brickList.Count <= _maxBricks)
         {
             _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;

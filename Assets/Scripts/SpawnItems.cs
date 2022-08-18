@@ -36,8 +36,8 @@ public class SpawnItems : MonoBehaviour
     }
     private void SetRanges()
     {
-        Min = new Vector3(_level.transform.position.x - 400, _yAxis, _level.transform.position.z - 1500); 
-        Max = new Vector3(_level.transform.position.x + 400, _yAxis, _level.transform.position.z - 1000);
+        Min = new Vector3(_level.transform.position.x - 350, _yAxis, _level.transform.position.z - 1500); 
+        Max = new Vector3(_level.transform.position.x + 350, _yAxis, _level.transform.position.z - 1000);
         _xAxis = Random.Range(Min.x, Max.x);
         _yAxis = _level.transform.position.y-400;
         _zAxis = Random.Range(Min.z, Max.z);
