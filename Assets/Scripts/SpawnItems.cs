@@ -6,15 +6,34 @@ public class SpawnItems : MonoBehaviour
 {
 
     [SerializeField] private GameObject _brick, _redBrick, _greenBrick, _orangeBrick, 
-                                        _brickParent, _redBrickParent, _greenBrickParent, _orangeBrickParent;
+                                        _StickmanBrickParent, _RedBrickParent, _GreenBrickParent, _OrangeBrickParent;
     private GameObject _brickObj, _redBrickObj, _greenBrickObj, _orangeBrickObj, _level;
-    private Vector3 Min;
-    private Vector3 Max;
-    private float _xAxis;
-    private float _yAxis;
-    private float _zAxis;
-    private Vector3 _randomPosition;
+    private Vector3 Min, Max, _randomPosition;
+    private float _xAxis, _yAxis, _zAxis;
+    private Dictionary<string,List<GameObject>> PickUps;
+    private Dictionary<string,GameObject> Parents;
+    private List<GameObject> StickmanToPickUp, RedToPickUp, GreenToPickUp, OrangeToPickUp;
 
+
+    private void Start()
+    {
+        StickmanToPickUp = new List<GameObject>();
+        RedToPickUp = new List<GameObject>();
+        GreenToPickUp = new List<GameObject>();
+        OrangeToPickUp = new List<GameObject>();
+
+        PickUps = new Dictionary<string, List<GameObject>>();
+        PickUps.Add("Stickman", StickmanToPickUp);
+        PickUps.Add("Red", RedToPickUp);
+        PickUps.Add("Green", GreenToPickUp);
+        PickUps.Add("Orange", OrangeToPickUp);
+
+        Parents = new Dictionary<string, GameObject>();
+        Parents.Add("Stickman", _StickmanBrickParent);
+        Parents.Add("Red", _RedBrickParent);
+        Parents.Add("Green", _GreenBrickParent);
+        Parents.Add("Orange", _OrangeBrickParent);
+    }
     private void SetRanges()
     {
         Min = new Vector3(_level.transform.position.x - 400, _yAxis, _level.transform.position.z - 1500); 
@@ -29,16 +48,33 @@ public class SpawnItems : MonoBehaviour
         this._level = level;
         SetRanges();
         _brickObj=Instantiate(_brick, _randomPosition, Quaternion.identity);
-        _brickObj.transform.parent = _brickParent.transform;
+        PickUps["Stickman"].Add(_brickObj);
+        //_brickObj.transform.parent = _brickParent.transform;
         SetRanges();
         _redBrickObj=Instantiate(_redBrick, _randomPosition, Quaternion.identity);
-        _redBrickObj.transform.parent = _redBrickParent.transform;
+        PickUps["Red"].Add(_redBrickObj);
+        //_redBrickObj.transform.parent = _redBrickParent.transform;
         SetRanges();
         _greenBrickObj = Instantiate(_greenBrick, _randomPosition, Quaternion.identity);
-        _greenBrickObj.transform.parent = _greenBrickParent.transform;
+        PickUps["Green"].Add(_greenBrickObj);
+        //_greenBrickObj.transform.parent = _greenBrickParent.transform;
         SetRanges();
         _orangeBrickObj = Instantiate(_orangeBrick, _randomPosition, Quaternion.identity);
-        _orangeBrickObj.transform.parent = _orangeBrickParent.transform;
+        PickUps["Orange"].Add(_orangeBrickObj);
+       // _orangeBrickObj.transform.parent = _orangeBrickParent.transform;
+    }
+
+    public void SetParent(string playerTag)
+    {
+        Debug.Log(PickUps[playerTag].Count);
+        for (int i = 0; i < PickUps[playerTag].Count; i++)
+            PickUps[playerTag][i].transform.parent = Parents[playerTag].transform;
+    }
+
+    public void ClearParent(string playerTag)
+    {
+        for (int i = 0; i < PickUps[playerTag].Count; i++)
+            Destroy(PickUps[playerTag][i]);
     }
 
     

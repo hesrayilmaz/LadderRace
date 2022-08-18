@@ -6,12 +6,16 @@ public class LevelController : MonoBehaviour
 {
     [SerializeField] private GameObject _floor;
     [SerializeField] private SpawnItems _items;
+    [SerializeField] private AIManager _RedManager, _GreenManager, _OrangeManager;
+    [SerializeField] private CharacterManager _CharacterManager;
     [SerializeField] private int _numOfFloor;
     private int _numOfBrick;
     private GameObject _currentLevel;
     private int _currentNum = 0, _minNum=35, _maxNum=45;
     private float _yDiff = 480f;
     private float _zDiff = 793f;
+
+    private bool _isStarted = true;
 
     // Start is called before the first frame update
     void Start()
@@ -20,14 +24,26 @@ public class LevelController : MonoBehaviour
         _currentLevel = _floor;
         //Instantiate(_floor);
         //GenerateLevel();
-        _numOfBrick = Random.Range(_minNum, _maxNum);
-        for (int i = 0; i < _numOfBrick; i++)
-        {
-            _items.Init(_currentLevel);
-        }
+       
        
     }
 
+    private void Update()
+    {
+        if (_isStarted)
+        {
+            _numOfBrick = Random.Range(_minNum, _maxNum);
+            for (int i = 0; i < _numOfBrick; i++)
+            {
+                _items.Init(_currentLevel);
+            }
+            _RedManager.SetFirstFloor();
+            _GreenManager.SetFirstFloor();
+            _OrangeManager.SetFirstFloor();
+            _CharacterManager.SetFirstFloor();
+            _isStarted = false;
+        }
+    }
     // Update is called once per frame
     public void GenerateLevel()
     {

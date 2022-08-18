@@ -37,6 +37,7 @@ public class AIManager : MonoBehaviour
     private Vector3 _characterPos;
     private Vector3 _ladderEndPos;
     public int radius = 3;
+    private bool _isStarted = true;
 
 
 
@@ -58,14 +59,17 @@ public class AIManager : MonoBehaviour
         _goToLadder = false;
         _brickList = new List<GameObject>();
         _level = new Vector3(-16, 411, 1263);
+        
     }
+
+   
     // Update is called once per frame
     void Update()
     {
-
+       
         if (_pickedUp)
         {
-            Debug.Log("11111111111"); 
+            //Debug.Log("11111111111"); 
             PickUp();
             _pickedUp = false;
         }
@@ -80,7 +84,7 @@ public class AIManager : MonoBehaviour
        
         else if (_isClimbingUpward && !_isClimbed)
         {
-            Debug.Log("3333");
+            //Debug.Log("3333");
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
             ClimbAnimation();
             transform.DOMoveY(7f, 0.2f).SetRelative();
@@ -95,13 +99,11 @@ public class AIManager : MonoBehaviour
              IdleAnimation();
              _isCurrentLevel = true;
          }
-         else
-             IdleAnimation();
         */
         if (_isClimbed)
         {
             //StartCoroutine(FixPosition());
-            Debug.Log("444444");
+            //Debug.Log("444444");
             transform.position += new Vector3(0f, 15f, 70f);
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _isCurrentLevel = true;
@@ -142,7 +144,8 @@ public class AIManager : MonoBehaviour
             _ladder.ClearBricks();
             _ladder.ChangeLadderPosAI();
             _isWalkPointSet = false;
-            
+            _range.ClearParent(transform.tag);
+            _range.SetParent(transform.tag);
         }
         else if(!(other.gameObject.tag == transform.tag) &&
                   other.gameObject.tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
@@ -152,6 +155,11 @@ public class AIManager : MonoBehaviour
             _pickedUp = true;
         }
 
+    }
+
+    public void SetFirstFloor()
+    {
+        _range.SetParent(transform.tag);
     }
 
     public void PickUp()
@@ -218,6 +226,7 @@ public class AIManager : MonoBehaviour
             Debug.Log("walk point: " + walkPoint);
             Debug.Log("transform: " + transform.position);
             _agent.SetDestination(walkPoint);
+            
             RunAnimation();
             _isWalkPointSet = true;
         }

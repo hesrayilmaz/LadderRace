@@ -10,6 +10,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private AudioSource _climbAudio;
     [SerializeField] private LevelController _newLevel;
     [SerializeField] private BuildLadder _ladder;
+    [SerializeField] private SpawnItems _range;
 
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
@@ -35,6 +36,8 @@ public class CharacterManager : MonoBehaviour
     private bool _pickedUp = false;
     [SerializeField] private GameObject _characterBack;
 
+    private bool _isStarted = true;
+
     private void Start()
     {
         _isClimbingUpward = false;
@@ -46,6 +49,12 @@ public class CharacterManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_isStarted)
+        {
+            _range.SetParent(transform.tag);
+            _isStarted = false;
+        }
+
         if (_pickedUp)
         {
             PickUp();
@@ -119,6 +128,10 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    public void SetFirstFloor()
+    {
+        _range.SetParent(transform.tag);
+    }
 
     public void PickUp()
     {
