@@ -33,7 +33,7 @@ public class AIManager : MonoBehaviour
     public bool _isClimbed { get; set; }
     public bool _isNewLevel { get; set; }
     public bool _goToLadder { get; set; }
-    public static bool _isCurrentLevel = true;
+    public bool _isCurrentLevel = true;
     private Vector3 _characterPos;
     private Vector3 _ladderEndPos;
     public int radius = 3;
@@ -109,7 +109,6 @@ public class AIManager : MonoBehaviour
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _isCurrentLevel = true;
             _isClimbed = false;
-           
         }
 
         //else if (!_isClimbed)
@@ -129,6 +128,9 @@ public class AIManager : MonoBehaviour
             {
                 _levelController.GenerateLevel();
                 _isCurrentLevel = false;
+                AIManager[] AIs = FindObjectsOfType<AIManager>();
+                foreach(AIManager AI in AIs)
+                    AI._isCurrentLevel = false;
                 CharacterManager._isCurrentLevel = false;
             }
             StartCoroutine(DropProcess());
@@ -138,14 +140,12 @@ public class AIManager : MonoBehaviour
         }
         else if (other.gameObject.tag == "LadderEnd")
         {
-           
             _isClimbingUpward = false;
             _isClimbed = true;
             _isNewLevel = true;
             _ladder.ClearBricks();
             _ladder.ChangeLadderPos();
             _isWalkPointSet = false;
-            
             _range.SetParent(transform.tag);
         }
         else if(!(other.gameObject.tag == transform.tag) &&
@@ -186,7 +186,6 @@ public class AIManager : MonoBehaviour
 
         if (_brickList.Count == _maxBricks)
         {
-            //GoToLadder(_ladder.GetLadderPosAI()+ new Vector3(-61, 180, 127));
             GoToLadder(_ladder.GetLadderPosAI());
             _goToLadder = true;
         }

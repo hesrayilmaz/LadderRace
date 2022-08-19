@@ -105,7 +105,9 @@ public class CharacterManager : MonoBehaviour
             {
                 _newLevel.GenerateLevel();
                 _isCurrentLevel = false;
-                AIManager._isCurrentLevel = false;
+                AIManager[] AIs = FindObjectsOfType<AIManager>();
+                foreach (AIManager AI in AIs)
+                    AI._isCurrentLevel = false;
             }
         
             _ladder.Drop();
