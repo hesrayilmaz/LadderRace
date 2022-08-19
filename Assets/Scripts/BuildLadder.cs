@@ -108,21 +108,41 @@ public class BuildLadder : MonoBehaviour
 
     IEnumerator DropProcess()
     {
-        Debug.Log("bricklist count: "+ _AIManager._brickList.Count);
-        while (_AIManager._brickList.Count != 0 && _bricksOnLadder.Count < _necessaryBricks)
+        if(this.gameObject.tag != "Stickman")
         {
-            _ladderStep = Instantiate(_actualLadderStep);
-            _ladderStep.transform.localScale = new Vector3(170, 150, 200);
-            _bricksOnLadder.Add(_ladderStep);
-            _ladderStep.transform.parent = _ladder.transform;
-            _ladderStep.transform.localRotation = Quaternion.identity;
-            _ladderPos = _ladderPos + new Vector3(0, 16, 0);
-            _ladderStep.transform.position = _ladderPos;
-            _myBrick = _AIManager._brickList[_AIManager._brickList.Count - 1];
-            Destroy(_myBrick);
-            _AIManager._brickList.Remove(_myBrick);
-            yield return new WaitForSeconds(0.1f);
+            while (_AIManager._brickList.Count != 0 && _bricksOnLadder.Count < _necessaryBricks)
+            {
+                _ladderStep = Instantiate(_actualLadderStep);
+                _ladderStep.transform.localScale = new Vector3(170, 150, 200);
+                _bricksOnLadder.Add(_ladderStep);
+                _ladderStep.transform.parent = _ladder.transform;
+                _ladderStep.transform.localRotation = Quaternion.identity;
+                _ladderPos = _ladderPos + new Vector3(0, 16, 0);
+                _ladderStep.transform.position = _ladderPos;
+                _myBrick = _AIManager._brickList[_AIManager._brickList.Count - 1];
+                Destroy(_myBrick);
+                _AIManager._brickList.Remove(_myBrick);
+                yield return new WaitForSeconds(0.1f);
+            }
         }
+        else
+        {
+            while (_characterManager._brickList.Count != 0 && _bricksOnLadder.Count < _necessaryBricks)
+            {
+                _ladderStep = Instantiate(_actualLadderStep);
+                _ladderStep.transform.localScale = new Vector3(170, 150, 200);
+                _bricksOnLadder.Add(_ladderStep);
+                _ladderStep.transform.parent = _ladder.transform;
+                _ladderStep.transform.localRotation = Quaternion.identity;
+                _ladderPos = _ladderPos + new Vector3(0, 16, 0);
+                _ladderStep.transform.position = _ladderPos;
+                _myBrick = _characterManager._brickList[_characterManager._brickList.Count - 1];
+                Destroy(_myBrick);
+                _characterManager._brickList.Remove(_myBrick);
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        
         
         if (this.gameObject.tag == "Stickman" && _bricksOnLadder.Count == _necessaryBricks)
             _characterManager._isClimbingUpward = true;
