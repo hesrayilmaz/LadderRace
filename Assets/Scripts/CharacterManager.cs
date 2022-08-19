@@ -77,7 +77,7 @@ public class CharacterManager : MonoBehaviour
             //Debug.Log("3333");
             //_climbAudio.Stop();
             IdleAnimation();
-           _characterPos = _level + new Vector3(80f, -404f, -1600f);
+           _characterPos = _level + new Vector3(100f, -404f, -1600f);
             transform.position = _characterPos;
             transform.DOMove(_characterPos, 0.015f);
            _isCurrentLevel = true;

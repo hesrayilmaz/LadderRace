@@ -143,7 +143,7 @@ public class AIManager : MonoBehaviour
             _isClimbed = true;
             _isNewLevel = true;
             _ladder.ClearBricks();
-            _ladder.ChangeLadderPosAI();
+            _ladder.ChangeLadderPos();
             _isWalkPointSet = false;
             
             _range.SetParent(transform.tag);

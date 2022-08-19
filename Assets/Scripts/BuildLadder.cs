@@ -82,19 +82,12 @@ public class BuildLadder : MonoBehaviour
 
     public void ChangeLadderPos()
     {
-        _ladderPos = _ladderPos + new Vector3(0, 8, 793);
-        _firstStepPos = _ladderPos;
-    }
-    public void ChangeLadderPosAI()
-    {
         _ladderPos = _ladderPos + new Vector3(0, 0, 793);
         _firstStepPos = _ladderPos;
-       // _ladderPos = _firstStepPos;
     }
 
     public Vector3 GetLadderPosAI()
     {
-        //return _firstStepPos;
         return _firstStepPos;
     }
     public int GetBrickCount()
