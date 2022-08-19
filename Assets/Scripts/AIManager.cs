@@ -85,6 +85,7 @@ public class AIManager : MonoBehaviour
         else if (_isClimbingUpward && !_isClimbed)
         {
             //Debug.Log("3333");
+            _range.ClearParent(transform.tag);
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
             ClimbAnimation();
             transform.DOMoveY(7f, 0.2f).SetRelative();
@@ -144,7 +145,7 @@ public class AIManager : MonoBehaviour
             _ladder.ClearBricks();
             _ladder.ChangeLadderPosAI();
             _isWalkPointSet = false;
-            _range.ClearParent(transform.tag);
+            
             _range.SetParent(transform.tag);
         }
         else if(!(other.gameObject.tag == transform.tag) &&
@@ -224,9 +225,9 @@ public class AIManager : MonoBehaviour
             }
             Debug.Log("walk point: " + walkPoint);
             Debug.Log("transform: " + transform.position);
-            float _distToWalkPoint2 = transform.position.y - walkPoint.y;
-            Debug.Log("distttttttttttttt: "+_distToWalkPoint2);
-            if (walkPoint.y - transform.position.y > 10)
+            
+            Debug.Log("distttttttttttttt: "+ (walkPoint.y - transform.position.y));
+            if (walkPoint.y - transform.position.y > 10 || walkPoint.y - transform.position.y<0)
                 return;
             
             _agent.SetDestination(walkPoint);

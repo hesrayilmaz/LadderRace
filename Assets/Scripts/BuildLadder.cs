@@ -126,8 +126,7 @@ public class BuildLadder : MonoBehaviour
         
         if (this.gameObject.tag == "Stickman" && _bricksOnLadder.Count == _necessaryBricks)
             _characterManager._isClimbingUpward = true;
-        else if((this.gameObject.tag == "Red" || this.gameObject.tag == "Green" || this.gameObject.tag == "Orange")
-                 && _bricksOnLadder.Count == _necessaryBricks)
+        else if(this.gameObject.tag != "Stickman" && _bricksOnLadder.Count == _necessaryBricks)
             _AIManager._isClimbingUpward = true;
         _climbAudio.Stop();
     }

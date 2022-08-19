@@ -68,13 +68,26 @@ public class SpawnItems : MonoBehaviour
     {
         Debug.Log(PickUps[playerTag].Count);
         for (int i = 0; i < PickUps[playerTag].Count; i++)
-            PickUps[playerTag][i].transform.parent = Parents[playerTag].transform;
+            if(PickUps[playerTag][i] != null)
+                 PickUps[playerTag][i].transform.parent = Parents[playerTag].transform;
     }
 
     public void ClearParent(string playerTag)
     {
         for (int i = 0; i < PickUps[playerTag].Count; i++)
-            Destroy(PickUps[playerTag][i]);
+        {
+
+
+            if (PickUps[playerTag][i] != null && PickUps[playerTag][i].transform.parent == Parents[playerTag].transform)
+            {
+                Debug.Log(PickUps[playerTag][i].transform.parent);
+                Destroy(PickUps[playerTag][i]);
+            }
+            else if (PickUps[playerTag][i] != null && PickUps[playerTag][i].transform.parent != Parents[playerTag].transform)
+                return;
+                
+        }
+            
     }
 
     
