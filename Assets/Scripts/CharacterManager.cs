@@ -97,17 +97,15 @@ public class CharacterManager : MonoBehaviour
     {
         if (other.gameObject.tag == "LadderStart")
         {
-            //_isClimbingUpward = true;
-           
             _isClimbed = false;
            // _climbAudio.Play();
            if (_isCurrentLevel)
             {
                 _newLevel.GenerateLevel();
-                _isCurrentLevel = false;
                 AIManager[] AIs = FindObjectsOfType<AIManager>();
                 foreach (AIManager AI in AIs)
                     AI._isCurrentLevel = false;
+                _isCurrentLevel = false;
             }
         
             _ladder.Drop();
@@ -140,7 +138,6 @@ public class CharacterManager : MonoBehaviour
         if (_brickList.Count <= _maxBricks)
         {
             _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-
             _myBrick.transform.parent = _characterBack.transform;
 
             if (_brickList.Count == 0)

@@ -73,15 +73,11 @@ public class AIManager : MonoBehaviour
             PickUp();
             _pickedUp = false;
         }
-         
-       // if(_isMoving)
         else if(!_goToLadder && !_isClimbingUpward && !_isClimbed)
         {
             //Debug.Log("22222222222");
             Move();
         }
-            
-       
         else if (_isClimbingUpward && !_isClimbed)
         {
             //Debug.Log("3333");
@@ -89,8 +85,6 @@ public class AIManager : MonoBehaviour
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
             ClimbAnimation();
             transform.DOMoveY(7f, 0.2f).SetRelative();
-            //_ladderEndPos = transform.position + new Vector3(0, 460, 0);
-            //_agent.SetDestination(_ladderEndPos);
         }
         /*
          else if (_isClimbed)
@@ -111,9 +105,6 @@ public class AIManager : MonoBehaviour
             _isClimbed = false;
         }
 
-        //else if (!_isClimbed)
-          //  _isMoving = true;       
-
     }
 
 
@@ -121,17 +112,16 @@ public class AIManager : MonoBehaviour
     {
         if (other.gameObject.tag == "LadderStart")
         {
-            //_isClimbingUpward = true;
             Debug.Log("LADDER START");
             _isClimbed = false;
             if (_isCurrentLevel)
             {
                 _levelController.GenerateLevel();
                 _isCurrentLevel = false;
+                CharacterManager._isCurrentLevel = false;
                 AIManager[] AIs = FindObjectsOfType<AIManager>();
                 foreach(AIManager AI in AIs)
                     AI._isCurrentLevel = false;
-                CharacterManager._isCurrentLevel = false;
             }
             StartCoroutine(DropProcess());
             _isNewLevel = false;
@@ -169,7 +159,6 @@ public class AIManager : MonoBehaviour
         if (_brickList.Count <= _maxBricks)
         {
             _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-
             _myBrick.transform.parent = _characterBack.transform;
 
             if (_brickList.Count == 0)
@@ -181,7 +170,6 @@ public class AIManager : MonoBehaviour
             }
             _myBrick.transform.localRotation = Quaternion.identity;
             _brickList.Add(_myBrick);
-            //_myBrick.tag = "Untagged";
         }
 
         if (_brickList.Count == _maxBricks)
@@ -189,8 +177,6 @@ public class AIManager : MonoBehaviour
             GoToLadder(_ladder.GetLadderPosAI());
             _goToLadder = true;
         }
-
-
     }
  
     public void Move()
@@ -200,14 +186,10 @@ public class AIManager : MonoBehaviour
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
             List<Vector3> targetColor = new List<Vector3>();
             for(int i = 0; i < hitColliders.Length; i++)
-            {
-                
+            { 
                 if (!(hitColliders[i].tag==transform.tag) &&
                     hitColliders[i].tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
-                {
-                    targetColor.Add(hitColliders[i].transform.position);
-                }
-                    
+                        targetColor.Add(hitColliders[i].transform.position);
             }
             
             if (targetColor.Count > 0)
@@ -215,17 +197,17 @@ public class AIManager : MonoBehaviour
                 //Debug.Log(targetColor.Count);
                 walkPoint = targetColor[targetColor.Count-1];
             }
-                
             else
             {
                 int bricksOnGround = GameObject.FindGameObjectWithTag(transform.tag+"Parent").transform.childCount;
                 int random = Random.Range(0, bricksOnGround);
                 walkPoint = GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.GetChild(random).position;
             }
+            
             Debug.Log("walk point: " + walkPoint);
             Debug.Log("transform: " + transform.position);
-            
             Debug.Log("distttttttttttttt: "+ (walkPoint.y - transform.position.y));
+            
             if (walkPoint.y - transform.position.y > 10 || walkPoint.y - transform.position.y<0)
                 return;
             

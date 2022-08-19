@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 5263619509923572092}
   m_Layer: 0
   m_Name: Percent
-  m_TagString: AI
+  m_TagString: Red
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -277,7 +277,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _percentText: {fileID: 3367768034943281731}
   _items: {fileID: 0}
-  _AIItems: {fileID: 0}
+  _redItems: {fileID: 0}
+  _greenItems: {fileID: 0}
+  _orangeItems: {fileID: 0}
 --- !u!1 &1515150734276030328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1448,7 +1450,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4417917977823363830}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16, y: 891, z: 2056}
+  m_LocalPosition: {x: -16, y: 1851, z: 3642}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1634,7 +1636,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _percentText: {fileID: 4834553707403440927}
   _items: {fileID: 0}
-  _AIItems: {fileID: 0}
+  _redItems: {fileID: 0}
+  _greenItems: {fileID: 0}
+  _orangeItems: {fileID: 0}
 --- !u!1 &4688033032837786034
 GameObject:
   m_ObjectHideFlags: 0
@@ -2049,7 +2053,7 @@ GameObject:
   - component: {fileID: 5691443253157388357}
   m_Layer: 0
   m_Name: Percent
-  m_TagString: AI
+  m_TagString: Green
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -2084,7 +2088,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _percentText: {fileID: 4749588268383238095}
   _items: {fileID: 0}
-  _AIItems: {fileID: 0}
+  _redItems: {fileID: 0}
+  _greenItems: {fileID: 0}
+  _orangeItems: {fileID: 0}
 --- !u!1 &7046788218532460752
 GameObject:
   m_ObjectHideFlags: 0
@@ -2269,7 +2275,7 @@ GameObject:
   - component: {fileID: 4090623396058049997}
   m_Layer: 0
   m_Name: Percent
-  m_TagString: AI
+  m_TagString: Orange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -2304,7 +2310,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _percentText: {fileID: 6719217632174941109}
   _items: {fileID: 0}
-  _AIItems: {fileID: 0}
+  _redItems: {fileID: 0}
+  _greenItems: {fileID: 0}
+  _orangeItems: {fileID: 0}
 --- !u!1 &8220446871547494610
 GameObject:
   m_ObjectHideFlags: 0

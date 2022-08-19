@@ -2701,7 +2701,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 10000
-  field of view: 63
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -3152,6 +3152,7 @@ MonoBehaviour:
   _climbAnimName: Climb
   _climbAnimSpeed: 3
   _rotateSpeed: 10
+  _isCurrentLevel: 1
   radius: 5
   _pickUpAudio: {fileID: 569645840}
   _characterBack: {fileID: 1816334525}
@@ -4336,6 +4337,7 @@ MonoBehaviour:
   _climbAnimName: Climb
   _climbAnimSpeed: 3
   _rotateSpeed: 10
+  _isCurrentLevel: 1
   radius: 5
   _pickUpAudio: {fileID: 569645840}
   _characterBack: {fileID: 1230606663}
@@ -4484,6 +4486,7 @@ MonoBehaviour:
   _climbAnimName: Climb
   _climbAnimSpeed: 3
   _rotateSpeed: 10
+  _isCurrentLevel: 1
   radius: 5
   _pickUpAudio: {fileID: 569645840}
   _characterBack: {fileID: 451901015}

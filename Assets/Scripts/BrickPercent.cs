@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 public class BrickPercent : MonoBehaviour
 {
-    //public Image _barImage;
+
     [SerializeField] private TextMeshPro _percentText;
     [SerializeField] private BuildLadder _items, _AIItems;
     private int _maxBrickNum = 30;
@@ -15,6 +15,7 @@ public class BrickPercent : MonoBehaviour
     void Start()
     {
         _items = GameObject.Find("stickman").GetComponent<BuildLadder>();
+
         if (this.gameObject.tag == "Red")
             _AIItems = GameObject.Find("redAI").GetComponent<BuildLadder>();
         else if(this.gameObject.tag == "Green")
@@ -30,7 +31,7 @@ public class BrickPercent : MonoBehaviour
     {
         if(this.gameObject.tag=="Stickman")
             _percent = (int)((100.0 / _maxBrickNum) * _items.GetBrickCount());
-        else if(this.gameObject.tag=="Red")
+        else if (this.gameObject.tag == "Red")
             _percent = (int)((100.0 / _maxBrickNum) * _AIItems.GetBrickCount());
         else if(this.gameObject.tag=="Green")
             _percent = (int)((100.0 / _maxBrickNum) * _AIItems.GetBrickCount());
@@ -38,7 +39,6 @@ public class BrickPercent : MonoBehaviour
             _percent = (int)((100.0 / _maxBrickNum) * _AIItems.GetBrickCount());
       
         _percentText.text = "%" + _percent;
-        
         
     }
 }
