@@ -12,6 +12,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private BuildLadder _ladder;
     [SerializeField] private SpawnItems _range;
 
+
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
     [SerializeField] private string _runAnimName = "Running";
@@ -39,6 +40,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private AudioSource _pickUpAudio;
     private bool _pickedUp = false;
     [SerializeField] private GameObject _characterBack;
+    [SerializeField] private GameObject _cup;
 
     private bool _isStarted = true;
 
@@ -65,7 +67,6 @@ public class CharacterManager : MonoBehaviour
             _pickedUp = false;
         }
 
-        
         else if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
         {
             //Debug.Log("1111");
@@ -85,21 +86,21 @@ public class CharacterManager : MonoBehaviour
             IdleAnimation();
             _characterPos = _level + new Vector3(100f, -404f, -1600f);
             transform.position = _characterPos;
-            transform.DOMove(_characterPos, 0.015f);
-            _isCurrentLevel = true;
-            /*if (_isDancing)
+            if(!_isDancing)
+                transform.DOMove(_characterPos, 0.015f);
+            else
             {
-                Debug.Log("danceeeeee");
-                DanceAnimation();
-            }*/
-               
+                StartCoroutine(Dance());
+            }
+            _isCurrentLevel = true;
+
         }
         else
             IdleAnimation();
 
 
         transform.DOMove((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.015f).SetRelative();
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
 
     }
     
@@ -130,11 +131,12 @@ public class CharacterManager : MonoBehaviour
                 _ladder.ClearBricks();
                 _ladder.ChangeLadderPos();
                 _level = _level + new Vector3(0, 480, 793);
-            /*if (_isFinished)
+            if (_isFinished)
             {
                 Debug.Log("finish");
                 _isDancing = true;
-            }*/
+                Debug.Log(_isDancing);
+            }
 
         }
         else if (other.gameObject.tag == "Brick")
@@ -174,6 +176,22 @@ public class CharacterManager : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
         go.GetComponent<TrailRenderer>().emitting = false;
     }
+
+    IEnumerator Dance()
+    {
+        //_cup = GameObject.FindGameObjectWithTag("Cup");
+        //Vector3 _cupPos = _cup.transform.position;
+        //_cupPos.y = _characterPos.y;
+        transform.DOMove(_characterPos, 0.015f);
+        //Debug.Log("characterpos: " + _characterPos);
+        //RunAnimation();
+        //Debug.Log("_cup.transform.position: " + _cupPos);
+        //transform.DOMove(_cupPos, 0.5f).SetRelative();
+        yield return new WaitForSeconds(0.015f);
+        
+        DanceAnimation();
+    }
+
 
     public void IdleAnimation()
     {

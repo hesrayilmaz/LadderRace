@@ -35,7 +35,6 @@ using UnityEngine;
         {
             AnimationClip clip = GetAnimationClipByName(clipName);
 
-            //Debug.Log("KLÝP VAR MI "+ (clip.name));
             if (_animancer != null && clip != null)
             {
                 _currentState = _animancer.Play(clip, _fadeDuration);
@@ -75,6 +74,14 @@ using UnityEngine;
             }
             return null;
         }
+
+        public void Animations()
+    {
+        for (int i = 0; i < _clips.Length; i++)
+        {
+            Debug.Log(_clips[i].name);
+        }
+    }
 
         public Transform GetAnimatorTransform()
         {

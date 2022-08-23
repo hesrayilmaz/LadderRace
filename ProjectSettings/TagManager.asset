@@ -25,6 +25,7 @@ TagManager:
   - Green
   - Orange
   - FinishPlatform
+  - Cup
   layers:
   - Default
   - TransparentFX
