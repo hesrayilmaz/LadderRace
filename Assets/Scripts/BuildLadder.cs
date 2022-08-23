@@ -101,7 +101,7 @@ public class BuildLadder : MonoBehaviour
 
     IEnumerator DropProcess()
     {
-        if(this.gameObject.tag != "Stickman")
+        if(!gameObject.CompareTag("Stickman"))
         {
             while (_AIManager._brickList.Count != 0 && _bricksOnLadder.Count < _necessaryBricks)
             {
@@ -117,6 +117,7 @@ public class BuildLadder : MonoBehaviour
                 _AIManager._brickList.Remove(_myBrick);
                 yield return new WaitForSeconds(0.1f);
             }
+
         }
         else
         {
@@ -136,11 +137,11 @@ public class BuildLadder : MonoBehaviour
             }
         }
         
-        
         if (this.gameObject.tag == "Stickman" && _bricksOnLadder.Count == _necessaryBricks)
             _characterManager._isClimbingUpward = true;
         else if(this.gameObject.tag != "Stickman" && _bricksOnLadder.Count == _necessaryBricks)
             _AIManager._isClimbingUpward = true;
+
         _climbAudio.Stop();
     }
 }

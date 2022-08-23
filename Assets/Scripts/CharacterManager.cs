@@ -18,6 +18,8 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private float _runAnimSpeed = 2f;
     [SerializeField] private string _climbAnimName = "Climb";
     [SerializeField] private float _climbAnimSpeed = 3f;
+    [SerializeField] private string _danceAnimName = "Samba Dancing";
+    [SerializeField] private float _danceAnimSpeed = 3f;
     [SerializeField] private float _rotateSpeed = 10f;
 
     public bool _isClimbingUpward { get; set; }
@@ -26,6 +28,8 @@ public class CharacterManager : MonoBehaviour
     public static bool _isCurrentLevel = true; 
     private Vector3 _characterPos;
     private Vector3 _level;
+    public bool _isFinished = false;
+    private bool _isDancing = false;
 
 
 
@@ -60,6 +64,8 @@ public class CharacterManager : MonoBehaviour
             PickUp();
             _pickedUp = false;
         }
+
+        
         else if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
         {
             //Debug.Log("1111");
@@ -77,11 +83,16 @@ public class CharacterManager : MonoBehaviour
             //Debug.Log("3333");
             //_climbAudio.Stop();
             IdleAnimation();
-           _characterPos = _level + new Vector3(100f, -404f, -1600f);
+            _characterPos = _level + new Vector3(100f, -404f, -1600f);
             transform.position = _characterPos;
             transform.DOMove(_characterPos, 0.015f);
-           _isCurrentLevel = true;
-            
+            _isCurrentLevel = true;
+            /*if (_isDancing)
+            {
+                Debug.Log("danceeeeee");
+                DanceAnimation();
+            }*/
+               
         }
         else
             IdleAnimation();
@@ -113,12 +124,18 @@ public class CharacterManager : MonoBehaviour
         }
         else if (other.gameObject.tag == "LadderEnd")
         {
-            _isClimbingUpward = false;
-            _isClimbed = true;
-            _isNewLevel = true;
-            _ladder.ClearBricks();
-            _ladder.ChangeLadderPos();
-            _level = _level + new Vector3(0, 480, 793);
+                _isClimbingUpward = false;
+                _isClimbed = true;
+                _isNewLevel = true;
+                _ladder.ClearBricks();
+                _ladder.ChangeLadderPos();
+                _level = _level + new Vector3(0, 480, 793);
+            /*if (_isFinished)
+            {
+                Debug.Log("finish");
+                _isDancing = true;
+            }*/
+
         }
         else if (other.gameObject.tag == "Brick")
         {
@@ -143,10 +160,8 @@ public class CharacterManager : MonoBehaviour
             if (_brickList.Count == 0)
                 _myBrick.transform.position = _characterBack.transform.position;
             else
-            {
                 _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 10f, 0f);
-                StartCoroutine(TrailRendererProcess(_myBrick));
-            }
+            StartCoroutine(TrailRendererProcess(_myBrick));
             _myBrick.transform.localRotation = Quaternion.identity;
             _brickList.Add(_myBrick);
         }
@@ -156,7 +171,6 @@ public class CharacterManager : MonoBehaviour
     IEnumerator TrailRendererProcess(GameObject go)
     {
         go.GetComponent<TrailRenderer>().emitting = true;
-        //go.transform.position = Vector3.Lerp(_startPos, _endPos, 1f);
         yield return new WaitForSeconds(0.7f);
         go.GetComponent<TrailRenderer>().emitting = false;
     }
@@ -172,6 +186,10 @@ public class CharacterManager : MonoBehaviour
     public void ClimbAnimation()
     {
         PlayAnimation(_climbAnimName, _climbAnimSpeed);
+    } 
+    public void DanceAnimation()
+    {
+        PlayAnimation(_danceAnimName, _danceAnimSpeed);
     }
     public void PlayAnimation(string animName, float animSpeed)
     {

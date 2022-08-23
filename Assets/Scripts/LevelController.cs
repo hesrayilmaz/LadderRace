@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelController : MonoBehaviour
 {
-    [SerializeField] private GameObject _floor;
+    [SerializeField] private GameObject _floor, _finishFloor;
     [SerializeField] private SpawnItems _items;
     [SerializeField] private AIManager _RedManager, _GreenManager, _OrangeManager;
     [SerializeField] private CharacterManager _CharacterManager;
@@ -55,7 +55,12 @@ public class LevelController : MonoBehaviour
             }
         }
         else
-            _currentLevel = null;
+        {
+            _finishFloor.transform.position = _floor.transform.position + new Vector3(16f, 70, -620);
+            Instantiate(_finishFloor);
+            _CharacterManager._isFinished = true;
+            AIManager._isFinished = true;
+        }
         
     }
 

@@ -35,6 +35,7 @@ using UnityEngine;
         {
             AnimationClip clip = GetAnimationClipByName(clipName);
 
+            //Debug.Log("KLÝP VAR MI "+ (clip.name));
             if (_animancer != null && clip != null)
             {
                 _currentState = _animancer.Play(clip, _fadeDuration);

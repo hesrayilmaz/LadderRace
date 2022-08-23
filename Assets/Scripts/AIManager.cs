@@ -27,6 +27,8 @@ public class AIManager : MonoBehaviour
     [SerializeField] private float _runAnimSpeed = 2f;
     [SerializeField] private string _climbAnimName = "Climb";
     [SerializeField] private float _climbAnimSpeed = 3f;
+    [SerializeField] private string _danceAnimName = "Samba Dancing";
+    [SerializeField] private float _danceAnimSpeed = 3f;
     [SerializeField] private float _rotateSpeed = 10f;
 
     public bool _isClimbingUpward { get; set; }
@@ -38,7 +40,7 @@ public class AIManager : MonoBehaviour
     private Vector3 _ladderEndPos;
     public int radius = 3;
     private bool _isStarted = true;
-
+    public static bool _isFinished = false;
 
 
 
@@ -49,6 +51,7 @@ public class AIManager : MonoBehaviour
     [SerializeField] private AudioSource _pickUpAudio;
     private bool _pickedUp=false;
     [SerializeField] private GameObject _characterBack;
+
 
 
     private void Start()
@@ -99,6 +102,7 @@ public class AIManager : MonoBehaviour
         {
             //StartCoroutine(FixPosition());
             //Debug.Log("444444");
+            _range.SetParent(transform.tag);
             transform.position += new Vector3(0f, 15f, 70f);
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _isCurrentLevel = true;
@@ -124,24 +128,30 @@ public class AIManager : MonoBehaviour
                     AI._isCurrentLevel = false;
             }
             StartCoroutine(DropProcess());
+           
             _isNewLevel = false;
             _isWalkPointSet = false;
 
         }
         else if (other.gameObject.tag == "LadderEnd")
         {
-            _isClimbingUpward = false;
-            _isClimbed = true;
-            _isNewLevel = true;
-            _ladder.ClearBricks();
-            _ladder.ChangeLadderPos();
-            _isWalkPointSet = false;
-            _range.SetParent(transform.tag);
+                _isClimbingUpward = false;
+                _isClimbed = true;
+                _isNewLevel = true;
+                _ladder.ClearBricks();
+                _ladder.ChangeLadderPos();
+                _isWalkPointSet = false;
+           /* if (_isFinished)
+            {
+                Debug.Log("finishhhhhhh");
+                DanceAnimation();
+            }*/
+
         }
-        else if(!(other.gameObject.tag == transform.tag) &&
+        else if(other.gameObject.tag != transform.tag &&
                   other.gameObject.tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
         {
-            _pickUpAudio.Play();
+           // _pickUpAudio.Play();
             _myBrick = other.gameObject;
             _pickedUp = true;
         }
@@ -155,21 +165,22 @@ public class AIManager : MonoBehaviour
 
     public void PickUp()
     {
-        //Debug.Log("pickupppppppppppp");
         if (_brickList.Count <= _maxBricks)
         {
             _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
             _myBrick.transform.parent = _characterBack.transform;
 
             if (_brickList.Count == 0)
-                _myBrick.transform.position = _characterBack.transform.position;
+                 _myBrick.transform.position = _characterBack.transform.position;
             else
             {
                 _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 10f, 0f);
-                StartCoroutine(TrailRendererProcess(_myBrick));
+
             }
+            StartCoroutine(TrailRendererProcess(_myBrick));
             _myBrick.transform.localRotation = Quaternion.identity;
             _brickList.Add(_myBrick);
+            _myBrick.gameObject.tag = "Untagged";
         }
 
         if (_brickList.Count == _maxBricks)
@@ -187,7 +198,7 @@ public class AIManager : MonoBehaviour
             List<Vector3> targetColor = new List<Vector3>();
             for(int i = 0; i < hitColliders.Length; i++)
             { 
-                if (!(hitColliders[i].tag==transform.tag) &&
+                if ((hitColliders[i].tag!=transform.tag) &&
                     hitColliders[i].tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
                         targetColor.Add(hitColliders[i].transform.position);
             }
@@ -208,7 +219,8 @@ public class AIManager : MonoBehaviour
             Debug.Log("transform: " + transform.position);
             Debug.Log("distttttttttttttt: "+ (walkPoint.y - transform.position.y));
             
-            if (walkPoint.y - transform.position.y > 10 || walkPoint.y - transform.position.y<0)
+            if (walkPoint.y - transform.position.y > 10 || walkPoint.y - transform.position.y<0 ||
+                walkPoint.z == transform.position.z)
                 return;
             
             _agent.SetDestination(walkPoint);
@@ -236,6 +248,10 @@ public class AIManager : MonoBehaviour
     {
         PlayAnimation(_climbAnimName, _climbAnimSpeed);
     }
+    public void DanceAnimation()
+    {
+        PlayAnimation(_danceAnimName, _danceAnimSpeed);
+    }
     public void PlayAnimation(string animName, float animSpeed)
     {
         _animancer.PlayAnimation(animName);
@@ -245,7 +261,7 @@ public class AIManager : MonoBehaviour
     public void GoToLadder(Vector3 endPoint)
     {
         Debug.Log("ladder poiint: "+endPoint);
-        transform.LookAt(endPoint);
+        //transform.LookAt(endPoint);
         _agent.SetDestination(endPoint);
     }
 
@@ -265,6 +281,7 @@ public class AIManager : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
         go.GetComponent<TrailRenderer>().emitting = false;
     }
+
 
     /* IEnumerator FixPosition()
      {

@@ -10,7 +10,6 @@ TagManager:
   - Wall
   - Platform
   - Brick
-  - LastBrick
   - Ground
   - AIBrick
   - AI
@@ -25,6 +24,7 @@ TagManager:
   - Red
   - Green
   - Orange
+  - FinishPlatform
   layers:
   - Default
   - TransparentFX
