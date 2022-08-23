@@ -4102,7 +4102,7 @@ MonoBehaviour:
   _climbAnimName: Climb
   _climbAnimSpeed: 3
   _danceAnimName: Samba Dancing
-  _danceAnimSpeed: 3
+  _danceAnimSpeed: 2
   _rotateSpeed: 100
   _isFinished: 0
   _brickList: []

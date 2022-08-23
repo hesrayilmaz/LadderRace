@@ -90,6 +90,7 @@ public class CharacterManager : MonoBehaviour
                 transform.DOMove(_characterPos, 0.015f);
             else
             {
+                StartCoroutine(FixPosition());
                 StartCoroutine(Dance());
             }
             _isCurrentLevel = true;
@@ -133,9 +134,7 @@ public class CharacterManager : MonoBehaviour
                 _level = _level + new Vector3(0, 480, 793);
             if (_isFinished)
             {
-                Debug.Log("finish");
                 _isDancing = true;
-                Debug.Log(_isDancing);
             }
 
         }
@@ -177,19 +176,26 @@ public class CharacterManager : MonoBehaviour
         go.GetComponent<TrailRenderer>().emitting = false;
     }
 
+    IEnumerator FixPosition()
+    {
+        transform.DOMoveY(_characterPos.y, 0.01f);
+        yield return new WaitForSeconds(0.01f);
+        
+    }
+    
     IEnumerator Dance()
     {
-        //_cup = GameObject.FindGameObjectWithTag("Cup");
-        //Vector3 _cupPos = _cup.transform.position;
-        //_cupPos.y = _characterPos.y;
-        transform.DOMove(_characterPos, 0.015f);
-        //Debug.Log("characterpos: " + _characterPos);
-        //RunAnimation();
-        //Debug.Log("_cup.transform.position: " + _cupPos);
-        //transform.DOMove(_cupPos, 0.5f).SetRelative();
-        yield return new WaitForSeconds(0.015f);
+        _cup = GameObject.FindGameObjectWithTag("Cup");
+        Vector3 _cupPos = _cup.transform.position;
+        _cupPos.y = _characterPos.y;
+        //transform.DOMoveY(_characterPos.y, 0.01f);
+        //yield return new WaitForSeconds(0.01f);
         
+        RunAnimation();
+        transform.DOMove(_cupPos, 0.9f);
+        yield return new WaitForSeconds(0.9f);
         DanceAnimation();
+
     }
 
 
