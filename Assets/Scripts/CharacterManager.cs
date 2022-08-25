@@ -137,7 +137,8 @@ public class CharacterManager : MonoBehaviour
             if (_isFinished)
             {
                 AIManager._isGameOver = true;
-                GameObject.Find("Canvas").SetActive(false);
+                GameObject.Find("Canvas").transform.Find("Fixed Joystick").gameObject.SetActive(false);
+                GameObject.Find("Canvas").transform.Find("GameOverPanel").GetComponent<GameOver>().ShowPanel();
                 _isDancing = true;
             }
 
