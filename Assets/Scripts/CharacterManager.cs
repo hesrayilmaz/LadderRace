@@ -137,6 +137,7 @@ public class CharacterManager : MonoBehaviour
             if (_isFinished)
             {
                 AIManager._isGameOver = true;
+                GameObject.Find("Canvas").SetActive(false);
                 _isDancing = true;
             }
 

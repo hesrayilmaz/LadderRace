@@ -902,7 +902,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SUCCESSFUL
+  m_text: WIN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 549e0c2f2684bbd4fa4423cb63848b83, type: 2}
   m_sharedMaterial: {fileID: -5163770664477775925, guid: 549e0c2f2684bbd4fa4423cb63848b83, type: 2}
