@@ -11,7 +11,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private LevelController _newLevel;
     [SerializeField] private BuildLadder _ladder;
     [SerializeField] private SpawnItems _range;
-
+    [SerializeField] private CameraController _camera;
 
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
@@ -40,6 +40,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private AudioSource _pickUpAudio;
     private bool _pickedUp = false;
     [SerializeField] private GameObject _characterBack;
+    [SerializeField] private GameObject _characterHand;
     [SerializeField] private GameObject _cup;
 
     private bool _isStarted = true;
@@ -90,6 +91,7 @@ public class CharacterManager : MonoBehaviour
                 transform.DOMove(_characterPos, 0.015f);
             else
             {
+                _camera.EnableFinishCamera();
                 StartCoroutine(FixPosition());
                 StartCoroutine(Dance());
             }
@@ -101,7 +103,7 @@ public class CharacterManager : MonoBehaviour
 
 
         transform.DOMove((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.015f).SetRelative();
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
 
     }
     
@@ -194,6 +196,7 @@ public class CharacterManager : MonoBehaviour
         RunAnimation();
         transform.DOMove(_cupPos, 0.9f);
         yield return new WaitForSeconds(0.9f);
+        //_cup.transform.position = _characterHand.transform.position;
         DanceAnimation();
 
     }

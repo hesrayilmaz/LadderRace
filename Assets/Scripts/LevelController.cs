@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelController : MonoBehaviour
 {
     [SerializeField] private GameObject _floor, _finishFloor;
+    [SerializeField] private GameObject[] _levels;
     [SerializeField] private SpawnItems _items;
     [SerializeField] private AIManager _RedManager, _GreenManager, _OrangeManager;
     [SerializeField] private CharacterManager _CharacterManager;
@@ -22,6 +23,8 @@ public class LevelController : MonoBehaviour
     {
         _floor.transform.position = new Vector3(-16f, 411f, 1263f);
         _currentLevel = _floor;
+        _levels = new GameObject[_numOfFloor];
+        _levels[0] = _currentLevel;
     }
 
     private void Update()
@@ -48,6 +51,7 @@ public class LevelController : MonoBehaviour
         {
             _floor.transform.position = _floor.transform.position + new Vector3(0f, _yDiff, _zDiff);
             _currentLevel = Instantiate(_floor);
+            _levels[_currentNum] = _currentLevel;
             _numOfBrick = Random.Range(_minNum, _maxNum);
             for(int i = 0; i < _numOfBrick; i++)
             {
@@ -68,5 +72,10 @@ public class LevelController : MonoBehaviour
     {
         return _currentLevel;
     }
-   
+
+    public GameObject GetLevel(int index)
+    {
+        return _levels[index];
+    }
+
 }

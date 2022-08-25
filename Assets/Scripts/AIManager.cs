@@ -41,7 +41,7 @@ public class AIManager : MonoBehaviour
     public int radius = 3;
     private bool _isStarted = true;
     public static bool _isFinished = false;
-
+    private bool _isDancing = false;
 
 
 
@@ -51,7 +51,7 @@ public class AIManager : MonoBehaviour
     [SerializeField] private AudioSource _pickUpAudio;
     private bool _pickedUp=false;
     [SerializeField] private GameObject _characterBack;
-
+    [SerializeField] private GameObject _cup;
 
 
     private void Start()
@@ -106,7 +106,14 @@ public class AIManager : MonoBehaviour
             transform.position += new Vector3(0f, 15f, 70f);
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _isCurrentLevel = true;
-            _isClimbed = false;
+            if(!_isDancing)
+                _isClimbed = false;
+            else
+            {
+                StartCoroutine(Dance());
+                
+            }
+                
         }
 
     }
@@ -135,17 +142,17 @@ public class AIManager : MonoBehaviour
         }
         else if (other.gameObject.tag == "LadderEnd")
         {
+           
                 _isClimbingUpward = false;
                 _isClimbed = true;
                 _isNewLevel = true;
                 _ladder.ClearBricks();
                 _ladder.ChangeLadderPos();
                 _isWalkPointSet = false;
-           /* if (_isFinished)
+            if (_isFinished)
             {
-                Debug.Log("finishhhhhhh");
-                DanceAnimation();
-            }*/
+                _isDancing = true;
+            }
 
         }
         else if(other.gameObject.tag != transform.tag &&
@@ -220,7 +227,7 @@ public class AIManager : MonoBehaviour
             Debug.Log("distttttttttttttt: "+ (walkPoint.y - transform.position.y));
             
             if (walkPoint.y - transform.position.y > 10 || walkPoint.y - transform.position.y<0 ||
-                walkPoint.z == transform.position.z)
+                (walkPoint.z == transform.position.z && walkPoint.z == transform.position.z))
                 return;
             
             _agent.SetDestination(walkPoint);
@@ -282,6 +289,18 @@ public class AIManager : MonoBehaviour
         go.GetComponent<TrailRenderer>().emitting = false;
     }
 
+    IEnumerator Dance()
+    {
+        _cup = GameObject.FindGameObjectWithTag("Cup");
+        Vector3 _cupPos = _cup.transform.position-new Vector3(0,52f,50f);
+        
+        Debug.Log("cup pos: " + _cupPos);
+        RunAnimation();
+        //_agent.SetDestination(_cupPos);
+        yield return new WaitForSeconds(0.5f);
+        DanceAnimation();
+        
+    }
 
     /* IEnumerator FixPosition()
      {
