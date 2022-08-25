@@ -200,7 +200,12 @@ public class AIManager : MonoBehaviour
  
     public void Move()
     {
-        if (!_isWalkPointSet && !_isGameOver)
+        if (_isGameOver)
+        {
+            IdleAnimation();
+            _agent.SetDestination(transform.position);
+        }
+        else if (!_isWalkPointSet)
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
             List<Vector3> targetColor = new List<Vector3>();

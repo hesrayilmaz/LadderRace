@@ -191,6 +191,7 @@ public class CharacterManager : MonoBehaviour
         _cup = GameObject.FindGameObjectWithTag("Cup");
         Vector3 _cupPos = _cup.transform.position;
         _cupPos.y = _characterPos.y;
+        _cupPos.z -= 20f;
         //transform.DOMoveY(_characterPos.y, 0.01f);
         //yield return new WaitForSeconds(0.01f);
         
