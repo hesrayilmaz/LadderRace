@@ -136,6 +136,7 @@ public class CharacterManager : MonoBehaviour
                 _level = _level + new Vector3(0, 480, 793);
             if (_isFinished)
             {
+                AIManager._isGameOver = true;
                 _isDancing = true;
             }
 

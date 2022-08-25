@@ -42,7 +42,7 @@ public class AIManager : MonoBehaviour
     private bool _isStarted = true;
     public static bool _isFinished = false;
     private bool _isDancing = false;
-
+    public static bool _isGameOver = false;
 
 
     public List<GameObject> _brickList { get; set; }
@@ -110,6 +110,7 @@ public class AIManager : MonoBehaviour
                 _isClimbed = false;
             else
             {
+                
                 StartCoroutine(Dance());
                 
             }
@@ -199,7 +200,7 @@ public class AIManager : MonoBehaviour
  
     public void Move()
     {
-        if (!_isWalkPointSet)
+        if (!_isWalkPointSet && !_isGameOver)
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
             List<Vector3> targetColor = new List<Vector3>();
