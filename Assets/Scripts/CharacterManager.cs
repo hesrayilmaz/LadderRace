@@ -77,6 +77,7 @@ public class CharacterManager : MonoBehaviour
         else if (_isClimbingUpward && !_isClimbed)
         {
             //Debug.Log("2222");
+            _range.ClearParent(transform.tag);
             ClimbAnimation();
             transform.DOMoveY(7f, 0.05f).SetRelative();
         }
@@ -84,17 +85,22 @@ public class CharacterManager : MonoBehaviour
         {
             //Debug.Log("3333");
             //_climbAudio.Stop();
+            _range.SetParent(transform.tag);
             IdleAnimation();
             _characterPos = _level + new Vector3(100f, -404f, -1600f);
             transform.position = _characterPos;
-            if(!_isDancing)
-                transform.DOMove(_characterPos, 0.015f);
-            else
+            if (_isDancing && GameObject.FindGameObjectWithTag("BlueParent").transform.childCount == 0)
             {
                 _camera.EnableFinishCamera();
                 StartCoroutine(FixPosition());
                 StartCoroutine(Dance());
             }
+            else
+            {
+                transform.DOMove(_characterPos, 0.015f);
+                _isDancing = false;
+            }
+           
             _isCurrentLevel = true;
 
         }
@@ -170,6 +176,7 @@ public class CharacterManager : MonoBehaviour
             StartCoroutine(TrailRendererProcess(_myBrick));
             _myBrick.transform.localRotation = Quaternion.identity;
             _brickList.Add(_myBrick);
+            _myBrick.gameObject.tag = "Untagged";
         }
 
     }

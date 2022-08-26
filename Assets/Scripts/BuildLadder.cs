@@ -27,50 +27,13 @@ public class BuildLadder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //_brickList = new List<GameObject>(); 
-        /*if (GetComponent<AIManager>() != null)
-            _brickList = GetComponent<AIManager>()._brickList;
-        else
-            _brickList = GetComponent<CharacterManager>()._brickList;
-        */
         _bricksOnLadder = new List<GameObject>();
-        /*_firstStepPos = new Vector3(-7, -175, 265);
-        _ladderPos = _firstStepPos;
-    */
-        //_firstStepPos = _ladder.transform.position;
-        //_ladderPos = _ladder.transform.position + new Vector3(-110,-350,100);
         _ladderPos = _ladder.transform.position + new Vector3(-5, -170, 265);
         _firstStepPos = _ladderPos;
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        /*if (this.gameObject.tag != "Stickman" && _brickList.Count == _maxBricks)
-        {
-            _AIManager.GoToLadder(_firstStepPos + new Vector3(-61, 180, 127));
-        }*/
-
-        /*if ((this.gameObject.tag == "Stickman" && _characterManager._isNewLevel) ||
-            (this.gameObject.tag == "AI" && _AIManager._isNewLevel))
-            _bricksOnLadder.Clear();*/
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-       /* if ((this.gameObject.tag == "AI" && other.gameObject.tag == "LadderEnd"))
-        {
-            _firstStepPos = _ladderPos + new Vector3(0, 0, 793);
-            _ladderPos = _firstStepPos;
-        }*/
-    }
-
-
     public void Drop()
     {
-        //if (_characterManager._isNewLevel)
-          //  _ladderPos = _ladderPos + new Vector3(0, 8, 793);
         _climbAudio.Play();
         StartCoroutine(DropProcess());
     }

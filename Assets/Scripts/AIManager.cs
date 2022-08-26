@@ -106,13 +106,12 @@ public class AIManager : MonoBehaviour
             transform.position += new Vector3(0f, 15f, 70f);
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _isCurrentLevel = true;
-            if(!_isDancing)
-                _isClimbed = false;
+            if(_isDancing && GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.childCount == 0)
+                StartCoroutine(Dance());
             else
             {
-                
-                StartCoroutine(Dance());
-                
+                _isClimbed = false;
+                _isDancing = false;
             }
                 
         }
@@ -225,13 +224,15 @@ public class AIManager : MonoBehaviour
             {
                 int bricksOnGround = GameObject.FindGameObjectWithTag(transform.tag+"Parent").transform.childCount;
                 int random = Random.Range(0, bricksOnGround);
-                walkPoint = GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.GetChild(random).position;
+                if (GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.childCount != 0)
+                    walkPoint = GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.GetChild(random).position;
+                else return;
             }
             
-            Debug.Log("walk point: " + walkPoint);
+            /*Debug.Log("walk point: " + walkPoint);
             Debug.Log("transform: " + transform.position);
             Debug.Log("distttttttttttttt: "+ (walkPoint.y - transform.position.y));
-            
+            */
             if (walkPoint.y - transform.position.y > 10 || walkPoint.y - transform.position.y<0 ||
                 (walkPoint.z == transform.position.z && walkPoint.z == transform.position.z))
                 return;
@@ -273,7 +274,7 @@ public class AIManager : MonoBehaviour
 
     public void GoToLadder(Vector3 endPoint)
     {
-        Debug.Log("ladder poiint: "+endPoint);
+        //Debug.Log("ladder poiint: "+endPoint);
         //transform.LookAt(endPoint);
         _agent.SetDestination(endPoint);
     }
@@ -290,7 +291,6 @@ public class AIManager : MonoBehaviour
     IEnumerator TrailRendererProcess(GameObject go)
     {
         go.GetComponent<TrailRenderer>().emitting = true;
-        //go.transform.position = Vector3.Lerp(_startPos, _endPos, 1f);
         yield return new WaitForSeconds(0.7f);
         go.GetComponent<TrailRenderer>().emitting = false;
     }
@@ -302,7 +302,7 @@ public class AIManager : MonoBehaviour
         
         Debug.Log("cup pos: " + _cupPos);
         RunAnimation();
-        //_agent.SetDestination(_cupPos);
+        _agent.SetDestination(_cupPos);
         yield return new WaitForSeconds(0.5f);
         DanceAnimation();
         
