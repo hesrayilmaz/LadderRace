@@ -12,6 +12,10 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private BuildLadder _ladder;
     [SerializeField] private SpawnItems _range;
     [SerializeField] private CameraController _camera;
+    [SerializeField] private AudioSource _pickUpAudio;
+    [SerializeField] private GameObject _characterBack;
+    [SerializeField] private GameObject _characterHand;
+    [SerializeField] private GameObject _cup;
 
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
@@ -26,27 +30,23 @@ public class CharacterManager : MonoBehaviour
     public bool _isClimbingUpward { get; set; }
     public bool _isClimbed { get; set; }
     public bool _isNewLevel { get; set; }
-    public static bool _isCurrentLevel = true; 
-    private Vector3 _characterPos;
-    private Vector3 _level;
-    public bool _isFinished = false;
-    private bool _isDancing = false;
-
+    public static bool _isCurrentLevel; 
+    private Vector3 _characterPos, _level;
+    private bool _isStarted, _isDancing, _pickedUp = false;
+    public bool _isFinished;
 
 
     public List<GameObject> _brickList;
     private int _maxBricks = 10;
     private GameObject _myBrick;
-    [SerializeField] private AudioSource _pickUpAudio;
-    private bool _pickedUp = false;
-    [SerializeField] private GameObject _characterBack;
-    [SerializeField] private GameObject _characterHand;
-    [SerializeField] private GameObject _cup;
-
-    private bool _isStarted = true;
+    
 
     private void Start()
     {
+        _isStarted = true;
+        _isFinished = false;
+        _isDancing = false;
+        _isCurrentLevel = true;
         _isClimbingUpward = false;
         _isClimbed = false;
         _isNewLevel = false;
@@ -106,7 +106,6 @@ public class CharacterManager : MonoBehaviour
         }
         else
             IdleAnimation();
-
 
         transform.DOMove((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.015f).SetRelative();
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
@@ -192,7 +191,6 @@ public class CharacterManager : MonoBehaviour
     {
         transform.DOMoveY(_characterPos.y, 0.01f);
         yield return new WaitForSeconds(0.01f);
-        
     }
     
     IEnumerator Dance()

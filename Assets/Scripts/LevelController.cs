@@ -58,7 +58,7 @@ public class LevelController : MonoBehaviour
                 _items.Init(_currentLevel);
             }
         }
-        else
+        else if(_currentNum == _numOfFloor)
         {
             _finishFloor.transform.position = _floor.transform.position + new Vector3(16f, 70, -620);
             Instantiate(_finishFloor);
@@ -78,4 +78,8 @@ public class LevelController : MonoBehaviour
         return _levels[index];
     }
 
+    public GameObject GetFinishLevel()
+    {
+        return _finishFloor;
+    }
 }

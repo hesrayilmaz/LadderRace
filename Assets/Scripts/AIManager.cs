@@ -7,18 +7,14 @@ using UnityEngine.AI;
 public class AIManager : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent _agent;
-
-    private Vector3 walkPoint;
-    private bool _isWalkPointSet;
-    private float _walkPointRange;
-    private Vector3 _level;
-    public float _distToPlayer = 1f;
-
     [SerializeField] private SimpleAnimancer _animancer;
     [SerializeField] private AudioSource _climbAudio;
     [SerializeField] private LevelController _levelController;
     [SerializeField] private BuildLadder _ladder;
     [SerializeField] private SpawnItems _range;
+    [SerializeField] private AudioSource _pickUpAudio;
+    [SerializeField] private GameObject _characterBack;
+    [SerializeField] private GameObject _cup;
 
 
     [SerializeField] private string _idleAnimName = "Idle";
@@ -35,33 +31,29 @@ public class AIManager : MonoBehaviour
     public bool _isClimbed { get; set; }
     public bool _isNewLevel { get; set; }
     public bool _goToLadder { get; set; }
-    public bool _isCurrentLevel = true;
-    private Vector3 _characterPos;
-    private Vector3 _ladderEndPos;
+    public bool _isCurrentLevel;
     public int radius = 3;
-    private bool _isStarted = true;
-    public static bool _isFinished = false;
-    private bool _isDancing = false;
-    public static bool _isGameOver = false;
+    public static bool _isFinished, _isGameOver;
+    private bool _isDancing, _isWalkPointSet, _pickedUp = false;
 
-
+    private Vector3 walkPoint;
     public List<GameObject> _brickList { get; set; }
     private int _maxBricks = 10;
     private GameObject _myBrick;
-    [SerializeField] private AudioSource _pickUpAudio;
-    private bool _pickedUp=false;
-    [SerializeField] private GameObject _characterBack;
-    [SerializeField] private GameObject _cup;
+    
 
 
     private void Start()
     {
+        _isFinished = false;
+        _isDancing = false;
+        _isGameOver = false;
+        _isCurrentLevel = true;
         _isClimbingUpward = false;
         _isClimbed = false;
         _isNewLevel = false;
         _goToLadder = false;
         _brickList = new List<GameObject>();
-        _level = new Vector3(-16, 411, 1263);
         
     }
 
@@ -112,10 +104,8 @@ public class AIManager : MonoBehaviour
             {
                 _isClimbed = false;
                 _isDancing = false;
-            }
-                
+            } 
         }
-
     }
 
 
@@ -217,7 +207,6 @@ public class AIManager : MonoBehaviour
             
             if (targetColor.Count > 0)
             {
-                //Debug.Log(targetColor.Count);
                 walkPoint = targetColor[targetColor.Count-1];
             }
             else

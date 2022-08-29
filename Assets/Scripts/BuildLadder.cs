@@ -17,9 +17,7 @@ public class BuildLadder : MonoBehaviour
 
     private GameObject _myBrick;
     private GameObject _ladderStep;
-    private List<GameObject> _brickList;
     private List<GameObject> _bricksOnLadder;
-    private Vector3 _startPos, _endPos;
     private Vector3 _firstStepPos, _ladderPos;
     private int _maxBricks = 10, _necessaryBricks=30;
 

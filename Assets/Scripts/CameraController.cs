@@ -7,17 +7,17 @@ public class CameraController : MonoBehaviour
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private GameObject finishCamera;
     [SerializeField] private Transform target;
-    [SerializeField] private GameObject finishFloor;
-    private Vector3 offset, secondOffset;
-
+    [SerializeField] private LevelController levelController;
+    private Vector3 offset;
+    private GameObject finishFloor;
 
     // Start is called before the first frame update
     void Start()
     {
+        finishFloor = levelController.GetFinishLevel();
         mainCamera.SetActive(true);
         finishCamera.SetActive(false);
         offset = mainCamera.transform.position - target.transform.position;
-        secondOffset = finishCamera.transform.position - finishFloor.transform.position;
     }
 
     // Update is called once per frame
@@ -32,8 +32,8 @@ public class CameraController : MonoBehaviour
 
     public void EnableFinishCamera()
     {
-        finishCamera.transform.position = new Vector3(secondOffset.x+finishFloor.transform.position.x,
-            secondOffset.y + finishFloor.transform.position.y, secondOffset.z + finishFloor.transform.position.z);
+        finishCamera.transform.position= new Vector3(finishFloor.transform.position.x+100f,
+          300f+ finishFloor.transform.position.y, finishFloor.transform.position.z-175f);
         mainCamera.SetActive(false);
         finishCamera.SetActive(true);
     }
