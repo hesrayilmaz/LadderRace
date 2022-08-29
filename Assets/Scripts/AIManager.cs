@@ -98,13 +98,11 @@ public class AIManager : MonoBehaviour
             transform.position += new Vector3(0f, 15f, 70f);
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _isCurrentLevel = true;
-            if(_isDancing && GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.childCount == 0)
+            _isClimbed = false;
+            if (_isDancing && GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.childCount == 0)
                 StartCoroutine(Dance());
             else
-            {
-                _isClimbed = false;
                 _isDancing = false;
-            } 
         }
     }
 
@@ -292,7 +290,7 @@ public class AIManager : MonoBehaviour
         Debug.Log("cup pos: " + _cupPos);
         RunAnimation();
         _agent.SetDestination(_cupPos);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         DanceAnimation();
         
     }

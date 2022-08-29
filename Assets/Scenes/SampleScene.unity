@@ -2704,58 +2704,6 @@ Transform:
   m_Father: {fileID: 598999895}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &721056166
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 721056168}
-  - component: {fileID: 721056167}
-  m_Layer: 0
-  m_Name: NavMeshLink
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &721056167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 721056166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eeb5dc026fdf4b488bc7ae0138ab719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_StartPoint: {x: 66.87068, y: -7.2095337, z: 74.971436}
-  m_EndPoint: {x: 66.79676, y: -8.568115, z: -43.300262}
-  m_Width: 900
-  m_CostModifier: 0
-  m_Bidirectional: 0
-  m_AutoUpdatePosition: 1
-  m_Area: 0
---- !u!4 &721056168
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 721056166}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -39, y: 493.3, z: 466}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &724469063
 GameObject:
   m_ObjectHideFlags: 0
@@ -4424,7 +4372,7 @@ Transform:
   - {fileID: 963194228}
   - {fileID: 1688644799}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1258810124
 GameObject:
@@ -5772,7 +5720,7 @@ MonoBehaviour:
   _GreenManager: {fileID: 1118875680}
   _OrangeManager: {fileID: 1434041006}
   _CharacterManager: {fileID: 1413736233}
-  _numOfFloor: 2
+  _numOfFloor: 1
 --- !u!4 &1452282369
 Transform:
   m_ObjectHideFlags: 0
