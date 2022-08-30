@@ -146,7 +146,7 @@ public class CharacterManager : MonoBehaviour
                 foreach (AIManager AI in AIs)
                     AI._isGameOver = true;
                 GameObject.Find("Canvas").transform.Find("Fixed Joystick").gameObject.SetActive(false);
-                GameObject.Find("Canvas").transform.Find("GameOverPanel").GetComponent<GameOver>().ShowPanel();
+                GameObject.Find("Canvas").transform.Find("GameOverPanel").GetComponent<GameOver>().ShowSuccessPanel();
                 _isDancing = true;
             }
 

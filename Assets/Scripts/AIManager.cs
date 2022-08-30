@@ -157,7 +157,7 @@ public class AIManager : MonoBehaviour
                         AI._isGameOver = true;
                 }
                 GameObject.Find("Canvas").transform.Find("Fixed Joystick").gameObject.SetActive(false);
-                GameObject.Find("Canvas").transform.Find("GameOverPanel").GetComponent<GameOver>().ShowPanel();
+                GameObject.Find("Canvas").transform.Find("GameOverPanel").GetComponent<GameOver>().ShowFailPanel();
                 _isDancing = true;
             }
 
