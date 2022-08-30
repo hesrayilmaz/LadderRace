@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
 
     public void EnableFinishCamera()
     {
-        finishCamera.transform.position= new Vector3(finishFloor.transform.position.x+100f,
+        finishCamera.transform.position= new Vector3(finishFloor.transform.position.x+90f,
           300f+ finishFloor.transform.position.y, finishFloor.transform.position.z-175f);
         mainCamera.SetActive(false);
         finishCamera.SetActive(true);

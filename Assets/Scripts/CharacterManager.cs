@@ -11,7 +11,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private LevelController _newLevel;
     [SerializeField] private BuildLadder _ladder;
     [SerializeField] private SpawnItems _range;
-    [SerializeField] private CameraController _camera;
+    private CameraController _camera;
     [SerializeField] private AudioSource _pickUpAudio;
     [SerializeField] private GameObject _characterBack;
     [SerializeField] private GameObject _characterHand;
@@ -51,6 +51,7 @@ public class CharacterManager : MonoBehaviour
         _isClimbed = false;
         _isNewLevel = false;
         _brickList = new List<GameObject>();
+        _camera = GameObject.Find("Camera").GetComponent<CameraController>();
         _level = new Vector3(-16, 411, 1263);
     }
     // Update is called once per frame
@@ -141,7 +142,9 @@ public class CharacterManager : MonoBehaviour
                 _level = _level + new Vector3(0, 480, 793);
             if (_isFinished)
             {
-                AIManager._isGameOver = true;
+                AIManager[] AIs = FindObjectsOfType<AIManager>();
+                foreach (AIManager AI in AIs)
+                    AI._isGameOver = true;
                 GameObject.Find("Canvas").transform.Find("Fixed Joystick").gameObject.SetActive(false);
                 GameObject.Find("Canvas").transform.Find("GameOverPanel").GetComponent<GameOver>().ShowPanel();
                 _isDancing = true;

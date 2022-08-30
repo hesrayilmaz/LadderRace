@@ -15,7 +15,7 @@ public class AIManager : MonoBehaviour
     [SerializeField] private AudioSource _pickUpAudio;
     [SerializeField] private GameObject _characterBack;
     [SerializeField] private GameObject _cup;
-
+    
 
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
@@ -31,16 +31,16 @@ public class AIManager : MonoBehaviour
     public bool _isClimbed { get; set; }
     public bool _isNewLevel { get; set; }
     public bool _goToLadder { get; set; }
-    public bool _isCurrentLevel;
+    public bool _isCurrentLevel, _isGameOver;
     public int radius = 3;
-    public static bool _isFinished, _isGameOver;
+    public static bool _isFinished;
     private bool _isDancing, _isWalkPointSet, _pickedUp = false;
 
     private Vector3 walkPoint;
     public List<GameObject> _brickList { get; set; }
     private int _maxBricks = 10;
     private GameObject _myBrick;
-    
+    private CameraController _camera;
 
 
     private void Start()
@@ -54,7 +54,7 @@ public class AIManager : MonoBehaviour
         _isNewLevel = false;
         _goToLadder = false;
         _brickList = new List<GameObject>();
-        
+        _camera = GameObject.Find("Camera").GetComponent<CameraController>();
     }
 
    
@@ -67,6 +67,14 @@ public class AIManager : MonoBehaviour
             //Debug.Log("11111111111"); 
             PickUp();
             _pickedUp = false;
+        }
+        if (_isGameOver)
+        {
+            IdleAnimation();
+            if (gameObject.GetComponent<NavMeshAgent>().enabled)
+                _agent.SetDestination(transform.position);
+            else
+                transform.DOKill();
         }
         else if(!_goToLadder && !_isClimbingUpward && !_isClimbed)
         {
@@ -100,7 +108,10 @@ public class AIManager : MonoBehaviour
             _isCurrentLevel = true;
             _isClimbed = false;
             if (_isDancing && GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.childCount == 0)
+            {
+                _camera.EnableFinishCamera();
                 StartCoroutine(Dance());
+            }
             else
                 _isDancing = false;
         }
@@ -139,6 +150,14 @@ public class AIManager : MonoBehaviour
                 _isWalkPointSet = false;
             if (_isFinished)
             {
+                AIManager[] AIs = FindObjectsOfType<AIManager>();
+                foreach (AIManager AI in AIs)
+                {
+                    if(AI.gameObject!=gameObject)
+                        AI._isGameOver = true;
+                }
+                GameObject.Find("Canvas").transform.Find("Fixed Joystick").gameObject.SetActive(false);
+                GameObject.Find("Canvas").transform.Find("GameOverPanel").GetComponent<GameOver>().ShowPanel();
                 _isDancing = true;
             }
 
@@ -187,12 +206,8 @@ public class AIManager : MonoBehaviour
  
     public void Move()
     {
-        if (_isGameOver)
-        {
-            IdleAnimation();
-            _agent.SetDestination(transform.position);
-        }
-        else if (!_isWalkPointSet)
+        
+        if (!_isWalkPointSet)
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
             List<Vector3> targetColor = new List<Vector3>();
