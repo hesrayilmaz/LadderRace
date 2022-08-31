@@ -72,8 +72,8 @@ public class LevelController : MonoBehaviour
         {
             _finishFloor.transform.position = _floorPrefab.transform.position + new Vector3(16f, 70, -620);
             Instantiate(_finishFloor);
-            _CharacterManager._isFinished = true;
-            AIManager._isFinished = true;
+            //_CharacterManager._isFinished = true;
+            //AIManager._isFinished = true;
         }
         
     }

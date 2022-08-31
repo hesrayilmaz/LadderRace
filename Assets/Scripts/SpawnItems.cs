@@ -36,8 +36,8 @@ public class SpawnItems : MonoBehaviour
     }
     private void SetRanges()
     {
-        Min = new Vector3(_level.transform.position.x - 350, _yAxis, _level.transform.position.z - 1450); 
-        Max = new Vector3(_level.transform.position.x + 350, _yAxis, _level.transform.position.z - 1050);
+        Min = new Vector3(_level.transform.position.x - 350, _yAxis, _level.transform.position.z - 1475); 
+        Max = new Vector3(_level.transform.position.x + 350, _yAxis, _level.transform.position.z - 1075);
         _xAxis = Random.Range(Min.x, Max.x);
         _yAxis = _level.transform.position.y-400;
         _zAxis = Random.Range(Min.z, Max.z);
@@ -50,25 +50,25 @@ public class SpawnItems : MonoBehaviour
         SetRanges();
         _brickObj = Instantiate(_brick, _randomPosition, Quaternion.identity);
         //_brickObj.transform.parent = _level.transform;
-        _brickObj.transform.parent = _level.transform;
+        _brickObj.transform.parent = _level.transform.Find("Bricks");
         PickUps["Stickman"].Add(_brickObj);
         
         SetRanges();
         _redBrickObj = Instantiate(_redBrick, _randomPosition, Quaternion.identity);
         //_redBrickObj.transform.parent = _level.transform;
-        _redBrickObj.transform.parent = _level.transform;
+        _redBrickObj.transform.parent = _level.transform.Find("RedBricks");
         PickUps["Red"].Add(_redBrickObj);
  
         SetRanges();
         _greenBrickObj = Instantiate(_greenBrick, _randomPosition, Quaternion.identity);
         //_greenBrickObj.transform.parent = _level.transform;
-        _greenBrickObj.transform.parent = _level.transform;
+        _greenBrickObj.transform.parent = _level.transform.Find("GreenBricks");
         PickUps["Green"].Add(_greenBrickObj);
  
         SetRanges();
         _orangeBrickObj = Instantiate(_orangeBrick, _randomPosition, Quaternion.identity);
         //_orangeBrickObj.transform.parent = _level.transform;
-        _orangeBrickObj.transform.parent = _level.transform;
+        _orangeBrickObj.transform.parent = _level.transform.Find("OrangeBricks");
         PickUps["Orange"].Add(_orangeBrickObj);
     }
 

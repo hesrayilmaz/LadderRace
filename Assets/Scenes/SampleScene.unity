@@ -1583,7 +1583,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &464804572
 Transform:
   m_ObjectHideFlags: 0
@@ -2523,7 +2523,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &808997302
 Transform:
   m_ObjectHideFlags: 0
@@ -2689,7 +2689,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &814396195
 Transform:
   m_ObjectHideFlags: 0
@@ -3967,7 +3967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1193407084
 Transform:
   m_ObjectHideFlags: 0
@@ -5500,7 +5500,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b938d1ea4449fa4e877eeecc8f5727a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _floor: {fileID: 4417917977823363830, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
+  _floorPrefab: {fileID: 4417917977823363830, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
+  _firstFloor: {fileID: 1834321905}
   _finishFloor: {fileID: 2352975246310850876, guid: 4a1566345fee89344aa77448b5754de9, type: 3}
   _levels: []
   _items: {fileID: 1452282370}
@@ -5509,6 +5510,7 @@ MonoBehaviour:
   _OrangeManager: {fileID: 1434041006}
   _CharacterManager: {fileID: 1413736233}
   _numOfFloor: 5
+  _currentLevel: {fileID: 0}
 --- !u!4 &1452282369
 Transform:
   m_ObjectHideFlags: 0
@@ -7158,6 +7160,11 @@ Transform:
   m_Father: {fileID: 521933466}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1834321905 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4417917977823363830, guid: 399ac5695b11cc24db76ed77e24bb3ab, type: 3}
+  m_PrefabInstance: {fileID: 847338815}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1850102600
 GameObject:
   m_ObjectHideFlags: 0
