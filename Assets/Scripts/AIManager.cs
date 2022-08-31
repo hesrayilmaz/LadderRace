@@ -32,7 +32,7 @@ public class AIManager : MonoBehaviour
     public bool _isNewLevel { get; set; }
     public bool _goToLadder { get; set; }
     public bool _isCurrentLevel, _isGameOver;
-    public int radius = 5;
+    public int radius = 5, _levelIndex;
     public static bool _isFinished;
     private bool _isDancing, _isWalkPointSet, _pickedUp = false;
 
@@ -54,6 +54,7 @@ public class AIManager : MonoBehaviour
         _goToLadder = false;
         _brickList = new List<GameObject>();
         _camera = GameObject.Find("Camera").GetComponent<CameraController>();
+        _levelIndex = 0;
     }
 
    
@@ -82,7 +83,7 @@ public class AIManager : MonoBehaviour
         else if (_isClimbingUpward && !_isClimbed)
         {
             //Debug.Log("3333");
-            _range.ClearParent(transform.tag);
+            //_range.ClearParent(transform.tag);
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
             ClimbAnimation();
             transform.DOMoveY(7f, 0.2f).SetRelative();
@@ -92,7 +93,7 @@ public class AIManager : MonoBehaviour
         {
             //StartCoroutine(FixPosition());
             //Debug.Log("444444");
-            _range.SetParent(transform.tag);
+           // _range.SetParent(transform.tag);
             transform.position += new Vector3(0f, 15f, 70f);
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _isCurrentLevel = true;
@@ -221,13 +222,13 @@ public class AIManager : MonoBehaviour
             {
                 if (gameObject.tag == "Red")
                     Debug.Log("elseeeeee");
-                int bricksOnGround = GameObject.FindGameObjectWithTag(transform.tag+"Parent").transform.childCount;
+                int bricksOnGround = _levelController.GetLevel(_levelIndex).transform.Find(transform.tag + "Bricks").transform.childCount;
                 int random = Random.Range(0, bricksOnGround);
-                if (GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.childCount != 0)
+                if (_levelController.GetLevel(_levelIndex).transform.Find(transform.tag + "Bricks").transform.childCount != 0)
                 {
                     if (gameObject.tag == "Red")
-                        Debug.Log("child count "+ GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.childCount);
-                    walkPoint = GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.GetChild(random).position;
+                        Debug.Log("child count "+ _levelController.GetLevel(_levelIndex).transform.Find(transform.tag + "Bricks").transform.childCount);
+                    walkPoint = _levelController.GetLevel(_levelIndex).transform.Find(transform.tag + "Bricks").transform.GetChild(random).position;
                 }
                     
                 else return;
