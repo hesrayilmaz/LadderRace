@@ -5,10 +5,10 @@ using UnityEngine;
 public class SpawnItems : MonoBehaviour
 {
 
-    [SerializeField] private GameObject _brick, _redBrick, _greenBrick, _orangeBrick, 
-                                        _StickmanBrickParent, _RedBrickParent, _GreenBrickParent, _OrangeBrickParent;
+    [SerializeField] private GameObject _brick, _redBrick, _greenBrick, _orangeBrick;
     [SerializeField] private LevelController _levelController;
-    private GameObject _brickObj, _redBrickObj, _greenBrickObj, _orangeBrickObj, _level;
+    private GameObject _brickObj, _redBrickObj, _greenBrickObj, _orangeBrickObj,
+                       _StickmanBrickParent, _RedBrickParent, _GreenBrickParent, _OrangeBrickParent, _level;
     private Vector3 Min, Max, _randomPosition;
     private float _xAxis, _yAxis, _zAxis;
     private Dictionary<string,List<GameObject>> PickUps;

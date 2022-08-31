@@ -89,7 +89,7 @@ public class CharacterManager : MonoBehaviour
             IdleAnimation();
             _characterPos = _level + new Vector3(100f, -404f, -1600f);
             transform.position = _characterPos;
-            if (_isDancing && _levelController.GetLevel(_levelIndex) == null)
+            if (_isDancing)
             {
                 _camera.EnableFinishCamera();
                 StartCoroutine(FixPosition());
@@ -122,13 +122,14 @@ public class CharacterManager : MonoBehaviour
         }
         else if (other.gameObject.tag == "LadderEnd")
         {
-                _isClimbingUpward = false;
-                _isClimbed = true;
-                _isNewLevel = true;
-                _ladder.ClearBricks();
-                _ladder.ChangeLadderPos();
-                _level = _level + new Vector3(0, 480, 793);
-            if (_isFinished)
+            _levelIndex++;
+            _isClimbingUpward = false;
+            _isClimbed = true;
+            _isNewLevel = true;
+            _ladder.ClearBricks();
+            _ladder.ChangeLadderPos();
+            _level = _level + new Vector3(0, 480, 793);
+            if (_levelController.GetLevel(_levelIndex) == null)
             {
                 AIManager[] AIs = FindObjectsOfType<AIManager>();
                 foreach (AIManager AI in AIs)

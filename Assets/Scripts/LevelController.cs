@@ -33,11 +33,9 @@ public class LevelController : MonoBehaviour
         if (_isStarted)
         {
             _numOfBrick = Random.Range(_minNum, _maxNum);
-
             for (int i = 0; i < _numOfBrick; i++)
-            {
                 _items.Init(_currentLevel);
-            }
+            
             GenerateLevel();
             _isStarted = false;
         }
@@ -54,9 +52,7 @@ public class LevelController : MonoBehaviour
             _levels[_currentNum] = _currentLevel;
             _numOfBrick = Random.Range(_minNum, _maxNum);
             for(int i = 0; i < _numOfBrick; i++)
-            {
                 _items.Init(_currentLevel);
-            }
             
         }
         if(_currentNum == _numOfFloor)
@@ -66,13 +62,14 @@ public class LevelController : MonoBehaviour
             //_CharacterManager._isFinished = true;
             //AIManager._isFinished = true;
         }
-
-        Debug.Log("level number: " + _levels.Length);
     }
 
     public GameObject GetLevel(int index)
     {
-        return _levels[index];
+        if (index < _levels.Length)
+            return _levels[index];
+        else
+            return null;
     }
 
     public GameObject GetFinishLevel()

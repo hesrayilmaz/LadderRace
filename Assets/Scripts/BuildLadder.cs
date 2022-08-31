@@ -19,7 +19,7 @@ public class BuildLadder : MonoBehaviour
     private GameObject _ladderStep;
     private List<GameObject> _bricksOnLadder;
     private Vector3 _firstStepPos, _ladderPos;
-    private int _maxBricks = 10, _necessaryBricks=30;
+    private int _necessaryBricks=30;
 
 
     // Start is called before the first frame update

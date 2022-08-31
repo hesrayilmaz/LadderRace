@@ -1568,37 +1568,6 @@ Transform:
   m_Father: {fileID: 171559146}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -15.535, z: 0}
---- !u!1 &464804571
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 464804572}
-  m_Layer: 0
-  m_Name: Bricks
-  m_TagString: BlueParent
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &464804572
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464804571}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &498943053
 GameObject:
   m_ObjectHideFlags: 0
@@ -2508,37 +2477,6 @@ Transform:
   m_Father: {fileID: 1864479486}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &808997301
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 808997302}
-  m_Layer: 0
-  m_Name: RedBricks
-  m_TagString: RedParent
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &808997302
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 808997301}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &811688692
 GameObject:
   m_ObjectHideFlags: 0
@@ -2674,37 +2612,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811688692}
   m_CullTransparentMesh: 1
---- !u!1 &814396194
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 814396195}
-  m_Layer: 0
-  m_Name: OrangeBricks
-  m_TagString: OrangeParent
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &814396195
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 814396194}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &819093954
 GameObject:
   m_ObjectHideFlags: 0
@@ -3555,9 +3462,9 @@ MonoBehaviour:
   _danceAnimName: Samba Dancing
   _danceAnimSpeed: 2
   _rotateSpeed: 10
-  _isCurrentLevel: 1
   _isGameOver: 0
   radius: 5
+  _levelIndex: 0
 --- !u!114 &1118875681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3952,37 +3859,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165005463}
   m_CullTransparentMesh: 1
---- !u!1 &1193407083
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1193407084}
-  m_Layer: 0
-  m_Name: GreenBricks
-  m_TagString: GreenParent
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1193407084
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1193407083}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1230606663
 GameObject:
   m_ObjectHideFlags: 0
@@ -4261,7 +4137,7 @@ Transform:
   - {fileID: 963194228}
   - {fileID: 1688644799}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1258810124
 GameObject:
@@ -4931,7 +4807,7 @@ MonoBehaviour:
   _animancer: {fileID: 1413736231}
   fixedJoystick: {fileID: 1348705744}
   _climbAudio: {fileID: 1258810126}
-  _newLevel: {fileID: 1452282368}
+  _levelController: {fileID: 1452282368}
   _ladder: {fileID: 1413736234}
   _range: {fileID: 1452282370}
   _pickUpAudio: {fileID: 569645840}
@@ -5146,9 +5022,9 @@ MonoBehaviour:
   _danceAnimName: Samba Dancing
   _danceAnimSpeed: 2
   _rotateSpeed: 10
-  _isCurrentLevel: 1
   _isGameOver: 0
   radius: 5
+  _levelIndex: 0
 --- !u!195 &1428125588
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5298,9 +5174,9 @@ MonoBehaviour:
   _danceAnimName: Samba Dancing
   _danceAnimSpeed: 2
   _rotateSpeed: 10
-  _isCurrentLevel: 1
   _isGameOver: 0
   radius: 5
+  _levelIndex: 0
 --- !u!114 &1434041007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5509,7 +5385,7 @@ MonoBehaviour:
   _GreenManager: {fileID: 1118875680}
   _OrangeManager: {fileID: 1434041006}
   _CharacterManager: {fileID: 1413736233}
-  _numOfFloor: 5
+  _numOfFloor: 0
   _currentLevel: {fileID: 0}
 --- !u!4 &1452282369
 Transform:
@@ -5542,10 +5418,6 @@ MonoBehaviour:
   _redBrick: {fileID: 5113347095119816855, guid: 7e2dafe8c9f076e48bbd35908534277a, type: 3}
   _greenBrick: {fileID: 5113347095119816855, guid: ff640498860b3c44d8b7bf1daf5ec150, type: 3}
   _orangeBrick: {fileID: 5113347095119816855, guid: 005f045268d970349a66ce7c0f1751f8, type: 3}
-  _StickmanBrickParent: {fileID: 0}
-  _RedBrickParent: {fileID: 0}
-  _GreenBrickParent: {fileID: 0}
-  _OrangeBrickParent: {fileID: 0}
   _levelController: {fileID: 1452282368}
 --- !u!1 &1480042607
 GameObject:

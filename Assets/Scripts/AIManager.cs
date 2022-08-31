@@ -96,7 +96,7 @@ public class AIManager : MonoBehaviour
             transform.position += new Vector3(0f, 15f, 70f);
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _isClimbed = false;
-            if (_isDancing && _levelController.GetLevel(_levelIndex)==null)
+            if (_isDancing)
             {
                 _camera.EnableFinishCamera();
                 StartCoroutine(Dance());
@@ -129,7 +129,7 @@ public class AIManager : MonoBehaviour
             _ladder.ClearBricks();
             _ladder.ChangeLadderPos();
             _isWalkPointSet = false;
-            if (_isFinished)
+            if (_levelController.GetLevel(_levelIndex) == null)
             {
                 AIManager[] AIs = FindObjectsOfType<AIManager>();
                 foreach (AIManager AI in AIs)
