@@ -3517,7 +3517,7 @@ NavMeshAgent:
   m_Acceleration: 270
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 20
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -5163,7 +5163,7 @@ NavMeshAgent:
   m_Acceleration: 270
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 20
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -5260,7 +5260,7 @@ NavMeshAgent:
   m_Acceleration: 270
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 20
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -5508,7 +5508,7 @@ MonoBehaviour:
   _GreenManager: {fileID: 1118875680}
   _OrangeManager: {fileID: 1434041006}
   _CharacterManager: {fileID: 1413736233}
-  _numOfFloor: 1
+  _numOfFloor: 5
 --- !u!4 &1452282369
 Transform:
   m_ObjectHideFlags: 0
@@ -5540,10 +5540,11 @@ MonoBehaviour:
   _redBrick: {fileID: 5113347095119816855, guid: 7e2dafe8c9f076e48bbd35908534277a, type: 3}
   _greenBrick: {fileID: 5113347095119816855, guid: ff640498860b3c44d8b7bf1daf5ec150, type: 3}
   _orangeBrick: {fileID: 5113347095119816855, guid: 005f045268d970349a66ce7c0f1751f8, type: 3}
-  _StickmanBrickParent: {fileID: 464804571}
-  _RedBrickParent: {fileID: 808997301}
-  _GreenBrickParent: {fileID: 1193407083}
-  _OrangeBrickParent: {fileID: 814396194}
+  _StickmanBrickParent: {fileID: 0}
+  _RedBrickParent: {fileID: 0}
+  _GreenBrickParent: {fileID: 0}
+  _OrangeBrickParent: {fileID: 0}
+  _levelController: {fileID: 1452282368}
 --- !u!1 &1480042607
 GameObject:
   m_ObjectHideFlags: 0

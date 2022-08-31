@@ -32,7 +32,7 @@ public class AIManager : MonoBehaviour
     public bool _isNewLevel { get; set; }
     public bool _goToLadder { get; set; }
     public bool _isCurrentLevel, _isGameOver;
-    public int radius = 3;
+    public int radius = 5;
     public static bool _isFinished;
     private bool _isDancing, _isWalkPointSet, _pickedUp = false;
 
@@ -41,7 +41,6 @@ public class AIManager : MonoBehaviour
     private int _maxBricks = 10;
     private GameObject _myBrick;
     private CameraController _camera;
-
 
     private void Start()
     {
@@ -78,7 +77,6 @@ public class AIManager : MonoBehaviour
         }
         else if(!_goToLadder && !_isClimbingUpward && !_isClimbed)
         {
-            //Debug.Log("22222222222");
             Move();
         }
         else if (_isClimbingUpward && !_isClimbed)
@@ -89,15 +87,7 @@ public class AIManager : MonoBehaviour
             ClimbAnimation();
             transform.DOMoveY(7f, 0.2f).SetRelative();
         }
-        /*
-         else if (_isClimbed)
-         {
-             //Debug.Log("3333");
-             _climbAudio.Stop();
-             IdleAnimation();
-             _isCurrentLevel = true;
-         }
-        */
+
         if (_isClimbed)
         {
             //StartCoroutine(FixPosition());
@@ -122,11 +112,11 @@ public class AIManager : MonoBehaviour
     {
         if (other.gameObject.tag == "LadderStart")
         {
-            Debug.Log("LADDER START");
+            //Debug.Log("LADDER START");
             _isClimbed = false;
             if (_isCurrentLevel)
             {
-                _levelController.GenerateLevel();
+                //_levelController.GenerateLevel();
                 _isCurrentLevel = false;
                 CharacterManager._isCurrentLevel = false;
                 AIManager[] AIs = FindObjectsOfType<AIManager>();
@@ -209,6 +199,8 @@ public class AIManager : MonoBehaviour
         
         if (!_isWalkPointSet)
         {
+            if (gameObject.tag == "Red")
+                Debug.Log("set walk point");
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
             List<Vector3> targetColor = new List<Vector3>();
             for(int i = 0; i < hitColliders.Length; i++)
@@ -220,24 +212,46 @@ public class AIManager : MonoBehaviour
             
             if (targetColor.Count > 0)
             {
-                walkPoint = targetColor[targetColor.Count-1];
+                if (gameObject.tag == "Red")
+                    Debug.Log("ifffffffff");
+                int random = Random.Range(0, targetColor.Count);
+                walkPoint = targetColor[random];
             }
             else
             {
+                if (gameObject.tag == "Red")
+                    Debug.Log("elseeeeee");
                 int bricksOnGround = GameObject.FindGameObjectWithTag(transform.tag+"Parent").transform.childCount;
                 int random = Random.Range(0, bricksOnGround);
                 if (GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.childCount != 0)
+                {
+                    if (gameObject.tag == "Red")
+                        Debug.Log("child count "+ GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.childCount);
                     walkPoint = GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.GetChild(random).position;
+                }
+                    
                 else return;
             }
+
+            if (gameObject.tag == "Red")
+            {
+                Debug.Log("walk point: " + walkPoint);
+                Debug.Log("transform: " + transform.position);
+                Debug.Log("distttttttttttttt: " + (walkPoint.y - transform.position.y));
+            }
             
-            /*Debug.Log("walk point: " + walkPoint);
-            Debug.Log("transform: " + transform.position);
-            Debug.Log("distttttttttttttt: "+ (walkPoint.y - transform.position.y));
-            */
+            
             if (walkPoint.y - transform.position.y > 10 || walkPoint.y - transform.position.y<0 ||
-                (walkPoint.z == transform.position.z && walkPoint.z == transform.position.z))
+                (Mathf.Approximately(walkPoint.x, transform.position.x) && Mathf.Approximately(walkPoint.z, transform.position.z)))
+            {
+                Debug.Log("wrong pointt");
                 return;
+            }
+                
+           
+                //int random = Random.Range(0, targetColor.Count-1);
+                //walkPoint = targetColor[random];
+           
             
             _agent.SetDestination(walkPoint);
             RunAnimation();
@@ -301,13 +315,11 @@ public class AIManager : MonoBehaviour
     {
         _cup = GameObject.FindGameObjectWithTag("Cup");
         Vector3 _cupPos = _cup.transform.position-new Vector3(0,52f,50f);
-        
-        Debug.Log("cup pos: " + _cupPos);
+        //Debug.Log("cup pos: " + _cupPos);
         RunAnimation();
         _agent.SetDestination(_cupPos);
         yield return new WaitForSeconds(1f);
         DanceAnimation();
-        
     }
 
     /* IEnumerator FixPosition()

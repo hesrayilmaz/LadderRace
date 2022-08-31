@@ -122,7 +122,7 @@ public class CharacterManager : MonoBehaviour
            // _climbAudio.Play();
            if (_isCurrentLevel)
             {
-                _newLevel.GenerateLevel();
+                //_newLevel.GenerateLevel();
                 AIManager[] AIs = FindObjectsOfType<AIManager>();
                 foreach (AIManager AI in AIs)
                     AI._isCurrentLevel = false;
@@ -204,7 +204,7 @@ public class CharacterManager : MonoBehaviour
         _cupPos.z -= 20f;
         //transform.DOMoveY(_characterPos.y, 0.01f);
         //yield return new WaitForSeconds(0.01f);
-        
+
         RunAnimation();
         transform.DOMove(_cupPos, 0.9f);
         yield return new WaitForSeconds(0.9f);
