@@ -8,7 +8,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private SimpleAnimancer _animancer;
     [SerializeField] private FixedJoystick fixedJoystick;
     [SerializeField] private AudioSource _climbAudio;
-    [SerializeField] private LevelController _newLevel;
+    [SerializeField] private LevelController _levelController;
     [SerializeField] private BuildLadder _ladder;
     [SerializeField] private SpawnItems _range;
     private CameraController _camera;
@@ -30,14 +30,13 @@ public class CharacterManager : MonoBehaviour
     public bool _isClimbingUpward { get; set; }
     public bool _isClimbed { get; set; }
     public bool _isNewLevel { get; set; }
-    public static bool _isCurrentLevel; 
     private Vector3 _characterPos, _level;
     private bool _isStarted, _isDancing, _pickedUp = false;
     public bool _isFinished;
 
 
     public List<GameObject> _brickList;
-    private int _maxBricks = 10;
+    private int _maxBricks = 10, _levelIndex;
     private GameObject _myBrick;
     
 
@@ -46,20 +45,20 @@ public class CharacterManager : MonoBehaviour
         _isStarted = true;
         _isFinished = false;
         _isDancing = false;
-        _isCurrentLevel = true;
         _isClimbingUpward = false;
         _isClimbed = false;
         _isNewLevel = false;
         _brickList = new List<GameObject>();
         _camera = GameObject.Find("Camera").GetComponent<CameraController>();
         _level = new Vector3(-16, 411, 1263);
+        _levelIndex = 0;
     }
     // Update is called once per frame
     void Update()
     {
         if (_isStarted)
         {
-            _range.SetParent(transform.tag);
+            //_range.SetParent(transform.tag);
             _isStarted = false;
         }
 
@@ -78,7 +77,7 @@ public class CharacterManager : MonoBehaviour
         else if (_isClimbingUpward && !_isClimbed)
         {
             //Debug.Log("2222");
-            _range.ClearParent(transform.tag);
+            //_range.ClearParent(transform.tag);
             ClimbAnimation();
             transform.DOMoveY(7f, 0.05f).SetRelative();
         }
@@ -86,11 +85,11 @@ public class CharacterManager : MonoBehaviour
         {
             //Debug.Log("3333");
             //_climbAudio.Stop();
-            _range.SetParent(transform.tag);
+           // _range.SetParent(transform.tag);
             IdleAnimation();
             _characterPos = _level + new Vector3(100f, -404f, -1600f);
             transform.position = _characterPos;
-            if (_isDancing && GameObject.FindGameObjectWithTag("BlueParent").transform.childCount == 0)
+            if (_isDancing && _levelController.GetLevel(_levelIndex) == null)
             {
                 _camera.EnableFinishCamera();
                 StartCoroutine(FixPosition());
@@ -101,8 +100,6 @@ public class CharacterManager : MonoBehaviour
                 transform.DOMove(_characterPos, 0.015f);
                 _isDancing = false;
             }
-           
-            _isCurrentLevel = true;
 
         }
         else
@@ -120,15 +117,6 @@ public class CharacterManager : MonoBehaviour
         {
             _isClimbed = false;
            // _climbAudio.Play();
-           if (_isCurrentLevel)
-            {
-                //_newLevel.GenerateLevel();
-                AIManager[] AIs = FindObjectsOfType<AIManager>();
-                foreach (AIManager AI in AIs)
-                    AI._isCurrentLevel = false;
-                _isCurrentLevel = false;
-            }
-        
             _ladder.Drop();
             _isNewLevel = false;
         }
@@ -159,10 +147,6 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    public void SetFirstFloor()
-    {
-        _range.SetParent(transform.tag);
-    }
 
     public void PickUp()
     {

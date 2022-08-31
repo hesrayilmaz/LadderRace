@@ -15,9 +15,12 @@ public class SpawnItems : MonoBehaviour
     private Dictionary<string,GameObject> Parents;
     private List<GameObject> StickmanToPickUp, RedToPickUp, GreenToPickUp, OrangeToPickUp;
     public static bool _isFirstLevel = true;
+    private int _levelIndex;
 
     private void Start()
     {
+        _levelIndex = 0;
+
         StickmanToPickUp = new List<GameObject>();
         RedToPickUp = new List<GameObject>();
         GreenToPickUp = new List<GameObject>();
@@ -30,7 +33,6 @@ public class SpawnItems : MonoBehaviour
         PickUps.Add("Orange", OrangeToPickUp);
 
         
-
         Parents = new Dictionary<string, GameObject>();
         
     }
@@ -74,10 +76,10 @@ public class SpawnItems : MonoBehaviour
 
     public void SetParent(string playerTag)
     {
-        _StickmanBrickParent = _levelController.GetCurrentLevel().transform.Find("Bricks").gameObject;
-        _RedBrickParent = _levelController.GetCurrentLevel().transform.Find("RedBricks").gameObject;
-        _GreenBrickParent = _levelController.GetCurrentLevel().transform.Find("GreenBricks").gameObject;
-        _OrangeBrickParent = _levelController.GetCurrentLevel().transform.Find("OrangeBricks").gameObject;
+        _StickmanBrickParent = _levelController.GetLevel(_levelIndex).transform.Find("Bricks").gameObject;
+        _RedBrickParent = _levelController.GetLevel(_levelIndex).transform.Find("RedBricks").gameObject;
+        _GreenBrickParent = _levelController.GetLevel(_levelIndex).transform.Find("GreenBricks").gameObject;
+        _OrangeBrickParent = _levelController.GetLevel(_levelIndex).transform.Find("OrangeBricks").gameObject;
 
         Parents.Add("Stickman", _StickmanBrickParent);
         Parents.Add("Red", _RedBrickParent);
@@ -90,6 +92,7 @@ public class SpawnItems : MonoBehaviour
                 PickUps[playerTag][i].transform.parent = Parents[playerTag].transform;
         }
 
+        _levelIndex++;
     }
 
     public void ClearParent(string playerTag)

@@ -31,7 +31,7 @@ public class AIManager : MonoBehaviour
     public bool _isClimbed { get; set; }
     public bool _isNewLevel { get; set; }
     public bool _goToLadder { get; set; }
-    public bool _isCurrentLevel, _isGameOver;
+    public bool _isGameOver;
     public int radius = 5, _levelIndex;
     public static bool _isFinished;
     private bool _isDancing, _isWalkPointSet, _pickedUp = false;
@@ -47,7 +47,6 @@ public class AIManager : MonoBehaviour
         _isFinished = false;
         _isDancing = false;
         _isGameOver = false;
-        _isCurrentLevel = true;
         _isClimbingUpward = false;
         _isClimbed = false;
         _isNewLevel = false;
@@ -96,9 +95,8 @@ public class AIManager : MonoBehaviour
            // _range.SetParent(transform.tag);
             transform.position += new Vector3(0f, 15f, 70f);
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
-            _isCurrentLevel = true;
             _isClimbed = false;
-            if (_isDancing && GameObject.FindGameObjectWithTag(transform.tag + "Parent").transform.childCount == 0)
+            if (_isDancing && _levelController.GetLevel(_levelIndex)==null)
             {
                 _camera.EnableFinishCamera();
                 StartCoroutine(Dance());
@@ -115,15 +113,6 @@ public class AIManager : MonoBehaviour
         {
             //Debug.Log("LADDER START");
             _isClimbed = false;
-            if (_isCurrentLevel)
-            {
-                //_levelController.GenerateLevel();
-                _isCurrentLevel = false;
-                CharacterManager._isCurrentLevel = false;
-                AIManager[] AIs = FindObjectsOfType<AIManager>();
-                foreach(AIManager AI in AIs)
-                    AI._isCurrentLevel = false;
-            }
             StartCoroutine(DropProcess());
            
             _isNewLevel = false;
@@ -132,13 +121,14 @@ public class AIManager : MonoBehaviour
         }
         else if (other.gameObject.tag == "LadderEnd")
         {
-           
-                _isClimbingUpward = false;
-                _isClimbed = true;
-                _isNewLevel = true;
-                _ladder.ClearBricks();
-                _ladder.ChangeLadderPos();
-                _isWalkPointSet = false;
+
+            _levelIndex++;
+            _isClimbingUpward = false;
+            _isClimbed = true;
+            _isNewLevel = true;
+            _ladder.ClearBricks();
+            _ladder.ChangeLadderPos();
+            _isWalkPointSet = false;
             if (_isFinished)
             {
                 AIManager[] AIs = FindObjectsOfType<AIManager>();
@@ -163,10 +153,6 @@ public class AIManager : MonoBehaviour
 
     }
 
-    public void SetFirstFloor()
-    {
-        _range.SetParent(transform.tag);
-    }
 
     public void PickUp()
     {

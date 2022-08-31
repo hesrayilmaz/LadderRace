@@ -12,7 +12,7 @@ public class LevelController : MonoBehaviour
     [SerializeField] private int _numOfFloor;
     private int _numOfBrick;
     public GameObject _currentLevel;
-    private int _currentNum = 0, _minNum=35, _maxNum=45;
+    private int _currentNum, _minNum=35, _maxNum=45;
     private float _yDiff = 480f;
     private float _zDiff = 793f;
 
@@ -21,19 +21,17 @@ public class LevelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _currentNum = 0;
         _floorPrefab.transform.position = new Vector3(-16f, 411f, 1263f);
         _currentLevel = _firstFloor;
-        _levels = new GameObject[_numOfFloor];
-        _levels[0] = _currentLevel;
-        
+        _levels = new GameObject[_numOfFloor+1];
+        _levels[_currentNum] = _currentLevel;
     }
 
     private void Update()
     {
         if (_isStarted)
         {
-
-            /**/
             _numOfBrick = Random.Range(_minNum, _maxNum);
 
             for (int i = 0; i < _numOfBrick; i++)
@@ -41,13 +39,6 @@ public class LevelController : MonoBehaviour
                 _items.Init(_currentLevel);
             }
             GenerateLevel();
-
-            //_RedManager.SetFirstFloor();
-            //_GreenManager.SetFirstFloor();
-            //_OrangeManager.SetFirstFloor();
-            //_CharacterManager.SetFirstFloor();
-           
-
             _isStarted = false;
         }
     }
@@ -75,12 +66,8 @@ public class LevelController : MonoBehaviour
             //_CharacterManager._isFinished = true;
             //AIManager._isFinished = true;
         }
-        
-    }
 
-    public GameObject GetCurrentLevel()
-    {
-        return _currentLevel;
+        Debug.Log("level number: " + _levels.Length);
     }
 
     public GameObject GetLevel(int index)
