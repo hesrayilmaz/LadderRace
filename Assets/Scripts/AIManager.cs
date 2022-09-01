@@ -116,7 +116,7 @@ public class AIManager : MonoBehaviour
             StartCoroutine(DropProcess());
            
             _isNewLevel = false;
-            _isWalkPointSet = false;
+            
 
         }
         else if (other.gameObject.tag == "LadderEnd")
@@ -131,6 +131,7 @@ public class AIManager : MonoBehaviour
             _isWalkPointSet = false;
             if (_levelController.GetLevel(_levelIndex) == null)
             {
+                _isWalkPointSet = true;
                 AIManager[] AIs = FindObjectsOfType<AIManager>();
                 foreach (AIManager AI in AIs)
                 {
@@ -143,8 +144,7 @@ public class AIManager : MonoBehaviour
             }
 
         }
-        else if(other.gameObject.tag != transform.tag &&
-                  other.gameObject.tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
+        else if(other.gameObject.tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
         {
            // _pickUpAudio.Play();
             _myBrick = other.gameObject;
@@ -158,7 +158,7 @@ public class AIManager : MonoBehaviour
     {
         if (_brickList.Count <= _maxBricks)
         {
-            _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            //_myBrick.GetComponent<Rigidbody>().isKinematic = true;
             _myBrick.transform.parent = _characterBack.transform;
 
             if (_brickList.Count == 0)
@@ -172,8 +172,8 @@ public class AIManager : MonoBehaviour
             _myBrick.transform.localRotation = Quaternion.identity;
             _brickList.Add(_myBrick);
             _myBrick.gameObject.tag = "Untagged";
+            _isWalkPointSet = false;
         }
-
         if (_brickList.Count == _maxBricks)
         {
             GoToLadder(_ladder.GetLadderPosAI());
@@ -225,31 +225,28 @@ public class AIManager : MonoBehaviour
                 Debug.Log("walk point: " + walkPoint);
                 Debug.Log("transform: " + transform.position);
                 Debug.Log("distttttttttttttt: " + (walkPoint.y - transform.position.y));
-            }
-            
-            
-            if (walkPoint.y - transform.position.y > 10 || walkPoint.y - transform.position.y<0 ||
+
+                if (walkPoint.y - transform.position.y > 10 || walkPoint.y - transform.position.y < 0 ||
                 (Mathf.Approximately(walkPoint.x, transform.position.x) && Mathf.Approximately(walkPoint.z, transform.position.z)))
-            {
-                Debug.Log("wrong pointt");
-                return;
+                {
+                    Debug.Log("wrong pointt");
+                    return;
+                }
             }
-                
-           
-                //int random = Random.Range(0, targetColor.Count-1);
-                //walkPoint = targetColor[random];
-           
+            
             
             _agent.SetDestination(walkPoint);
             RunAnimation();
-            _isWalkPointSet = true;
+            
         }
-       
+
+        _isWalkPointSet = true;
         _isClimbed = false;
-        Vector3 _distToWalkPoint = transform.position - walkPoint;
-        //Debug.Log("dist: "+_distToWalkPoint.magnitude);
-        if (_distToWalkPoint.magnitude < 10f)
-            _isWalkPointSet = false;
+        /*Vector3 _distToWalkPoint = transform.position - walkPoint;
+        if (gameObject.tag == "Red")
+            Debug.Log("DISSSSTTTTTTTT: "+_distToWalkPoint.magnitude);
+        if (_distToWalkPoint.magnitude < 20f)
+            _isWalkPointSet = false;*/
     }
 
 
@@ -279,15 +276,24 @@ public class AIManager : MonoBehaviour
     {
         //Debug.Log("ladder poiint: "+endPoint);
         //transform.LookAt(endPoint);
+        _isWalkPointSet = true;
         _agent.SetDestination(endPoint);
     }
 
+    IEnumerator PickUpProcess()
+    {
+        PickUp();
+        yield return new WaitForSeconds(0.5f);
+        
+
+    }
     IEnumerator DropProcess()
     {
         IdleAnimation();
         _ladder.Drop();
         yield return new WaitForSeconds(1.5f);
         _goToLadder = false;
+        _isWalkPointSet = false;
         RunAnimation();
     }
 

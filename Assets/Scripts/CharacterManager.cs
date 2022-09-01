@@ -142,7 +142,7 @@ public class CharacterManager : MonoBehaviour
         }
         else if (other.gameObject.tag == "Brick")
         {
-            _pickUpAudio.Play();
+            
             _myBrick = other.gameObject;
             _pickedUp = true;
         }
@@ -153,7 +153,8 @@ public class CharacterManager : MonoBehaviour
     {
         if (_brickList.Count <= _maxBricks)
         {
-            _myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            _pickUpAudio.Play();
+            //_myBrick.gameObject.GetComponent<Rigidbody>().isKinematic = true;
             _myBrick.transform.parent = _characterBack.transform;
 
             if (_brickList.Count == 0)

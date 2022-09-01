@@ -11,7 +11,7 @@ public class LevelController : MonoBehaviour
     [SerializeField] private CharacterManager _CharacterManager;
     [SerializeField] private int _numOfFloor;
     private int _numOfBrick;
-    public GameObject _currentLevel;
+    private GameObject _currentLevel;
     private int _currentNum, _minNum=35, _maxNum=45;
     private float _yDiff = 480f;
     private float _zDiff = 793f;
@@ -59,8 +59,6 @@ public class LevelController : MonoBehaviour
         {
             _finishFloor.transform.position = _floorPrefab.transform.position + new Vector3(16f, 70, -620);
             Instantiate(_finishFloor);
-            //_CharacterManager._isFinished = true;
-            //AIManager._isFinished = true;
         }
     }
 
