@@ -15,7 +15,6 @@ public class AIManager : MonoBehaviour
     [SerializeField] private AudioSource _pickUpAudio;
     [SerializeField] private GameObject _characterBack;
     [SerializeField] private GameObject _cup;
-    
 
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
@@ -33,19 +32,21 @@ public class AIManager : MonoBehaviour
     public bool _goToLadder { get; set; }
     public bool _isGameOver;
     public int radius = 5, _levelIndex;
-    public static bool _isFinished;
-    private bool _isDancing, _isWalkPointSet, _pickedUp = false;
+    private bool _isDancing, _isWalkPointSet, _pickedUp;
 
-    private Vector3 walkPoint;
+    private Vector3 walkPoint, _ladderPos;
     public List<GameObject> _brickList { get; set; }
     private int _maxBricks = 10;
     private GameObject _myBrick;
     private CameraController _camera;
+    
 
     private void Start()
     {
-        _isFinished = false;
+       
         _isDancing = false;
+        _isWalkPointSet = false;
+        _pickedUp = false;
         _isGameOver = false;
         _isClimbingUpward = false;
         _isClimbed = false;
@@ -54,6 +55,7 @@ public class AIManager : MonoBehaviour
         _brickList = new List<GameObject>();
         _camera = GameObject.Find("Camera").GetComponent<CameraController>();
         _levelIndex = 0;
+        gameObject.GetComponent<NavMeshAgent>().enabled = true;
     }
 
    
@@ -63,27 +65,34 @@ public class AIManager : MonoBehaviour
        
         if (_pickedUp)
         {
-            //Debug.Log("11111111111"); 
+            if(gameObject.tag=="Red")
+                Debug.Log("11111111111"); 
             PickUp();
             _pickedUp = false;
         }
         if (_isGameOver)
         {
+            if (gameObject.tag == "Red")
+                Debug.Log("666666");
             IdleAnimation();
             if (gameObject.GetComponent<NavMeshAgent>().enabled)
                 _agent.SetDestination(transform.position);
             else
                 transform.DOKill();
+                //transform.DOMove(transform.position, 0.1f); 
         }
         else if(!_goToLadder && !_isClimbingUpward && !_isClimbed)
         {
+            if (gameObject.tag == "Red")
+                Debug.Log("5555555");
             Move();
         }
         else if (_isClimbingUpward && !_isClimbed)
         {
-            //Debug.Log("3333");
-            //_range.ClearParent(transform.tag);
+            if (gameObject.tag == "Red")
+                Debug.Log("3333");
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
+            transform.position = _ladderPos - new Vector3(0, 0, 15);
             ClimbAnimation();
             transform.DOMoveY(7f, 0.2f).SetRelative();
         }
@@ -91,8 +100,8 @@ public class AIManager : MonoBehaviour
         if (_isClimbed)
         {
             //StartCoroutine(FixPosition());
-            //Debug.Log("444444");
-           // _range.SetParent(transform.tag);
+            if (gameObject.tag == "Red")
+                Debug.Log("444444");
             transform.position += new Vector3(0f, 15f, 70f);
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
             _isClimbed = false;
@@ -109,26 +118,23 @@ public class AIManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "LadderStart")
+        if (other.gameObject.tag == "LadderStart" && other.transform.parent.name == gameObject.tag + "Ladder")
         {
-            //Debug.Log("LADDER START");
+            transform.DOMove(_ladderPos, 0.3f);
             _isClimbed = false;
+            gameObject.GetComponent<NavMeshAgent>().enabled = false;
             StartCoroutine(DropProcess());
-           
             _isNewLevel = false;
-            
-
         }
         else if (other.gameObject.tag == "LadderEnd")
         {
-
             _levelIndex++;
             _isClimbingUpward = false;
             _isClimbed = true;
             _isNewLevel = true;
             _ladder.ClearBricks();
             _ladder.ChangeLadderPos();
-            _isWalkPointSet = false;
+            
             if (_levelController.GetLevel(_levelIndex) == null)
             {
                 _isWalkPointSet = true;
@@ -142,11 +148,11 @@ public class AIManager : MonoBehaviour
                 GameObject.Find("Canvas").transform.Find("GameOverPanel").GetComponent<GameOver>().ShowFailPanel();
                 _isDancing = true;
             }
-
+            else
+                _isWalkPointSet = false;
         }
         else if(other.gameObject.tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
         {
-           // _pickUpAudio.Play();
             _myBrick = other.gameObject;
             _pickedUp = true;
         }
@@ -156,24 +162,19 @@ public class AIManager : MonoBehaviour
 
     public void PickUp()
     {
-        if (_brickList.Count <= _maxBricks)
-        {
-            //_myBrick.GetComponent<Rigidbody>().isKinematic = true;
-            _myBrick.transform.parent = _characterBack.transform;
+        _myBrick.transform.parent = _characterBack.transform;
 
-            if (_brickList.Count == 0)
-                 _myBrick.transform.position = _characterBack.transform.position;
-            else
-            {
-                _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 10f, 0f);
-
-            }
-            StartCoroutine(TrailRendererProcess(_myBrick));
-            _myBrick.transform.localRotation = Quaternion.identity;
-            _brickList.Add(_myBrick);
-            _myBrick.gameObject.tag = "Untagged";
-            _isWalkPointSet = false;
-        }
+        if (_brickList.Count == 0)
+            _myBrick.transform.position = _characterBack.transform.position;
+        else
+            _myBrick.transform.position = _brickList[_brickList.Count - 1].transform.position + new Vector3(0f, 10f, 0f);
+        
+        StartCoroutine(TrailRendererProcess(_myBrick));
+        _myBrick.transform.localRotation = Quaternion.identity;
+        _brickList.Add(_myBrick);
+        _myBrick.gameObject.tag = "Untagged";
+        _isWalkPointSet = false;
+       
         if (_brickList.Count == _maxBricks)
         {
             GoToLadder(_ladder.GetLadderPosAI());
@@ -183,70 +184,54 @@ public class AIManager : MonoBehaviour
  
     public void Move()
     {
-        
+
+        if (Mathf.Approximately(_agent.velocity.sqrMagnitude, 0))
+            _isWalkPointSet = false;
+
         if (!_isWalkPointSet)
         {
-            if (gameObject.tag == "Red")
-                Debug.Log("set walk point");
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
             List<Vector3> targetColor = new List<Vector3>();
             for(int i = 0; i < hitColliders.Length; i++)
             { 
-                if ((hitColliders[i].tag!=transform.tag) &&
-                    hitColliders[i].tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
+                if (hitColliders[i].tag.StartsWith(transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.name.Substring(0, 1)))
                         targetColor.Add(hitColliders[i].transform.position);
             }
-            
+
+            int bricksOnGround = _levelController.GetLevel(_levelIndex).transform.Find(transform.tag + "Bricks").transform.childCount;
+            int random = Random.Range(0, bricksOnGround);
+
             if (targetColor.Count > 0)
             {
-                if (gameObject.tag == "Red")
-                    Debug.Log("ifffffffff");
-                int random = Random.Range(0, targetColor.Count);
-                walkPoint = targetColor[random];
+                walkPoint = targetColor[targetColor.Count - 1];
+                if (Mathf.Approximately(_agent.velocity.sqrMagnitude, 0))
+                {
+                    random = Random.Range(0, bricksOnGround);
+                    walkPoint = _levelController.GetLevel(_levelIndex).transform.Find(transform.tag + "Bricks").transform.GetChild(random).position;
+                }
             }
             else
             {
-                if (gameObject.tag == "Red")
-                    Debug.Log("elseeeeee");
-                int bricksOnGround = _levelController.GetLevel(_levelIndex).transform.Find(transform.tag + "Bricks").transform.childCount;
-                int random = Random.Range(0, bricksOnGround);
                 if (_levelController.GetLevel(_levelIndex).transform.Find(transform.tag + "Bricks").transform.childCount != 0)
                 {
-                    if (gameObject.tag == "Red")
-                        Debug.Log("child count "+ _levelController.GetLevel(_levelIndex).transform.Find(transform.tag + "Bricks").transform.childCount);
+                    random = Random.Range(0, bricksOnGround);
                     walkPoint = _levelController.GetLevel(_levelIndex).transform.Find(transform.tag + "Bricks").transform.GetChild(random).position;
                 }
-                    
-                else return;
-            }
-
-            if (gameObject.tag == "Red")
-            {
-                Debug.Log("walk point: " + walkPoint);
-                Debug.Log("transform: " + transform.position);
-                Debug.Log("distttttttttttttt: " + (walkPoint.y - transform.position.y));
-
-                if (walkPoint.y - transform.position.y > 10 || walkPoint.y - transform.position.y < 0 ||
-                (Mathf.Approximately(walkPoint.x, transform.position.x) && Mathf.Approximately(walkPoint.z, transform.position.z)))
-                {
-                    Debug.Log("wrong pointt");
+                else 
                     return;
+                
+                if (Mathf.Approximately(_agent.velocity.sqrMagnitude, 0))
+                {
+                    random = Random.Range(0, bricksOnGround);
+                    walkPoint = _levelController.GetLevel(_levelIndex).transform.Find(transform.tag + "Bricks").transform.GetChild(random).position;
                 }
+
             }
-            
-            
             _agent.SetDestination(walkPoint);
             RunAnimation();
-            
+            _isWalkPointSet = true;
         }
-
-        _isWalkPointSet = true;
         _isClimbed = false;
-        /*Vector3 _distToWalkPoint = transform.position - walkPoint;
-        if (gameObject.tag == "Red")
-            Debug.Log("DISSSSTTTTTTTT: "+_distToWalkPoint.magnitude);
-        if (_distToWalkPoint.magnitude < 20f)
-            _isWalkPointSet = false;*/
     }
 
 
@@ -275,26 +260,25 @@ public class AIManager : MonoBehaviour
     public void GoToLadder(Vector3 endPoint)
     {
         //Debug.Log("ladder poiint: "+endPoint);
-        //transform.LookAt(endPoint);
+        _ladderPos = endPoint;
         _isWalkPointSet = true;
         _agent.SetDestination(endPoint);
-    }
+        }
 
-    IEnumerator PickUpProcess()
-    {
-        PickUp();
-        yield return new WaitForSeconds(0.5f);
-        
-
-    }
     IEnumerator DropProcess()
     {
+        //transform.DOMove(_ladderPos, 0.3f);
+        var rotationVector = transform.rotation.eulerAngles;
+        rotationVector.y = -20;
+        transform.rotation = Quaternion.Euler(rotationVector);
         IdleAnimation();
         _ladder.Drop();
         yield return new WaitForSeconds(1.5f);
+        
         _goToLadder = false;
-        _isWalkPointSet = false;
+        gameObject.GetComponent<NavMeshAgent>().enabled = true;
         RunAnimation();
+        _isWalkPointSet = false;
     }
 
     IEnumerator TrailRendererProcess(GameObject go)

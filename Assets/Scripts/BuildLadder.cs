@@ -26,7 +26,7 @@ public class BuildLadder : MonoBehaviour
     void Start()
     {
         _bricksOnLadder = new List<GameObject>();
-        _ladderPos = _ladder.transform.position + new Vector3(-5, -170, 265);
+        _ladderPos = _ladder.transform.position + new Vector3(-6, -170, 265);
         _firstStepPos = _ladderPos;
     }
 

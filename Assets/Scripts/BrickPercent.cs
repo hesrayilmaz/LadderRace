@@ -18,14 +18,14 @@ public class BrickPercent : MonoBehaviour
         //_levelController = GameObject.Find("LevelController").GetComponent<LevelController>();
         _items = GameObject.Find("stickman").GetComponent<BuildLadder>();
 
-        if (this.gameObject.tag == "Red")
+        if (gameObject.tag == "Red")
             _AIItems = GameObject.Find("redAI").GetComponent<BuildLadder>();
-        else if(this.gameObject.tag == "Green")
+        else if(gameObject.tag == "Green")
             _AIItems = GameObject.Find("greenAI").GetComponent<BuildLadder>();
-        else if(this.gameObject.tag == "Orange")
+        else if(gameObject.tag == "Orange")
             _AIItems = GameObject.Find("orangeAI").GetComponent<BuildLadder>();
 
-       // _percentText = _levelController.GetLevel(0).transform.Find(gameObject.tag+"Ladder").transform.Find("Percent").transform.Find("Text").GetComponent<TextMeshPro>();
+       //_percentText = _levelController.GetLevel(0).transform.Find(gameObject.tag+"Ladder").transform.Find("Percent").transform.Find("Text").GetComponent<TextMeshPro>();
         _percentText.text = "%" + 0;
     }
 

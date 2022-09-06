@@ -32,7 +32,6 @@ public class CharacterManager : MonoBehaviour
     public bool _isNewLevel { get; set; }
     private Vector3 _characterPos, _level;
     private bool _isStarted, _isDancing, _pickedUp = false;
-    public bool _isFinished;
 
 
     public List<GameObject> _brickList;
@@ -43,7 +42,6 @@ public class CharacterManager : MonoBehaviour
     private void Start()
     {
         _isStarted = true;
-        _isFinished = false;
         _isDancing = false;
         _isClimbingUpward = false;
         _isClimbed = false;
@@ -56,11 +54,6 @@ public class CharacterManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_isStarted)
-        {
-            //_range.SetParent(transform.tag);
-            _isStarted = false;
-        }
 
         if (_pickedUp)
         {

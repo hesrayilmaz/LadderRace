@@ -16,11 +16,12 @@ public class LevelController : MonoBehaviour
     private float _yDiff = 480f;
     private float _zDiff = 793f;
 
-    private bool _isStarted = true;
+    private bool _isStarted;
 
     // Start is called before the first frame update
     void Start()
     {
+        _isStarted = true;
         _currentNum = 0;
         _floorPrefab.transform.position = new Vector3(-16f, 411f, 1263f);
         _currentLevel = _firstFloor;
