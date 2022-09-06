@@ -21,12 +21,15 @@ public class LevelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         _isStarted = true;
         _currentNum = 0;
         _floorPrefab.transform.position = new Vector3(-16f, 411f, 1263f);
         _currentLevel = _firstFloor;
         _levels = new GameObject[_numOfFloor+1];
         _levels[_currentNum] = _currentLevel;
+        Destroy(GameObject.Find("[DOTween]"));
+        DontDestroyOnLoad(GameObject.Find("[DOTween]"));
     }
 
     private void Update()

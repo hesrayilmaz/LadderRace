@@ -423,7 +423,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &108766628
 Transform:
   m_ObjectHideFlags: 0
@@ -4823,7 +4823,6 @@ MonoBehaviour:
   _danceAnimName: Samba Dancing
   _danceAnimSpeed: 2
   _rotateSpeed: 100
-  _isFinished: 0
   _brickList: []
 --- !u!114 &1413736234
 MonoBehaviour:
@@ -5385,7 +5384,7 @@ MonoBehaviour:
   _GreenManager: {fileID: 1118875680}
   _OrangeManager: {fileID: 1434041006}
   _CharacterManager: {fileID: 1413736233}
-  _numOfFloor: 0
+  _numOfFloor: 4
 --- !u!4 &1452282369
 Transform:
   m_ObjectHideFlags: 0
