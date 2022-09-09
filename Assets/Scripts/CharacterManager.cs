@@ -38,11 +38,13 @@ public class CharacterManager : MonoBehaviour
     public List<GameObject> _brickList;
     private int _maxBricks = 10, _levelIndex;
     private GameObject _myBrick;
+    public bool _isGameOver;
     
 
     private void Start()
     {
         _isStarted = true;
+        _isGameOver = false;
         _isDancing = false;
         _isClimbingUpward = false;
         _isClimbed = false;
@@ -61,7 +63,11 @@ public class CharacterManager : MonoBehaviour
             PickUp();
             _pickedUp = false;
         }
-
+        if (_isGameOver)
+        {
+            IdleAnimation();
+            transform.DOKill(); 
+        }
         else if (fixedJoystick.Vertical != 0 || fixedJoystick.Horizontal != 0)
         {
             //Debug.Log("1111");
@@ -118,7 +124,7 @@ public class CharacterManager : MonoBehaviour
             _ladder.Drop();
             _isNewLevel = false;
         }
-        else if (other.gameObject.tag == "LadderEnd")
+        else if (other.gameObject.tag == "LadderEnd" && _ladder.GetBrickCount()==30)
         {
             _levelIndex++;
             _isClimbingUpward = false;
@@ -190,10 +196,9 @@ public class CharacterManager : MonoBehaviour
 
         RunAnimation();
         transform.DOMove(_cupPos, 0.9f);
-        yield return new WaitForSeconds(0.9f);
         //_cup.transform.position = _characterHand.transform.position;
         DanceAnimation();
-
+        yield return new WaitForSeconds(0.6f);
     }
 
 

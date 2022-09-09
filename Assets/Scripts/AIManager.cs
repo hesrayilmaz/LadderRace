@@ -15,6 +15,7 @@ public class AIManager : MonoBehaviour
     [SerializeField] private AudioSource _pickUpAudio, _failAudio;
     [SerializeField] private GameObject _characterBack;
     [SerializeField] private GameObject _cup;
+    [SerializeField] private CharacterManager _characterManager;
 
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
@@ -119,7 +120,7 @@ public class AIManager : MonoBehaviour
             StartCoroutine(DropProcess());
             _isNewLevel = false;
         }
-        else if (other.gameObject.tag == "LadderEnd")
+        else if (other.gameObject.tag == "LadderEnd" && _ladder.GetBrickCount() == 30)
         {
             _levelIndex++;
             _isClimbingUpward = false;
@@ -134,9 +135,10 @@ public class AIManager : MonoBehaviour
                 AIManager[] AIs = FindObjectsOfType<AIManager>();
                 foreach (AIManager AI in AIs)
                 {
-                    if(AI.gameObject!=gameObject)
+                    if (AI.gameObject != gameObject)
                         AI._isGameOver = true;
                 }
+                _characterManager._isGameOver = true;
                 GameObject.Find("Canvas").transform.Find("Fixed Joystick").gameObject.SetActive(false);
                 GameObject.Find("Canvas").transform.Find("GameOverPanel").GetComponent<GameOver>().ShowFailPanel();
                 _isDancing = true;
@@ -288,8 +290,8 @@ public class AIManager : MonoBehaviour
         //Debug.Log("cup pos: " + _cupPos);
         RunAnimation();
         _agent.SetDestination(_cupPos);
-        yield return new WaitForSeconds(1f);
         DanceAnimation();
+        yield return new WaitForSeconds(0.6f);
     }
 
     /* IEnumerator FixPosition()
