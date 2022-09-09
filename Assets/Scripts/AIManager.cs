@@ -12,7 +12,7 @@ public class AIManager : MonoBehaviour
     [SerializeField] private LevelController _levelController;
     [SerializeField] private BuildLadder _ladder;
     [SerializeField] private SpawnItems _range;
-    [SerializeField] private AudioSource _pickUpAudio;
+    [SerializeField] private AudioSource _pickUpAudio, _failAudio;
     [SerializeField] private GameObject _characterBack;
     [SerializeField] private GameObject _cup;
 
@@ -65,15 +65,11 @@ public class AIManager : MonoBehaviour
        
         if (_pickedUp)
         {
-            if(gameObject.tag=="Red")
-                Debug.Log("11111111111"); 
             PickUp();
             _pickedUp = false;
         }
         if (_isGameOver)
         {
-            if (gameObject.tag == "Red")
-                Debug.Log("666666");
             IdleAnimation();
             if (gameObject.GetComponent<NavMeshAgent>().enabled)
                 _agent.SetDestination(transform.position);
@@ -83,14 +79,10 @@ public class AIManager : MonoBehaviour
         }
         else if(!_goToLadder && !_isClimbingUpward && !_isClimbed)
         {
-            if (gameObject.tag == "Red")
-                Debug.Log("5555555");
             Move();
         }
         else if (_isClimbingUpward && !_isClimbed)
         {
-            if (gameObject.tag == "Red")
-                Debug.Log("3333");
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
             transform.position = _ladderPos - new Vector3(0, 0, 15);
             ClimbAnimation();
@@ -107,6 +99,7 @@ public class AIManager : MonoBehaviour
             _isClimbed = false;
             if (_isDancing)
             {
+                //_failAudio.Play();
                 _camera.EnableFinishCamera();
                 StartCoroutine(Dance());
             }

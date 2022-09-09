@@ -12,10 +12,11 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private BuildLadder _ladder;
     [SerializeField] private SpawnItems _range;
     private CameraController _camera;
-    [SerializeField] private AudioSource _pickUpAudio;
+    [SerializeField] private AudioSource _pickUpAudio, _successAudio;
     [SerializeField] private GameObject _characterBack;
     [SerializeField] private GameObject _characterHand;
     [SerializeField] private GameObject _cup;
+    [SerializeField] private Rigidbody _rb;
 
     [SerializeField] private string _idleAnimName = "Idle";
     [SerializeField] private float _idleAnimSpeed = 1f;
@@ -84,6 +85,7 @@ public class CharacterManager : MonoBehaviour
             transform.position = _characterPos;
             if (_isDancing)
             {
+                //_successAudio.Play();
                 _camera.EnableFinishCamera();
                 StartCoroutine(FixPosition());
                 StartCoroutine(Dance());
@@ -98,11 +100,14 @@ public class CharacterManager : MonoBehaviour
         else
             IdleAnimation();
 
-        transform.DOMove((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal), 0.015f).SetRelative();
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal)), Time.deltaTime * _rotateSpeed);
-
     }
-    
+
+    private void FixedUpdate()
+    {
+        Vector3 direction = (Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal);
+        transform.position += (direction*5);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), Time.fixedDeltaTime * _rotateSpeed);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -135,7 +140,6 @@ public class CharacterManager : MonoBehaviour
         }
         else if (other.gameObject.tag == "Brick")
         {
-            
             _myBrick = other.gameObject;
             _pickedUp = true;
         }
